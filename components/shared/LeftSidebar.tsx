@@ -2,16 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { sidebarLinks } from "@/lib/constants";
-// import { logout } from "@/lib/actions/auth.actions";
 
-export default async function LeftSideBar() {
+export default function LeftSideBar() {
+  const { data: session } = useSession();
+  if (!session) return null;
+
   const pathname = usePathname();
   const handleLogout = async () => {
     await signOut();
-  } 
+  };
   return (
     <section className="custom-scrollbar leftsidebar">
       <div className="flex w-full flex-1 flex-col gap-6 px-6">
@@ -19,6 +21,8 @@ export default async function LeftSideBar() {
           const isActive =
             (pathname.includes(link.route) && link.route.length > 1) ||
             pathname === link.route;
+
+            if(link.route === '/profile') link.route = `${link.route}/${session?.user.id}`
           return (
             <Link
               href={link.route}

@@ -1,20 +1,39 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { signOut, useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { fetchPosts } from "@/lib/actions/thread.actions";
+import ThreadCard from "@/components/cards/thread-card";
 
-export default function HomePage() {
-  const { data: session, status } = useSession();
-  console.log('session ><><> ', session);
-  console.log('status', status);
-  const handleLogout = async () => {
-    await signOut();
-  };
+export default async function HomePage() {
+  const session = await getServerSession(options);
+  const result = await fetchPosts({ limit: 10, page: 1, path: "/" });
+
   return (
-    <main>
-      <header>
-        <Button onClick={handleLogout}>Log out</Button>
-      </header>
-      <h1 className="">Home</h1>
-    </main>
+    <>
+      <h1 className="head-text text-left">Home</h1>
+
+      <section className="mt-9 flex flex-col gap-10">
+        {result.posts.length === 0 ? (
+          <p className="no-result">No threads found</p>
+        ) : (
+          <>
+            {result.posts.map((post) => {
+              return (
+                <ThreadCard
+                  key={post.id}
+                  id={post.id}
+                  currentUserId={session?.user.id}
+                  parentId={post.parentId}
+                  content={post.content}
+                  author={post.author}
+                  // community={post.community}
+                  createdAt={post.createdAt}
+                  comments={post.children}
+                />
+              );
+            })}
+          </>
+        )}
+      </section>
+    </>
   );
 }
