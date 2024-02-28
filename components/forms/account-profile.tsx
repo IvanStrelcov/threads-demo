@@ -119,7 +119,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     height={96}
                     priority
                     // className h-24 for fixed height
-                    className="rounded-full object-contain h-24"
+                    className="rounded-full object-contain w-24 h-24"
                   />
                 ) : (
                   <Image

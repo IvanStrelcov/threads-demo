@@ -2,40 +2,62 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL") // uses connection pooling
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // uses connection pooling
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/client"
+  // next line for updating node_modules
+  // https://github.com/prisma/prisma/issues/2584#issuecomment-646414549
+  // output   = "../node_modules/.prisma/client" 
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
-  uuid        String      @default(uuid())
-  name        String
-  username    String
-  email       String      @unique
-  password    String
-  image       String?
-  bio         String?
-  onboarded   Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  threads     Thread[]
+  id              Int         @id @default(autoincrement())
+  uuid            String      @default(uuid())
+  name            String?
+  username        String?
+  email           String      @unique
+  password        String
+  image           String?
+  bio             String?
+  onboarded       Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  threads         Thread[]
+  communityLeader Community[] @relation("CommunityCreator")
+  communityMember Community[] @relation("CommunityMember")
 }
 
 model Thread {
-  id          Int         @id @default(autoincrement())
-  uuid        String      @default(uuid())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id          Int        @id @default(autoincrement())
+  uuid        String     @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   content     String
   authorId    Int?
-  author      User?       @relation(fields: [authorId], references: [id])
+  author      User?      @relation(fields: [authorId], references: [id])
+  communityId Int?
+  community   Community? @relation(fields: [communityId], references: [id])
   parentId    Int?
-  parent      Thread?     @relation("ThreadChildren", fields: [parentId], references: [id])
-  children    Thread[]    @relation("ThreadChildren")
+  parent      Thread?    @relation("ThreadChildren", fields: [parentId], references: [id])
+  children    Thread[]   @relation("ThreadChildren")
+}
+
+model Community {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String?
+  username  String?
+  image     String?
+  bio       String?
+  creatorId Int
+  createdBy User     @relation("CommunityCreator", fields: [creatorId], references: [id])
+  members   User[]   @relation("CommunityMember")
+  thread    Thread[]
 }

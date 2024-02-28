@@ -21,10 +21,10 @@ export default function ProfileHeader({
         <div className="flex items-center gap-3">
           <div className="relative h-20 w-20 object-cover">
             <Image
-              src={image || "/assets/profile.svg"}
+              src={image ?? "/assets/profile.svg"}
               alt="Profile image"
               fill
-              className="rounded-full object-cover shadow-2xl"
+              className="rounded-full object-contain shadow-2xl"
             />
           </div>
 

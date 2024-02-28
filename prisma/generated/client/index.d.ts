@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Thread = $Result.DefaultSelection<Prisma.$ThreadPayload>
+/**
+ * Model Community
+ * 
+ */
+export type Community = $Result.DefaultSelection<Prisma.$CommunityPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -165,6 +170,16 @@ export class PrismaClient<
     * ```
     */
   get thread(): Prisma.ThreadDelegate<ExtArgs>;
+
+  /**
+   * `prisma.community`: Exposes CRUD operations for the **Community** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Communities
+    * const communities = await prisma.community.findMany()
+    * ```
+    */
+  get community(): Prisma.CommunityDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -222,8 +237,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.9.1
-   * Query Engine version: 23fdc5965b1e05fc54e5f26ed3de66776b93de64
+   * Prisma Client JS version: 5.10.2
+   * Query Engine version: 5a9203d0590c951969e85a7d07215503f4672eb9
    */
   export type PrismaVersion = {
     client: string
@@ -636,7 +651,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Thread: 'Thread'
+    Thread: 'Thread',
+    Community: 'Community'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -653,7 +669,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'thread'
+      modelProps: 'user' | 'thread' | 'community'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -789,6 +805,72 @@ export namespace Prisma {
           }
         }
       }
+      Community: {
+        payload: Prisma.$CommunityPayload<ExtArgs>
+        fields: Prisma.CommunityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CommunityFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CommunityFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          findFirst: {
+            args: Prisma.CommunityFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CommunityFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          findMany: {
+            args: Prisma.CommunityFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>[]
+          }
+          create: {
+            args: Prisma.CommunityCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          createMany: {
+            args: Prisma.CommunityCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.CommunityDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          update: {
+            args: Prisma.CommunityUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          deleteMany: {
+            args: Prisma.CommunityDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CommunityUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.CommunityUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CommunityPayload>
+          }
+          aggregate: {
+            args: Prisma.CommunityAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateCommunity>
+          }
+          groupBy: {
+            args: Prisma.CommunityGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<CommunityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CommunityCountArgs<ExtArgs>,
+            result: $Utils.Optional<CommunityCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -846,6 +928,16 @@ export namespace Prisma {
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
     log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
   }
 
   /* Types for Logging */
@@ -939,10 +1031,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     threads: number
+    communityLeader: number
+    communityMember: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     threads?: boolean | UserCountOutputTypeCountThreadsArgs
+    communityLeader?: boolean | UserCountOutputTypeCountCommunityLeaderArgs
+    communityMember?: boolean | UserCountOutputTypeCountCommunityMemberArgs
   }
 
   // Custom InputTypes
@@ -963,6 +1059,22 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountThreadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ThreadWhereInput
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCommunityLeaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityWhereInput
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCommunityMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityWhereInput
   }
 
 
@@ -996,6 +1108,50 @@ export namespace Prisma {
    * ThreadCountOutputType without action
    */
   export type ThreadCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ThreadWhereInput
+  }
+
+
+
+  /**
+   * Count Type CommunityCountOutputType
+   */
+
+  export type CommunityCountOutputType = {
+    members: number
+    thread: number
+  }
+
+  export type CommunityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | CommunityCountOutputTypeCountMembersArgs
+    thread?: boolean | CommunityCountOutputTypeCountThreadArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * CommunityCountOutputType without action
+   */
+  export type CommunityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityCountOutputType
+     */
+    select?: CommunityCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * CommunityCountOutputType without action
+   */
+  export type CommunityCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * CommunityCountOutputType without action
+   */
+  export type CommunityCountOutputTypeCountThreadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ThreadWhereInput
   }
 
@@ -1209,8 +1365,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: number
     uuid: string
-    name: string
-    username: string
+    name: string | null
+    username: string | null
     email: string
     password: string
     image: string | null
@@ -1252,6 +1408,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     threads?: boolean | User$threadsArgs<ExtArgs>
+    communityLeader?: boolean | User$communityLeaderArgs<ExtArgs>
+    communityMember?: boolean | User$communityMemberArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1271,6 +1429,8 @@ export namespace Prisma {
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     threads?: boolean | User$threadsArgs<ExtArgs>
+    communityLeader?: boolean | User$communityLeaderArgs<ExtArgs>
+    communityMember?: boolean | User$communityMemberArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1279,12 +1439,14 @@ export namespace Prisma {
     name: "User"
     objects: {
       threads: Prisma.$ThreadPayload<ExtArgs>[]
+      communityLeader: Prisma.$CommunityPayload<ExtArgs>[]
+      communityMember: Prisma.$CommunityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       uuid: string
-      name: string
-      username: string
+      name: string | null
+      username: string | null
       email: string
       password: string
       image: string | null
@@ -1659,6 +1821,10 @@ export namespace Prisma {
 
     threads<T extends User$threadsArgs<ExtArgs> = {}>(args?: Subset<T, User$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
 
+    communityLeader<T extends User$communityLeaderArgs<ExtArgs> = {}>(args?: Subset<T, User$communityLeaderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    communityMember<T extends User$communityMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$communityMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findMany'> | Null>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2031,6 +2197,48 @@ export namespace Prisma {
 
 
   /**
+   * User.communityLeader
+   */
+  export type User$communityLeaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    where?: CommunityWhereInput
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    cursor?: CommunityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
+   * User.communityMember
+   */
+  export type User$communityMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    where?: CommunityWhereInput
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    cursor?: CommunityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2061,12 +2269,14 @@ export namespace Prisma {
   export type ThreadAvgAggregateOutputType = {
     id: number | null
     authorId: number | null
+    communityId: number | null
     parentId: number | null
   }
 
   export type ThreadSumAggregateOutputType = {
     id: number | null
     authorId: number | null
+    communityId: number | null
     parentId: number | null
   }
 
@@ -2077,6 +2287,7 @@ export namespace Prisma {
     updatedAt: Date | null
     content: string | null
     authorId: number | null
+    communityId: number | null
     parentId: number | null
   }
 
@@ -2087,6 +2298,7 @@ export namespace Prisma {
     updatedAt: Date | null
     content: string | null
     authorId: number | null
+    communityId: number | null
     parentId: number | null
   }
 
@@ -2097,6 +2309,7 @@ export namespace Prisma {
     updatedAt: number
     content: number
     authorId: number
+    communityId: number
     parentId: number
     _all: number
   }
@@ -2105,12 +2318,14 @@ export namespace Prisma {
   export type ThreadAvgAggregateInputType = {
     id?: true
     authorId?: true
+    communityId?: true
     parentId?: true
   }
 
   export type ThreadSumAggregateInputType = {
     id?: true
     authorId?: true
+    communityId?: true
     parentId?: true
   }
 
@@ -2121,6 +2336,7 @@ export namespace Prisma {
     updatedAt?: true
     content?: true
     authorId?: true
+    communityId?: true
     parentId?: true
   }
 
@@ -2131,6 +2347,7 @@ export namespace Prisma {
     updatedAt?: true
     content?: true
     authorId?: true
+    communityId?: true
     parentId?: true
   }
 
@@ -2141,6 +2358,7 @@ export namespace Prisma {
     updatedAt?: true
     content?: true
     authorId?: true
+    communityId?: true
     parentId?: true
     _all?: true
   }
@@ -2238,6 +2456,7 @@ export namespace Prisma {
     updatedAt: Date
     content: string
     authorId: number | null
+    communityId: number | null
     parentId: number | null
     _count: ThreadCountAggregateOutputType | null
     _avg: ThreadAvgAggregateOutputType | null
@@ -2267,8 +2486,10 @@ export namespace Prisma {
     updatedAt?: boolean
     content?: boolean
     authorId?: boolean
+    communityId?: boolean
     parentId?: boolean
     author?: boolean | Thread$authorArgs<ExtArgs>
+    community?: boolean | Thread$communityArgs<ExtArgs>
     parent?: boolean | Thread$parentArgs<ExtArgs>
     children?: boolean | Thread$childrenArgs<ExtArgs>
     _count?: boolean | ThreadCountOutputTypeDefaultArgs<ExtArgs>
@@ -2281,11 +2502,13 @@ export namespace Prisma {
     updatedAt?: boolean
     content?: boolean
     authorId?: boolean
+    communityId?: boolean
     parentId?: boolean
   }
 
   export type ThreadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Thread$authorArgs<ExtArgs>
+    community?: boolean | Thread$communityArgs<ExtArgs>
     parent?: boolean | Thread$parentArgs<ExtArgs>
     children?: boolean | Thread$childrenArgs<ExtArgs>
     _count?: boolean | ThreadCountOutputTypeDefaultArgs<ExtArgs>
@@ -2296,6 +2519,7 @@ export namespace Prisma {
     name: "Thread"
     objects: {
       author: Prisma.$UserPayload<ExtArgs> | null
+      community: Prisma.$CommunityPayload<ExtArgs> | null
       parent: Prisma.$ThreadPayload<ExtArgs> | null
       children: Prisma.$ThreadPayload<ExtArgs>[]
     }
@@ -2306,6 +2530,7 @@ export namespace Prisma {
       updatedAt: Date
       content: string
       authorId: number | null
+      communityId: number | null
       parentId: number | null
     }, ExtArgs["result"]["thread"]>
     composites: {}
@@ -2674,6 +2899,8 @@ export namespace Prisma {
 
     author<T extends Thread$authorArgs<ExtArgs> = {}>(args?: Subset<T, Thread$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
+    community<T extends Thread$communityArgs<ExtArgs> = {}>(args?: Subset<T, Thread$communityArgs<ExtArgs>>): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
     parent<T extends Thread$parentArgs<ExtArgs> = {}>(args?: Subset<T, Thread$parentArgs<ExtArgs>>): Prisma__ThreadClient<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     children<T extends Thread$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Thread$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
@@ -2712,6 +2939,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Thread", 'DateTime'>
     readonly content: FieldRef<"Thread", 'String'>
     readonly authorId: FieldRef<"Thread", 'Int'>
+    readonly communityId: FieldRef<"Thread", 'Int'>
     readonly parentId: FieldRef<"Thread", 'Int'>
   }
     
@@ -3041,6 +3269,22 @@ export namespace Prisma {
 
 
   /**
+   * Thread.community
+   */
+  export type Thread$communityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    where?: CommunityWhereInput
+  }
+
+
+  /**
    * Thread.parent
    */
   export type Thread$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3094,6 +3338,1060 @@ export namespace Prisma {
 
 
   /**
+   * Model Community
+   */
+
+  export type AggregateCommunity = {
+    _count: CommunityCountAggregateOutputType | null
+    _avg: CommunityAvgAggregateOutputType | null
+    _sum: CommunitySumAggregateOutputType | null
+    _min: CommunityMinAggregateOutputType | null
+    _max: CommunityMaxAggregateOutputType | null
+  }
+
+  export type CommunityAvgAggregateOutputType = {
+    id: number | null
+    creatorId: number | null
+  }
+
+  export type CommunitySumAggregateOutputType = {
+    id: number | null
+    creatorId: number | null
+  }
+
+  export type CommunityMinAggregateOutputType = {
+    id: number | null
+    uuid: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    username: string | null
+    image: string | null
+    bio: string | null
+    creatorId: number | null
+  }
+
+  export type CommunityMaxAggregateOutputType = {
+    id: number | null
+    uuid: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    username: string | null
+    image: string | null
+    bio: string | null
+    creatorId: number | null
+  }
+
+  export type CommunityCountAggregateOutputType = {
+    id: number
+    uuid: number
+    createdAt: number
+    updatedAt: number
+    name: number
+    username: number
+    image: number
+    bio: number
+    creatorId: number
+    _all: number
+  }
+
+
+  export type CommunityAvgAggregateInputType = {
+    id?: true
+    creatorId?: true
+  }
+
+  export type CommunitySumAggregateInputType = {
+    id?: true
+    creatorId?: true
+  }
+
+  export type CommunityMinAggregateInputType = {
+    id?: true
+    uuid?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    username?: true
+    image?: true
+    bio?: true
+    creatorId?: true
+  }
+
+  export type CommunityMaxAggregateInputType = {
+    id?: true
+    uuid?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    username?: true
+    image?: true
+    bio?: true
+    creatorId?: true
+  }
+
+  export type CommunityCountAggregateInputType = {
+    id?: true
+    uuid?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    username?: true
+    image?: true
+    bio?: true
+    creatorId?: true
+    _all?: true
+  }
+
+  export type CommunityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Community to aggregate.
+     */
+    where?: CommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Communities to fetch.
+     */
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Communities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Communities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Communities
+    **/
+    _count?: true | CommunityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CommunityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CommunitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommunityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommunityMaxAggregateInputType
+  }
+
+  export type GetCommunityAggregateType<T extends CommunityAggregateArgs> = {
+        [P in keyof T & keyof AggregateCommunity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCommunity[P]>
+      : GetScalarType<T[P], AggregateCommunity[P]>
+  }
+
+
+
+
+  export type CommunityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityWhereInput
+    orderBy?: CommunityOrderByWithAggregationInput | CommunityOrderByWithAggregationInput[]
+    by: CommunityScalarFieldEnum[] | CommunityScalarFieldEnum
+    having?: CommunityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommunityCountAggregateInputType | true
+    _avg?: CommunityAvgAggregateInputType
+    _sum?: CommunitySumAggregateInputType
+    _min?: CommunityMinAggregateInputType
+    _max?: CommunityMaxAggregateInputType
+  }
+
+  export type CommunityGroupByOutputType = {
+    id: number
+    uuid: string
+    createdAt: Date
+    updatedAt: Date
+    name: string | null
+    username: string | null
+    image: string | null
+    bio: string | null
+    creatorId: number
+    _count: CommunityCountAggregateOutputType | null
+    _avg: CommunityAvgAggregateOutputType | null
+    _sum: CommunitySumAggregateOutputType | null
+    _min: CommunityMinAggregateOutputType | null
+    _max: CommunityMaxAggregateOutputType | null
+  }
+
+  type GetCommunityGroupByPayload<T extends CommunityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CommunityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommunityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommunityGroupByOutputType[P]>
+            : GetScalarType<T[P], CommunityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommunitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    uuid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    username?: boolean
+    image?: boolean
+    bio?: boolean
+    creatorId?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Community$membersArgs<ExtArgs>
+    thread?: boolean | Community$threadArgs<ExtArgs>
+    _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["community"]>
+
+  export type CommunitySelectScalar = {
+    id?: boolean
+    uuid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    username?: boolean
+    image?: boolean
+    bio?: boolean
+    creatorId?: boolean
+  }
+
+  export type CommunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Community$membersArgs<ExtArgs>
+    thread?: boolean | Community$threadArgs<ExtArgs>
+    _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $CommunityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Community"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      members: Prisma.$UserPayload<ExtArgs>[]
+      thread: Prisma.$ThreadPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      uuid: string
+      createdAt: Date
+      updatedAt: Date
+      name: string | null
+      username: string | null
+      image: string | null
+      bio: string | null
+      creatorId: number
+    }, ExtArgs["result"]["community"]>
+    composites: {}
+  }
+
+
+  type CommunityGetPayload<S extends boolean | null | undefined | CommunityDefaultArgs> = $Result.GetResult<Prisma.$CommunityPayload, S>
+
+  type CommunityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CommunityFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CommunityCountAggregateInputType | true
+    }
+
+  export interface CommunityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Community'], meta: { name: 'Community' } }
+    /**
+     * Find zero or one Community that matches the filter.
+     * @param {CommunityFindUniqueArgs} args - Arguments to find a Community
+     * @example
+     * // Get one Community
+     * const community = await prisma.community.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends CommunityFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityFindUniqueArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Community that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {CommunityFindUniqueOrThrowArgs} args - Arguments to find a Community
+     * @example
+     * // Get one Community
+     * const community = await prisma.community.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends CommunityFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Community that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityFindFirstArgs} args - Arguments to find a Community
+     * @example
+     * // Get one Community
+     * const community = await prisma.community.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends CommunityFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityFindFirstArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Community that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityFindFirstOrThrowArgs} args - Arguments to find a Community
+     * @example
+     * // Get one Community
+     * const community = await prisma.community.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends CommunityFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Communities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Communities
+     * const communities = await prisma.community.findMany()
+     * 
+     * // Get first 10 Communities
+     * const communities = await prisma.community.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const communityWithIdOnly = await prisma.community.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends CommunityFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Community.
+     * @param {CommunityCreateArgs} args - Arguments to create a Community.
+     * @example
+     * // Create one Community
+     * const Community = await prisma.community.create({
+     *   data: {
+     *     // ... data to create a Community
+     *   }
+     * })
+     * 
+    **/
+    create<T extends CommunityCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityCreateArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Communities.
+     *     @param {CommunityCreateManyArgs} args - Arguments to create many Communities.
+     *     @example
+     *     // Create many Communities
+     *     const community = await prisma.community.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends CommunityCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Community.
+     * @param {CommunityDeleteArgs} args - Arguments to delete one Community.
+     * @example
+     * // Delete one Community
+     * const Community = await prisma.community.delete({
+     *   where: {
+     *     // ... filter to delete one Community
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends CommunityDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityDeleteArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Community.
+     * @param {CommunityUpdateArgs} args - Arguments to update one Community.
+     * @example
+     * // Update one Community
+     * const community = await prisma.community.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends CommunityUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityUpdateArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Communities.
+     * @param {CommunityDeleteManyArgs} args - Arguments to filter Communities to delete.
+     * @example
+     * // Delete a few Communities
+     * const { count } = await prisma.community.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends CommunityDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CommunityDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Communities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Communities
+     * const community = await prisma.community.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends CommunityUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Community.
+     * @param {CommunityUpsertArgs} args - Arguments to update or create a Community.
+     * @example
+     * // Update or create a Community
+     * const community = await prisma.community.upsert({
+     *   create: {
+     *     // ... data to create a Community
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Community we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends CommunityUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, CommunityUpsertArgs<ExtArgs>>
+    ): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Communities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityCountArgs} args - Arguments to filter Communities to count.
+     * @example
+     * // Count the number of Communities
+     * const count = await prisma.community.count({
+     *   where: {
+     *     // ... the filter for the Communities we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommunityCountArgs>(
+      args?: Subset<T, CommunityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommunityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Community.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommunityAggregateArgs>(args: Subset<T, CommunityAggregateArgs>): Prisma.PrismaPromise<GetCommunityAggregateType<T>>
+
+    /**
+     * Group by Community.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommunityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommunityGroupByArgs['orderBy'] }
+        : { orderBy?: CommunityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommunityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommunityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Community model
+   */
+  readonly fields: CommunityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Community.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CommunityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    members<T extends Community$membersArgs<ExtArgs> = {}>(args?: Subset<T, Community$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    thread<T extends Community$threadArgs<ExtArgs> = {}>(args?: Subset<T, Community$threadArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Community model
+   */ 
+  interface CommunityFieldRefs {
+    readonly id: FieldRef<"Community", 'Int'>
+    readonly uuid: FieldRef<"Community", 'String'>
+    readonly createdAt: FieldRef<"Community", 'DateTime'>
+    readonly updatedAt: FieldRef<"Community", 'DateTime'>
+    readonly name: FieldRef<"Community", 'String'>
+    readonly username: FieldRef<"Community", 'String'>
+    readonly image: FieldRef<"Community", 'String'>
+    readonly bio: FieldRef<"Community", 'String'>
+    readonly creatorId: FieldRef<"Community", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Community findUnique
+   */
+  export type CommunityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Community to fetch.
+     */
+    where: CommunityWhereUniqueInput
+  }
+
+
+  /**
+   * Community findUniqueOrThrow
+   */
+  export type CommunityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Community to fetch.
+     */
+    where: CommunityWhereUniqueInput
+  }
+
+
+  /**
+   * Community findFirst
+   */
+  export type CommunityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Community to fetch.
+     */
+    where?: CommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Communities to fetch.
+     */
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Communities.
+     */
+    cursor?: CommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Communities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Communities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Communities.
+     */
+    distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community findFirstOrThrow
+   */
+  export type CommunityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Community to fetch.
+     */
+    where?: CommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Communities to fetch.
+     */
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Communities.
+     */
+    cursor?: CommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Communities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Communities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Communities.
+     */
+    distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community findMany
+   */
+  export type CommunityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Communities to fetch.
+     */
+    where?: CommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Communities to fetch.
+     */
+    orderBy?: CommunityOrderByWithRelationInput | CommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Communities.
+     */
+    cursor?: CommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Communities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Communities.
+     */
+    skip?: number
+    distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community create
+   */
+  export type CommunityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Community.
+     */
+    data: XOR<CommunityCreateInput, CommunityUncheckedCreateInput>
+  }
+
+
+  /**
+   * Community createMany
+   */
+  export type CommunityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Communities.
+     */
+    data: CommunityCreateManyInput | CommunityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Community update
+   */
+  export type CommunityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Community.
+     */
+    data: XOR<CommunityUpdateInput, CommunityUncheckedUpdateInput>
+    /**
+     * Choose, which Community to update.
+     */
+    where: CommunityWhereUniqueInput
+  }
+
+
+  /**
+   * Community updateMany
+   */
+  export type CommunityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Communities.
+     */
+    data: XOR<CommunityUpdateManyMutationInput, CommunityUncheckedUpdateManyInput>
+    /**
+     * Filter which Communities to update
+     */
+    where?: CommunityWhereInput
+  }
+
+
+  /**
+   * Community upsert
+   */
+  export type CommunityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Community to update in case it exists.
+     */
+    where: CommunityWhereUniqueInput
+    /**
+     * In case the Community found by the `where` argument doesn't exist, create a new Community with this data.
+     */
+    create: XOR<CommunityCreateInput, CommunityUncheckedCreateInput>
+    /**
+     * In case the Community was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommunityUpdateInput, CommunityUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Community delete
+   */
+  export type CommunityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+    /**
+     * Filter which Community to delete.
+     */
+    where: CommunityWhereUniqueInput
+  }
+
+
+  /**
+   * Community deleteMany
+   */
+  export type CommunityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Communities to delete
+     */
+    where?: CommunityWhereInput
+  }
+
+
+  /**
+   * Community.members
+   */
+  export type Community$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community.thread
+   */
+  export type Community$threadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Thread
+     */
+    select?: ThreadSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ThreadInclude<ExtArgs> | null
+    where?: ThreadWhereInput
+    orderBy?: ThreadOrderByWithRelationInput | ThreadOrderByWithRelationInput[]
+    cursor?: ThreadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ThreadScalarFieldEnum | ThreadScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community without action
+   */
+  export type CommunityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Community
+     */
+    select?: CommunitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommunityInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -3131,10 +4429,26 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     content: 'content',
     authorId: 'authorId',
+    communityId: 'communityId',
     parentId: 'parentId'
   };
 
   export type ThreadScalarFieldEnum = (typeof ThreadScalarFieldEnum)[keyof typeof ThreadScalarFieldEnum]
+
+
+  export const CommunityScalarFieldEnum: {
+    id: 'id',
+    uuid: 'uuid',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    name: 'name',
+    username: 'username',
+    image: 'image',
+    bio: 'bio',
+    creatorId: 'creatorId'
+  };
+
+  export type CommunityScalarFieldEnum = (typeof CommunityScalarFieldEnum)[keyof typeof CommunityScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3238,8 +4552,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
     uuid?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    username?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    username?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
@@ -3248,13 +4562,15 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     threads?: ThreadListRelationFilter
+    communityLeader?: CommunityListRelationFilter
+    communityMember?: CommunityListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     uuid?: SortOrder
-    name?: SortOrder
-    username?: SortOrder
+    name?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrder
     image?: SortOrderInput | SortOrder
@@ -3263,6 +4579,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     threads?: ThreadOrderByRelationAggregateInput
+    communityLeader?: CommunityOrderByRelationAggregateInput
+    communityMember?: CommunityOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3272,8 +4590,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     uuid?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    username?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    username?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     image?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
@@ -3281,13 +4599,15 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     threads?: ThreadListRelationFilter
+    communityLeader?: CommunityListRelationFilter
+    communityMember?: CommunityListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     uuid?: SortOrder
-    name?: SortOrder
-    username?: SortOrder
+    name?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrder
     image?: SortOrderInput | SortOrder
@@ -3308,8 +4628,8 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"User"> | number
     uuid?: StringWithAggregatesFilter<"User"> | string
-    name?: StringWithAggregatesFilter<"User"> | string
-    username?: StringWithAggregatesFilter<"User"> | string
+    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -3329,8 +4649,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Thread"> | Date | string
     content?: StringFilter<"Thread"> | string
     authorId?: IntNullableFilter<"Thread"> | number | null
+    communityId?: IntNullableFilter<"Thread"> | number | null
     parentId?: IntNullableFilter<"Thread"> | number | null
     author?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+    community?: XOR<CommunityNullableRelationFilter, CommunityWhereInput> | null
     parent?: XOR<ThreadNullableRelationFilter, ThreadWhereInput> | null
     children?: ThreadListRelationFilter
   }
@@ -3342,8 +4664,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
     content?: SortOrder
     authorId?: SortOrderInput | SortOrder
+    communityId?: SortOrderInput | SortOrder
     parentId?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
+    community?: CommunityOrderByWithRelationInput
     parent?: ThreadOrderByWithRelationInput
     children?: ThreadOrderByRelationAggregateInput
   }
@@ -3358,8 +4682,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Thread"> | Date | string
     content?: StringFilter<"Thread"> | string
     authorId?: IntNullableFilter<"Thread"> | number | null
+    communityId?: IntNullableFilter<"Thread"> | number | null
     parentId?: IntNullableFilter<"Thread"> | number | null
     author?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+    community?: XOR<CommunityNullableRelationFilter, CommunityWhereInput> | null
     parent?: XOR<ThreadNullableRelationFilter, ThreadWhereInput> | null
     children?: ThreadListRelationFilter
   }, "id">
@@ -3371,6 +4697,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     content?: SortOrder
     authorId?: SortOrderInput | SortOrder
+    communityId?: SortOrderInput | SortOrder
     parentId?: SortOrderInput | SortOrder
     _count?: ThreadCountOrderByAggregateInput
     _avg?: ThreadAvgOrderByAggregateInput
@@ -3389,13 +4716,97 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Thread"> | Date | string
     content?: StringWithAggregatesFilter<"Thread"> | string
     authorId?: IntNullableWithAggregatesFilter<"Thread"> | number | null
+    communityId?: IntNullableWithAggregatesFilter<"Thread"> | number | null
     parentId?: IntNullableWithAggregatesFilter<"Thread"> | number | null
+  }
+
+  export type CommunityWhereInput = {
+    AND?: CommunityWhereInput | CommunityWhereInput[]
+    OR?: CommunityWhereInput[]
+    NOT?: CommunityWhereInput | CommunityWhereInput[]
+    id?: IntFilter<"Community"> | number
+    uuid?: StringFilter<"Community"> | string
+    createdAt?: DateTimeFilter<"Community"> | Date | string
+    updatedAt?: DateTimeFilter<"Community"> | Date | string
+    name?: StringNullableFilter<"Community"> | string | null
+    username?: StringNullableFilter<"Community"> | string | null
+    image?: StringNullableFilter<"Community"> | string | null
+    bio?: StringNullableFilter<"Community"> | string | null
+    creatorId?: IntFilter<"Community"> | number
+    createdBy?: XOR<UserRelationFilter, UserWhereInput>
+    members?: UserListRelationFilter
+    thread?: ThreadListRelationFilter
+  }
+
+  export type CommunityOrderByWithRelationInput = {
+    id?: SortOrder
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    creatorId?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    members?: UserOrderByRelationAggregateInput
+    thread?: ThreadOrderByRelationAggregateInput
+  }
+
+  export type CommunityWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CommunityWhereInput | CommunityWhereInput[]
+    OR?: CommunityWhereInput[]
+    NOT?: CommunityWhereInput | CommunityWhereInput[]
+    uuid?: StringFilter<"Community"> | string
+    createdAt?: DateTimeFilter<"Community"> | Date | string
+    updatedAt?: DateTimeFilter<"Community"> | Date | string
+    name?: StringNullableFilter<"Community"> | string | null
+    username?: StringNullableFilter<"Community"> | string | null
+    image?: StringNullableFilter<"Community"> | string | null
+    bio?: StringNullableFilter<"Community"> | string | null
+    creatorId?: IntFilter<"Community"> | number
+    createdBy?: XOR<UserRelationFilter, UserWhereInput>
+    members?: UserListRelationFilter
+    thread?: ThreadListRelationFilter
+  }, "id">
+
+  export type CommunityOrderByWithAggregationInput = {
+    id?: SortOrder
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    creatorId?: SortOrder
+    _count?: CommunityCountOrderByAggregateInput
+    _avg?: CommunityAvgOrderByAggregateInput
+    _max?: CommunityMaxOrderByAggregateInput
+    _min?: CommunityMinOrderByAggregateInput
+    _sum?: CommunitySumOrderByAggregateInput
+  }
+
+  export type CommunityScalarWhereWithAggregatesInput = {
+    AND?: CommunityScalarWhereWithAggregatesInput | CommunityScalarWhereWithAggregatesInput[]
+    OR?: CommunityScalarWhereWithAggregatesInput[]
+    NOT?: CommunityScalarWhereWithAggregatesInput | CommunityScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Community"> | number
+    uuid?: StringWithAggregatesFilter<"Community"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Community"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Community"> | Date | string
+    name?: StringNullableWithAggregatesFilter<"Community"> | string | null
+    username?: StringNullableWithAggregatesFilter<"Community"> | string | null
+    image?: StringNullableWithAggregatesFilter<"Community"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"Community"> | string | null
+    creatorId?: IntWithAggregatesFilter<"Community"> | number
   }
 
   export type UserCreateInput = {
     uuid?: string
-    name: string
-    username: string
+    name?: string | null
+    username?: string | null
     email: string
     password: string
     image?: string | null
@@ -3404,13 +4815,15 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     threads?: ThreadCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityCreateNestedManyWithoutMembersInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: number
     uuid?: string
-    name: string
-    username: string
+    name?: string | null
+    username?: string | null
     email: string
     password: string
     image?: string | null
@@ -3419,12 +4832,14 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
   }
 
   export type UserUpdateInput = {
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3433,13 +4848,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUpdateManyWithoutMembersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3448,13 +4865,15 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: number
     uuid?: string
-    name: string
-    username: string
+    name?: string | null
+    username?: string | null
     email: string
     password: string
     image?: string | null
@@ -3466,8 +4885,8 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3480,8 +4899,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3497,6 +4916,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
+    community?: CommunityCreateNestedOneWithoutThreadInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
@@ -3508,6 +4928,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     authorId?: number | null
+    communityId?: number | null
     parentId?: number | null
     children?: ThreadUncheckedCreateNestedManyWithoutParentInput
   }
@@ -3518,6 +4939,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
+    community?: CommunityUpdateOneWithoutThreadNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
@@ -3529,6 +4951,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
     children?: ThreadUncheckedUpdateManyWithoutParentNestedInput
   }
@@ -3540,6 +4963,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     authorId?: number | null
+    communityId?: number | null
     parentId?: number | null
   }
 
@@ -3557,7 +4981,96 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type CommunityCreateInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
+    members?: UserCreateNestedManyWithoutCommunityMemberInput
+    thread?: ThreadCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUncheckedCreateInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId: number
+    members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUpdateInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
+    members?: UserUpdateManyWithoutCommunityMemberNestedInput
+    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: IntFieldUpdateOperationsInput | number
+    members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
+    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityCreateManyInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId: number
+  }
+
+  export type CommunityUpdateManyMutationInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CommunityUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3623,12 +5136,22 @@ export namespace Prisma {
     none?: ThreadWhereInput
   }
 
+  export type CommunityListRelationFilter = {
+    every?: CommunityWhereInput
+    some?: CommunityWhereInput
+    none?: CommunityWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type ThreadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommunityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3772,6 +5295,11 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
+  export type CommunityNullableRelationFilter = {
+    is?: CommunityWhereInput | null
+    isNot?: CommunityWhereInput | null
+  }
+
   export type ThreadNullableRelationFilter = {
     is?: ThreadWhereInput | null
     isNot?: ThreadWhereInput | null
@@ -3784,12 +5312,14 @@ export namespace Prisma {
     updatedAt?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    communityId?: SortOrder
     parentId?: SortOrder
   }
 
   export type ThreadAvgOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
+    communityId?: SortOrder
     parentId?: SortOrder
   }
 
@@ -3800,6 +5330,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    communityId?: SortOrder
     parentId?: SortOrder
   }
 
@@ -3810,12 +5341,14 @@ export namespace Prisma {
     updatedAt?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    communityId?: SortOrder
     parentId?: SortOrder
   }
 
   export type ThreadSumOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
+    communityId?: SortOrder
     parentId?: SortOrder
   }
 
@@ -3835,6 +5368,67 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommunityCountOrderByAggregateInput = {
+    id?: SortOrder
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    image?: SortOrder
+    bio?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type CommunityAvgOrderByAggregateInput = {
+    id?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type CommunityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    image?: SortOrder
+    bio?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type CommunityMinOrderByAggregateInput = {
+    id?: SortOrder
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    username?: SortOrder
+    image?: SortOrder
+    bio?: SortOrder
+    creatorId?: SortOrder
+  }
+
+  export type CommunitySumOrderByAggregateInput = {
+    id?: SortOrder
+    creatorId?: SortOrder
+  }
+
   export type ThreadCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ThreadCreateWithoutAuthorInput, ThreadUncheckedCreateWithoutAuthorInput> | ThreadCreateWithoutAuthorInput[] | ThreadUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ThreadCreateOrConnectWithoutAuthorInput | ThreadCreateOrConnectWithoutAuthorInput[]
@@ -3842,11 +5436,37 @@ export namespace Prisma {
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
   }
 
+  export type CommunityCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput> | CommunityCreateWithoutCreatedByInput[] | CommunityUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutCreatedByInput | CommunityCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CommunityCreateManyCreatedByInputEnvelope
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+  }
+
+  export type CommunityCreateNestedManyWithoutMembersInput = {
+    create?: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput> | CommunityCreateWithoutMembersInput[] | CommunityUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutMembersInput | CommunityCreateOrConnectWithoutMembersInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+  }
+
   export type ThreadUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ThreadCreateWithoutAuthorInput, ThreadUncheckedCreateWithoutAuthorInput> | ThreadCreateWithoutAuthorInput[] | ThreadUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ThreadCreateOrConnectWithoutAuthorInput | ThreadCreateOrConnectWithoutAuthorInput[]
     createMany?: ThreadCreateManyAuthorInputEnvelope
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+  }
+
+  export type CommunityUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput> | CommunityCreateWithoutCreatedByInput[] | CommunityUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutCreatedByInput | CommunityCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CommunityCreateManyCreatedByInputEnvelope
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+  }
+
+  export type CommunityUncheckedCreateNestedManyWithoutMembersInput = {
+    create?: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput> | CommunityCreateWithoutMembersInput[] | CommunityUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutMembersInput | CommunityCreateOrConnectWithoutMembersInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3879,6 +5499,33 @@ export namespace Prisma {
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
   }
 
+  export type CommunityUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput> | CommunityCreateWithoutCreatedByInput[] | CommunityUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutCreatedByInput | CommunityCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CommunityUpsertWithWhereUniqueWithoutCreatedByInput | CommunityUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CommunityCreateManyCreatedByInputEnvelope
+    set?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    disconnect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    delete?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    update?: CommunityUpdateWithWhereUniqueWithoutCreatedByInput | CommunityUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CommunityUpdateManyWithWhereWithoutCreatedByInput | CommunityUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+  }
+
+  export type CommunityUpdateManyWithoutMembersNestedInput = {
+    create?: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput> | CommunityCreateWithoutMembersInput[] | CommunityUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutMembersInput | CommunityCreateOrConnectWithoutMembersInput[]
+    upsert?: CommunityUpsertWithWhereUniqueWithoutMembersInput | CommunityUpsertWithWhereUniqueWithoutMembersInput[]
+    set?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    disconnect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    delete?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    update?: CommunityUpdateWithWhereUniqueWithoutMembersInput | CommunityUpdateWithWhereUniqueWithoutMembersInput[]
+    updateMany?: CommunityUpdateManyWithWhereWithoutMembersInput | CommunityUpdateManyWithWhereWithoutMembersInput[]
+    deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -3901,10 +5548,43 @@ export namespace Prisma {
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
   }
 
+  export type CommunityUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput> | CommunityCreateWithoutCreatedByInput[] | CommunityUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutCreatedByInput | CommunityCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CommunityUpsertWithWhereUniqueWithoutCreatedByInput | CommunityUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CommunityCreateManyCreatedByInputEnvelope
+    set?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    disconnect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    delete?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    update?: CommunityUpdateWithWhereUniqueWithoutCreatedByInput | CommunityUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CommunityUpdateManyWithWhereWithoutCreatedByInput | CommunityUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+  }
+
+  export type CommunityUncheckedUpdateManyWithoutMembersNestedInput = {
+    create?: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput> | CommunityCreateWithoutMembersInput[] | CommunityUncheckedCreateWithoutMembersInput[]
+    connectOrCreate?: CommunityCreateOrConnectWithoutMembersInput | CommunityCreateOrConnectWithoutMembersInput[]
+    upsert?: CommunityUpsertWithWhereUniqueWithoutMembersInput | CommunityUpsertWithWhereUniqueWithoutMembersInput[]
+    set?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    disconnect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    delete?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+    update?: CommunityUpdateWithWhereUniqueWithoutMembersInput | CommunityUpdateWithWhereUniqueWithoutMembersInput[]
+    updateMany?: CommunityUpdateManyWithWhereWithoutMembersInput | CommunityUpdateManyWithWhereWithoutMembersInput[]
+    deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutThreadsInput = {
     create?: XOR<UserCreateWithoutThreadsInput, UserUncheckedCreateWithoutThreadsInput>
     connectOrCreate?: UserCreateOrConnectWithoutThreadsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type CommunityCreateNestedOneWithoutThreadInput = {
+    create?: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutThreadInput
+    connect?: CommunityWhereUniqueInput
   }
 
   export type ThreadCreateNestedOneWithoutChildrenInput = {
@@ -3935,6 +5615,16 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutThreadsInput, UserUpdateWithoutThreadsInput>, UserUncheckedUpdateWithoutThreadsInput>
+  }
+
+  export type CommunityUpdateOneWithoutThreadNestedInput = {
+    create?: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutThreadInput
+    upsert?: CommunityUpsertWithoutThreadInput
+    disconnect?: CommunityWhereInput | boolean
+    delete?: CommunityWhereInput | boolean
+    connect?: CommunityWhereUniqueInput
+    update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutThreadInput, CommunityUpdateWithoutThreadInput>, CommunityUncheckedUpdateWithoutThreadInput>
   }
 
   export type ThreadUpdateOneWithoutChildrenNestedInput = {
@@ -3980,6 +5670,100 @@ export namespace Prisma {
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
     update?: ThreadUpdateWithWhereUniqueWithoutParentInput | ThreadUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: ThreadUpdateManyWithWhereWithoutParentInput | ThreadUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCommunityLeaderInput = {
+    create?: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityLeaderInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedManyWithoutCommunityMemberInput = {
+    create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ThreadCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput> | ThreadCreateWithoutCommunityInput[] | ThreadUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: ThreadCreateOrConnectWithoutCommunityInput | ThreadCreateOrConnectWithoutCommunityInput[]
+    createMany?: ThreadCreateManyCommunityInputEnvelope
+    connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutCommunityMemberInput = {
+    create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ThreadUncheckedCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput> | ThreadCreateWithoutCommunityInput[] | ThreadUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: ThreadCreateOrConnectWithoutCommunityInput | ThreadCreateOrConnectWithoutCommunityInput[]
+    createMany?: ThreadCreateManyCommunityInputEnvelope
+    connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCommunityLeaderNestedInput = {
+    create?: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityLeaderInput
+    upsert?: UserUpsertWithoutCommunityLeaderInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommunityLeaderInput, UserUpdateWithoutCommunityLeaderInput>, UserUncheckedUpdateWithoutCommunityLeaderInput>
+  }
+
+  export type UserUpdateManyWithoutCommunityMemberNestedInput = {
+    create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutCommunityMemberInput | UserUpsertWithWhereUniqueWithoutCommunityMemberInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutCommunityMemberInput | UserUpdateWithWhereUniqueWithoutCommunityMemberInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutCommunityMemberInput | UserUpdateManyWithWhereWithoutCommunityMemberInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ThreadUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput> | ThreadCreateWithoutCommunityInput[] | ThreadUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: ThreadCreateOrConnectWithoutCommunityInput | ThreadCreateOrConnectWithoutCommunityInput[]
+    upsert?: ThreadUpsertWithWhereUniqueWithoutCommunityInput | ThreadUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: ThreadCreateManyCommunityInputEnvelope
+    set?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    disconnect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    delete?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    update?: ThreadUpdateWithWhereUniqueWithoutCommunityInput | ThreadUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: ThreadUpdateManyWithWhereWithoutCommunityInput | ThreadUpdateManyWithWhereWithoutCommunityInput[]
+    deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutCommunityMemberNestedInput = {
+    create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutCommunityMemberInput | UserUpsertWithWhereUniqueWithoutCommunityMemberInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutCommunityMemberInput | UserUpdateWithWhereUniqueWithoutCommunityMemberInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutCommunityMemberInput | UserUpdateManyWithWhereWithoutCommunityMemberInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ThreadUncheckedUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput> | ThreadCreateWithoutCommunityInput[] | ThreadUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: ThreadCreateOrConnectWithoutCommunityInput | ThreadCreateOrConnectWithoutCommunityInput[]
+    upsert?: ThreadUpsertWithWhereUniqueWithoutCommunityInput | ThreadUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: ThreadCreateManyCommunityInputEnvelope
+    set?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    disconnect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    delete?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+    update?: ThreadUpdateWithWhereUniqueWithoutCommunityInput | ThreadUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: ThreadUpdateManyWithWhereWithoutCommunityInput | ThreadUpdateManyWithWhereWithoutCommunityInput[]
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
   }
 
@@ -4164,6 +5948,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     content: string
+    community?: CommunityCreateNestedOneWithoutThreadInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
@@ -4174,6 +5959,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     content: string
+    communityId?: number | null
     parentId?: number | null
     children?: ThreadUncheckedCreateNestedManyWithoutParentInput
   }
@@ -4186,6 +5972,71 @@ export namespace Prisma {
   export type ThreadCreateManyAuthorInputEnvelope = {
     data: ThreadCreateManyAuthorInput | ThreadCreateManyAuthorInput[]
     skipDuplicates?: boolean
+  }
+
+  export type CommunityCreateWithoutCreatedByInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    members?: UserCreateNestedManyWithoutCommunityMemberInput
+    thread?: ThreadCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUncheckedCreateWithoutCreatedByInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityCreateOrConnectWithoutCreatedByInput = {
+    where: CommunityWhereUniqueInput
+    create: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CommunityCreateManyCreatedByInputEnvelope = {
+    data: CommunityCreateManyCreatedByInput | CommunityCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommunityCreateWithoutMembersInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
+    thread?: ThreadCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUncheckedCreateWithoutMembersInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId: number
+    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityCreateOrConnectWithoutMembersInput = {
+    where: CommunityWhereUniqueInput
+    create: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput>
   }
 
   export type ThreadUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -4214,13 +6065,61 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Thread"> | Date | string
     content?: StringFilter<"Thread"> | string
     authorId?: IntNullableFilter<"Thread"> | number | null
+    communityId?: IntNullableFilter<"Thread"> | number | null
     parentId?: IntNullableFilter<"Thread"> | number | null
+  }
+
+  export type CommunityUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: CommunityWhereUniqueInput
+    update: XOR<CommunityUpdateWithoutCreatedByInput, CommunityUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<CommunityCreateWithoutCreatedByInput, CommunityUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CommunityUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: CommunityWhereUniqueInput
+    data: XOR<CommunityUpdateWithoutCreatedByInput, CommunityUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type CommunityUpdateManyWithWhereWithoutCreatedByInput = {
+    where: CommunityScalarWhereInput
+    data: XOR<CommunityUpdateManyMutationInput, CommunityUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type CommunityScalarWhereInput = {
+    AND?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+    OR?: CommunityScalarWhereInput[]
+    NOT?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+    id?: IntFilter<"Community"> | number
+    uuid?: StringFilter<"Community"> | string
+    createdAt?: DateTimeFilter<"Community"> | Date | string
+    updatedAt?: DateTimeFilter<"Community"> | Date | string
+    name?: StringNullableFilter<"Community"> | string | null
+    username?: StringNullableFilter<"Community"> | string | null
+    image?: StringNullableFilter<"Community"> | string | null
+    bio?: StringNullableFilter<"Community"> | string | null
+    creatorId?: IntFilter<"Community"> | number
+  }
+
+  export type CommunityUpsertWithWhereUniqueWithoutMembersInput = {
+    where: CommunityWhereUniqueInput
+    update: XOR<CommunityUpdateWithoutMembersInput, CommunityUncheckedUpdateWithoutMembersInput>
+    create: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput>
+  }
+
+  export type CommunityUpdateWithWhereUniqueWithoutMembersInput = {
+    where: CommunityWhereUniqueInput
+    data: XOR<CommunityUpdateWithoutMembersInput, CommunityUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type CommunityUpdateManyWithWhereWithoutMembersInput = {
+    where: CommunityScalarWhereInput
+    data: XOR<CommunityUpdateManyMutationInput, CommunityUncheckedUpdateManyWithoutMembersInput>
   }
 
   export type UserCreateWithoutThreadsInput = {
     uuid?: string
-    name: string
-    username: string
+    name?: string | null
+    username?: string | null
     email: string
     password: string
     image?: string | null
@@ -4228,13 +6127,15 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityCreateNestedManyWithoutMembersInput
   }
 
   export type UserUncheckedCreateWithoutThreadsInput = {
     id?: number
     uuid?: string
-    name: string
-    username: string
+    name?: string | null
+    username?: string | null
     email: string
     password: string
     image?: string | null
@@ -4242,11 +6143,43 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
   }
 
   export type UserCreateOrConnectWithoutThreadsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutThreadsInput, UserUncheckedCreateWithoutThreadsInput>
+  }
+
+  export type CommunityCreateWithoutThreadInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
+    members?: UserCreateNestedManyWithoutCommunityMemberInput
+  }
+
+  export type CommunityUncheckedCreateWithoutThreadInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId: number
+    members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+  }
+
+  export type CommunityCreateOrConnectWithoutThreadInput = {
+    where: CommunityWhereUniqueInput
+    create: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
   }
 
   export type ThreadCreateWithoutChildrenInput = {
@@ -4255,6 +6188,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
+    community?: CommunityCreateNestedOneWithoutThreadInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
   }
 
@@ -4265,6 +6199,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     authorId?: number | null
+    communityId?: number | null
     parentId?: number | null
   }
 
@@ -4279,6 +6214,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
+    community?: CommunityCreateNestedOneWithoutThreadInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
 
@@ -4289,6 +6225,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     authorId?: number | null
+    communityId?: number | null
     children?: ThreadUncheckedCreateNestedManyWithoutParentInput
   }
 
@@ -4315,8 +6252,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutThreadsInput = {
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4324,13 +6261,15 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUpdateManyWithoutMembersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutThreadsInput = {
     id?: IntFieldUpdateOperationsInput | number
     uuid?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4338,6 +6277,44 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+  }
+
+  export type CommunityUpsertWithoutThreadInput = {
+    update: XOR<CommunityUpdateWithoutThreadInput, CommunityUncheckedUpdateWithoutThreadInput>
+    create: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
+    where?: CommunityWhereInput
+  }
+
+  export type CommunityUpdateToOneWithWhereWithoutThreadInput = {
+    where?: CommunityWhereInput
+    data: XOR<CommunityUpdateWithoutThreadInput, CommunityUncheckedUpdateWithoutThreadInput>
+  }
+
+  export type CommunityUpdateWithoutThreadInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
+    members?: UserUpdateManyWithoutCommunityMemberNestedInput
+  }
+
+  export type CommunityUncheckedUpdateWithoutThreadInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: IntFieldUpdateOperationsInput | number
+    members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
   }
 
   export type ThreadUpsertWithoutChildrenInput = {
@@ -4357,6 +6334,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
+    community?: CommunityUpdateOneWithoutThreadNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
   }
 
@@ -4367,6 +6345,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -4386,13 +6365,219 @@ export namespace Prisma {
     data: XOR<ThreadUpdateManyMutationInput, ThreadUncheckedUpdateManyWithoutParentInput>
   }
 
+  export type UserCreateWithoutCommunityLeaderInput = {
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    threads?: ThreadCreateNestedManyWithoutAuthorInput
+    communityMember?: CommunityCreateNestedManyWithoutMembersInput
+  }
+
+  export type UserUncheckedCreateWithoutCommunityLeaderInput = {
+    id?: number
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
+    communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+  }
+
+  export type UserCreateOrConnectWithoutCommunityLeaderInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
+  }
+
+  export type UserCreateWithoutCommunityMemberInput = {
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    threads?: ThreadCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutCommunityMemberInput = {
+    id?: number
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutCommunityMemberInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput>
+  }
+
+  export type ThreadCreateWithoutCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    content: string
+    author?: UserCreateNestedOneWithoutThreadsInput
+    parent?: ThreadCreateNestedOneWithoutChildrenInput
+    children?: ThreadCreateNestedManyWithoutParentInput
+  }
+
+  export type ThreadUncheckedCreateWithoutCommunityInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    content: string
+    authorId?: number | null
+    parentId?: number | null
+    children?: ThreadUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type ThreadCreateOrConnectWithoutCommunityInput = {
+    where: ThreadWhereUniqueInput
+    create: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type ThreadCreateManyCommunityInputEnvelope = {
+    data: ThreadCreateManyCommunityInput | ThreadCreateManyCommunityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCommunityLeaderInput = {
+    update: XOR<UserUpdateWithoutCommunityLeaderInput, UserUncheckedUpdateWithoutCommunityLeaderInput>
+    create: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCommunityLeaderInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCommunityLeaderInput, UserUncheckedUpdateWithoutCommunityLeaderInput>
+  }
+
+  export type UserUpdateWithoutCommunityLeaderInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    threads?: ThreadUpdateManyWithoutAuthorNestedInput
+    communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommunityLeaderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
+    communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutCommunityMemberInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutCommunityMemberInput, UserUncheckedUpdateWithoutCommunityMemberInput>
+    create: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutCommunityMemberInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutCommunityMemberInput, UserUncheckedUpdateWithoutCommunityMemberInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutCommunityMemberInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutCommunityMemberInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: IntFilter<"User"> | number
+    uuid?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    username?: StringNullableFilter<"User"> | string | null
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    image?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
+    onboarded?: BoolFilter<"User"> | boolean
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+  }
+
+  export type ThreadUpsertWithWhereUniqueWithoutCommunityInput = {
+    where: ThreadWhereUniqueInput
+    update: XOR<ThreadUpdateWithoutCommunityInput, ThreadUncheckedUpdateWithoutCommunityInput>
+    create: XOR<ThreadCreateWithoutCommunityInput, ThreadUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type ThreadUpdateWithWhereUniqueWithoutCommunityInput = {
+    where: ThreadWhereUniqueInput
+    data: XOR<ThreadUpdateWithoutCommunityInput, ThreadUncheckedUpdateWithoutCommunityInput>
+  }
+
+  export type ThreadUpdateManyWithWhereWithoutCommunityInput = {
+    where: ThreadScalarWhereInput
+    data: XOR<ThreadUpdateManyMutationInput, ThreadUncheckedUpdateManyWithoutCommunityInput>
+  }
+
   export type ThreadCreateManyAuthorInput = {
     id?: number
     uuid?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     content: string
+    communityId?: number | null
     parentId?: number | null
+  }
+
+  export type CommunityCreateManyCreatedByInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
   }
 
   export type ThreadUpdateWithoutAuthorInput = {
@@ -4400,6 +6585,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
+    community?: CommunityUpdateOneWithoutThreadNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
@@ -4410,6 +6596,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
     children?: ThreadUncheckedUpdateManyWithoutParentNestedInput
   }
@@ -4420,7 +6607,81 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type CommunityUpdateWithoutCreatedByInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: UserUpdateManyWithoutCommunityMemberNestedInput
+    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
+    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CommunityUpdateWithoutMembersInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
+    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateWithoutMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: IntFieldUpdateOperationsInput | number
+    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateManyWithoutMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ThreadCreateManyParentInput = {
@@ -4430,6 +6691,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     authorId?: number | null
+    communityId?: number | null
   }
 
   export type ThreadUpdateWithoutParentInput = {
@@ -4438,6 +6700,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
+    community?: CommunityUpdateOneWithoutThreadNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
 
@@ -4448,6 +6711,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
     children?: ThreadUncheckedUpdateManyWithoutParentNestedInput
   }
 
@@ -4458,6 +6722,93 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    communityId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ThreadCreateManyCommunityInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    content: string
+    authorId?: number | null
+    parentId?: number | null
+  }
+
+  export type UserUpdateWithoutCommunityMemberInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    threads?: ThreadUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommunityMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutCommunityMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ThreadUpdateWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    author?: UserUpdateOneWithoutThreadsNestedInput
+    parent?: ThreadUpdateOneWithoutChildrenNestedInput
+    children?: ThreadUpdateManyWithoutParentNestedInput
+  }
+
+  export type ThreadUncheckedUpdateWithoutCommunityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableIntFieldUpdateOperationsInput | number | null
+    children?: ThreadUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type ThreadUncheckedUpdateManyWithoutCommunityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 
@@ -4474,6 +6825,10 @@ export namespace Prisma {
      */
     export type ThreadCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ThreadCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use CommunityCountOutputTypeDefaultArgs instead
+     */
+    export type CommunityCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommunityCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
@@ -4481,6 +6836,10 @@ export namespace Prisma {
      * @deprecated Use ThreadDefaultArgs instead
      */
     export type ThreadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ThreadDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CommunityDefaultArgs instead
+     */
+    export type CommunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommunityDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

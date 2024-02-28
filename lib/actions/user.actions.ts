@@ -1,9 +1,21 @@
 "use server";
 
+import { Prisma } from "@prisma/client";
+import type { Thread, User } from "@prisma/client";
 import prisma from "@/lib/database/db";
 import { revalidatePath } from "next/cache";
 import { prismaExclude } from "../database/utils";
-import { UserModel } from "../definitions";
+
+type ThreadWithAuthor = {
+  id: number;
+  uuid: string;
+  createdAt: Date;
+  updatedAt: Date;
+  content: string;
+  authorId: number | null;
+  parentId: number | null;
+  author: User;
+};
 
 export async function updateUser({
   userId,
@@ -84,5 +96,71 @@ export async function fetchUserPosts(userId: number) {
     return user;
   } catch (error: any) {
     throw new Error(`Failed to fetch users posts: ${error.message}`);
+  }
+}
+
+export async function fetchUsers({
+  userId,
+  searchString,
+  limit = 20,
+  page = 1,
+  sortBy = "desc",
+}: {
+  userId: number;
+  searchString: string;
+  limit: number;
+  page: number;
+  sortBy: Prisma.SortOrder;
+}) {
+  try {
+    const skip = limit * (page - 1);
+
+    const query: Prisma.UserFindManyArgs = {
+      where: { AND: [{ id: { not: userId }, onboarded: true }] },
+      orderBy: { createdAt: sortBy },
+      skip,
+      take: limit,
+    };
+    // query.where for ts error
+    if (searchString.trim() !== "" && query.where) {
+      query.where["OR"] = [
+        { username: { contains: searchString, mode: "insensitive" } },
+        { name: { contains: searchString, mode: "insensitive" } },
+      ];
+    }
+    const users = await prisma.user.findMany(query);
+    const totalUsersCount = await prisma.user.count(
+      query as Prisma.UserCountArgs
+    );
+    const isNext = totalUsersCount > skip + users.length;
+    return { users, isNext };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch users: ${error.message}`);
+  }
+}
+
+export async function fetchActivities({ userId }: { userId: number }) {
+  try {
+    const userThreads = await prisma.thread.findMany({
+      where: { authorId: userId },
+      include: {
+        children: {
+          where: { authorId: { not: userId } },
+          include: { author: { select: prismaExclude("User", ["password"]) } },
+        },
+      },
+    });
+
+    userThreads.map((e) => {
+      e.children.map(console.log);
+    });
+
+    const childThreads = userThreads.reduce((acc, current) => {
+      return acc.concat(current?.children);
+    }, [] as Thread[]);
+
+    return childThreads as unknown as ThreadWithAuthor[];
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user activities: ${error.message}`);
   }
 }

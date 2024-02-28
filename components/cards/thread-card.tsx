@@ -50,7 +50,7 @@ export default function ThreadCard({
               className="relative h-11 w-11"
             >
               <Image
-                src={author?.image || "/assets/profile.svg"}
+                src={author?.image ?? "/assets/profile.svg"}
                 alt="Profile image"
                 fill
                 className="cursor-pointer rounded-full"

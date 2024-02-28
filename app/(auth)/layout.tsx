@@ -19,7 +19,9 @@ export default function AuthLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <AuthProvider>{children}</AuthProvider> */}
-        {children}
+        <div className="w-full flex justify-center items-center min-h-screen">
+          {children}
+        </div>
       </body>
     </html>
   );

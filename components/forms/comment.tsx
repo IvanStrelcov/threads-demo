@@ -58,11 +58,11 @@ export default function Comment({
             <FormItem className="flex w-full items-center gap-3">
               <FormLabel>
                 <Image
-                  src={currentUserImage}
+                  src={currentUserImage ?? ""}
                   alt="Profile image"
                   width={48}
                   height={48}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-contain w-12 h-12"
                 />
               </FormLabel>
               <FormControl className="border-none bg-transparent">
