@@ -1,12 +1,8 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { options } from "@/app/api/auth/[...nextauth]/options";
-import { fetchActivities, fetchUsers } from "@/lib/actions/user.actions";
-import ProfileHeader from "@/components/shared/ProfileHeader";
-import { profileTabs } from "@/lib/constants";
-import { UserModel } from "@/lib/definitions";
-import UserCard from "@/components/cards/user-card";
 import Link from "next/link";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { fetchActivities } from "@/lib/actions/user.actions";
 
 export default async function Activity() {
   const session = await getServerSession(options);
@@ -14,7 +10,7 @@ export default async function Activity() {
   if (!session?.user) return null;
 
   const activities = await fetchActivities({ userId: session.user.id });
-  // get activities
+
   return (
     <section className="">
       <h1 className="head-text mb-10">Activity</h1>
