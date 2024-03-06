@@ -1,3 +1,4 @@
+import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,14 +9,14 @@ interface Thread {
   content: string;
   author: {
     id: number;
-    name: string;
+    name: string | null;
     image: string | null;
   } | null;
-  // community: {
-  // id: string;
-  // name: string;
-  // image: string;
-  // } | null,
+  community: {
+    id: number;
+    name: string | null;
+    image: string | null;
+  } | null;
   createdAt: Date;
   comments: {
     author: {
@@ -31,11 +32,12 @@ export default function ThreadCard({
   parentId,
   content,
   author,
-  // community={post.community}
+  community,
   createdAt,
   comments,
   isComment,
 }: Thread) {
+  console.log('comments >>>', comments)
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -53,7 +55,7 @@ export default function ThreadCard({
                 src={author?.image ?? "/assets/profile.svg"}
                 alt="Profile image"
                 fill
-                className="cursor-pointer rounded-full"
+                className="cursor-pointer rounded-full object-cover"
               />
             </Link>
 
@@ -114,6 +116,48 @@ export default function ThreadCard({
           </div>
         </div>
       </div>
+
+      {/* TODO: delete thread */}
+      {/* TODO: show comment logo */}
+      {!isComment && comments?.length > 0 && (
+        <div className="ml-2.5 mt-3 flex items-center gap-2">
+          {comments.slice(0, 2).map((comment, index) => (
+            <Image
+              key={index}
+              src={comment?.author?.image || "/assets/profile.svg"}
+              alt={`user_${index}`}
+              width={24}
+              height={24}
+              className={`${index !== 0 && "-ml-5"} rounded-full object-cover w-6 h-6`}
+            />
+          ))}
+
+          <Link href={`/thread/${id}`}>
+            <p className="mt-1 text-subtle-medium text-gray-1">
+              {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+            </p>
+          </Link>
+        </div>
+      )}
+
+      {!isComment && community && (
+        <Link
+          href={`/communities/${community.id}`}
+          className="mt-5 flex items-center"
+        >
+          <p className="text-subtle-medium text-gray-1">
+            {formatDateString(createdAt.toString())} - {community.name}{" "}
+            Community
+          </p>
+          <Image
+            src={community.image || "/assets/profile.svg"}
+            alt={community.name || "community-logo"}
+            width={14}
+            height={14}
+            className="ml-1 rounded-full object-cover"
+          />
+        </Link>
+      )}
     </article>
   );
 }

@@ -8,6 +8,7 @@ import LeftSideBar from "@/components/shared/LeftSidebar";
 import RightSideBar from "@/components/shared/RightSideBar";
 import BottomBar from "@/components/shared/BottomBar";
 import AuthProvider from "@/context/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -39,6 +40,7 @@ export default async function HomeLayout({
             <RightSideBar />
           </main>
           <BottomBar />
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

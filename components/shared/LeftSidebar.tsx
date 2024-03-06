@@ -7,10 +7,10 @@ import { signOut, useSession } from "next-auth/react";
 import { sidebarLinks } from "@/lib/constants";
 
 export default function LeftSideBar() {
+  const pathname = usePathname();
   const { data: session } = useSession();
   if (!session) return null;
 
-  const pathname = usePathname();
   const handleLogout = async () => {
     await signOut();
   };

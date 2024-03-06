@@ -28,12 +28,3 @@ export async function signUp({
     throw error;
   }
 }
-
-// export async function logout() {
-//   try {
-//     await signOut();
-//   } catch (error) {
-//     console.log('logout error >>> ', error);
-//     throw error;
-//   }
-// }

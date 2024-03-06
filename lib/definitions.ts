@@ -1,12 +1,13 @@
 export type User = {
   id: number;
   email: string;
-  name: string;
-  username: string;
+  name: string | null;
+  username: string | null;
   onboarded: boolean;
   bio: string | null;
   image: string | null;
   password?: string;
+  activeCommunity: number | null;
 };
 
 export type UserModel = {

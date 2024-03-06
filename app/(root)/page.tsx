@@ -2,10 +2,19 @@ import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchPosts } from "@/lib/actions/thread.actions";
 import ThreadCard from "@/components/cards/thread-card";
+import Pagination from "@/components/shared/Pagination";
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   const session = await getServerSession(options);
-  const result = await fetchPosts({ limit: 10, page: 1, path: "/" });
+
+  const result = await fetchPosts({
+    limit: 30,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
 
   return (
     <>
@@ -25,7 +34,7 @@ export default async function HomePage() {
                   parentId={post.parentId}
                   content={post.content}
                   author={post.author}
-                  // community={post.community}
+                  community={post.community}
                   createdAt={post.createdAt}
                   comments={post.children}
                 />
@@ -34,6 +43,11 @@ export default async function HomePage() {
           </>
         )}
       </section>
+      <Pagination
+        path="/"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
     </>
   );
 }

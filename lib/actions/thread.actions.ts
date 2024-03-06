@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/database/db";
+import type { Thread } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function createThread({
@@ -16,7 +17,7 @@ export async function createThread({
 }) {
   try {
     const createdThread = await prisma.thread.create({
-      data: { content: text, authorId: author },
+      data: { content: text, authorId: author, communityId: communityId },
     });
     revalidatePath(path);
   } catch (error: any) {
@@ -27,11 +28,9 @@ export async function createThread({
 export async function fetchPosts({
   limit = 20,
   page = 1,
-  path = "/",
 }: {
   limit: number;
   page: number;
-  path: string;
 }) {
   try {
     const skip = limit * (page - 1);
@@ -45,6 +44,13 @@ export async function fetchPosts({
             username: true,
             name: true,
           },
+        },
+        community: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+          }
         },
         children: {
           include: {
@@ -62,6 +68,7 @@ export async function fetchPosts({
         createdAt: "desc",
       },
     });
+    console.log('posts >>>', posts)
     const totalPostsCount = await prisma.thread.count({
       where: { parentId: null },
     });

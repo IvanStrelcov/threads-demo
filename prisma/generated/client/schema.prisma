@@ -12,7 +12,7 @@ generator client {
   output   = "./generated/client"
   // next line for updating node_modules
   // https://github.com/prisma/prisma/issues/2584#issuecomment-646414549
-  // output   = "../node_modules/.prisma/client" 
+  // output   = "../node_modules/.prisma/client"
 }
 
 model User {
@@ -30,6 +30,7 @@ model User {
   threads         Thread[]
   communityLeader Community[] @relation("CommunityCreator")
   communityMember Community[] @relation("CommunityMember")
+  activeCommunity Int?
 }
 
 model Thread {
@@ -56,8 +57,8 @@ model Community {
   username  String?
   image     String?
   bio       String?
-  creatorId Int
-  createdBy User     @relation("CommunityCreator", fields: [creatorId], references: [id])
+  creatorId Int?
+  createdBy User?     @relation("CommunityCreator", fields: [creatorId], references: [id])
   members   User[]   @relation("CommunityMember")
-  thread    Thread[]
+  threads   Thread[]
 }

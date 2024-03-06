@@ -38,7 +38,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   const pathname = usePathname();
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
-  console.log('user', user);
+
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -93,7 +93,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     if (pathname === '/profile/edit') {
       router.back();
     } else {
-      console.log('here !!!!');
       router.push('/');
     }
   };

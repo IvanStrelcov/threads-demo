@@ -16,6 +16,7 @@ async function getUser(email: string): Promise<User | null> {
         onboarded: true,
         bio: true,
         image: true,
+        activeCommunity: true,
       },
     });
     return user;
@@ -35,7 +36,9 @@ export const options: NextAuthOptions = {
   callbacks: {
     async jwt({ token }) {
       const user = await getUser(token.email || "");
-      if (!user) throw Error('User not exist');
+      if (!user) {
+        throw Error('User not exist');
+      }
       token.data = user;
       return token;
     },
@@ -46,6 +49,7 @@ export const options: NextAuthOptions = {
       session.user.name = token.data.name;
       session.user.image = token.data.image;
       session.user.bio = token.data.bio;
+      session.user.activeCommunity = token.data.activeCommunity;
       return session;
     },
   },

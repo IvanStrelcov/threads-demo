@@ -118,7 +118,8 @@ exports.Prisma.UserScalarFieldEnum = {
   bio: 'bio',
   onboarded: 'onboarded',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  activeCommunity: 'activeCommunity'
 };
 
 exports.Prisma.ThreadScalarFieldEnum = {

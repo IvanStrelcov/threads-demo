@@ -92,7 +92,6 @@ export async function fetchUserPosts(userId: number) {
         },
       },
     });
-    console.log(user);
     return user;
   } catch (error: any) {
     throw new Error(`Failed to fetch users posts: ${error.message}`);
@@ -151,10 +150,6 @@ export async function fetchActivities({ userId }: { userId: number }) {
       },
     });
 
-    userThreads.map((e) => {
-      e.children.map(console.log);
-    });
-
     const childThreads = userThreads.reduce((acc, current) => {
       return acc.concat(current?.children);
     }, [] as Thread[]);
@@ -162,5 +157,23 @@ export async function fetchActivities({ userId }: { userId: number }) {
     return childThreads as unknown as ThreadWithAuthor[];
   } catch (error: any) {
     throw new Error(`Failed to fetch user activities: ${error.message}`);
+  }
+}
+
+export async function changeActiveCommunity({
+  userId,
+  activeCommunityId,
+  path,
+}: {
+  userId: number;
+  activeCommunityId: number | null;
+  path: string;
+}) {
+  try {
+    const result = await prisma.user.update({ where: {id: userId }, data: { activeCommunity: activeCommunityId} });
+    console.log('changeActiveCommunity result >>>', result);
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to change user active community: ${error.message}`);
   }
 }

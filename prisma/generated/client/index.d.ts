@@ -1119,12 +1119,12 @@ export namespace Prisma {
 
   export type CommunityCountOutputType = {
     members: number
-    thread: number
+    threads: number
   }
 
   export type CommunityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | CommunityCountOutputTypeCountMembersArgs
-    thread?: boolean | CommunityCountOutputTypeCountThreadArgs
+    threads?: boolean | CommunityCountOutputTypeCountThreadsArgs
   }
 
   // Custom InputTypes
@@ -1151,7 +1151,7 @@ export namespace Prisma {
   /**
    * CommunityCountOutputType without action
    */
-  export type CommunityCountOutputTypeCountThreadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CommunityCountOutputTypeCountThreadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ThreadWhereInput
   }
 
@@ -1175,10 +1175,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
+    activeCommunity: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
+    activeCommunity: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1193,6 +1195,7 @@ export namespace Prisma {
     onboarded: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    activeCommunity: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1207,6 +1210,7 @@ export namespace Prisma {
     onboarded: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    activeCommunity: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1221,16 +1225,19 @@ export namespace Prisma {
     onboarded: number
     createdAt: number
     updatedAt: number
+    activeCommunity: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     id?: true
+    activeCommunity?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
+    activeCommunity?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1245,6 +1252,7 @@ export namespace Prisma {
     onboarded?: true
     createdAt?: true
     updatedAt?: true
+    activeCommunity?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1259,6 +1267,7 @@ export namespace Prisma {
     onboarded?: true
     createdAt?: true
     updatedAt?: true
+    activeCommunity?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1273,6 +1282,7 @@ export namespace Prisma {
     onboarded?: true
     createdAt?: true
     updatedAt?: true
+    activeCommunity?: true
     _all?: true
   }
 
@@ -1374,6 +1384,7 @@ export namespace Prisma {
     onboarded: boolean
     createdAt: Date
     updatedAt: Date
+    activeCommunity: number | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1407,6 +1418,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    activeCommunity?: boolean
     threads?: boolean | User$threadsArgs<ExtArgs>
     communityLeader?: boolean | User$communityLeaderArgs<ExtArgs>
     communityMember?: boolean | User$communityMemberArgs<ExtArgs>
@@ -1425,6 +1437,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    activeCommunity?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1454,6 +1467,7 @@ export namespace Prisma {
       onboarded: boolean
       createdAt: Date
       updatedAt: Date
+      activeCommunity: number | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1864,6 +1878,7 @@ export namespace Prisma {
     readonly onboarded: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly activeCommunity: FieldRef<"User", 'Int'>
   }
     
 
@@ -3539,7 +3554,7 @@ export namespace Prisma {
     username: string | null
     image: string | null
     bio: string | null
-    creatorId: number
+    creatorId: number | null
     _count: CommunityCountAggregateOutputType | null
     _avg: CommunityAvgAggregateOutputType | null
     _sum: CommunitySumAggregateOutputType | null
@@ -3571,9 +3586,9 @@ export namespace Prisma {
     image?: boolean
     bio?: boolean
     creatorId?: boolean
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    createdBy?: boolean | Community$createdByArgs<ExtArgs>
     members?: boolean | Community$membersArgs<ExtArgs>
-    thread?: boolean | Community$threadArgs<ExtArgs>
+    threads?: boolean | Community$threadsArgs<ExtArgs>
     _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["community"]>
 
@@ -3590,9 +3605,9 @@ export namespace Prisma {
   }
 
   export type CommunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    createdBy?: boolean | Community$createdByArgs<ExtArgs>
     members?: boolean | Community$membersArgs<ExtArgs>
-    thread?: boolean | Community$threadArgs<ExtArgs>
+    threads?: boolean | Community$threadsArgs<ExtArgs>
     _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3600,9 +3615,9 @@ export namespace Prisma {
   export type $CommunityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Community"
     objects: {
-      createdBy: Prisma.$UserPayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
       members: Prisma.$UserPayload<ExtArgs>[]
-      thread: Prisma.$ThreadPayload<ExtArgs>[]
+      threads: Prisma.$ThreadPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3613,7 +3628,7 @@ export namespace Prisma {
       username: string | null
       image: string | null
       bio: string | null
-      creatorId: number
+      creatorId: number | null
     }, ExtArgs["result"]["community"]>
     composites: {}
   }
@@ -3979,11 +3994,11 @@ export namespace Prisma {
   export interface Prisma__CommunityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    createdBy<T extends Community$createdByArgs<ExtArgs> = {}>(args?: Subset<T, Community$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     members<T extends Community$membersArgs<ExtArgs> = {}>(args?: Subset<T, Community$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    thread<T extends Community$threadArgs<ExtArgs> = {}>(args?: Subset<T, Community$threadArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
+    threads<T extends Community$threadsArgs<ExtArgs> = {}>(args?: Subset<T, Community$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4334,6 +4349,22 @@ export namespace Prisma {
 
 
   /**
+   * Community.createdBy
+   */
+  export type Community$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+
+  /**
    * Community.members
    */
   export type Community$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4355,9 +4386,9 @@ export namespace Prisma {
 
 
   /**
-   * Community.thread
+   * Community.threads
    */
-  export type Community$threadArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Community$threadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Thread
      */
@@ -4416,7 +4447,8 @@ export namespace Prisma {
     bio: 'bio',
     onboarded: 'onboarded',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    activeCommunity: 'activeCommunity'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4561,6 +4593,7 @@ export namespace Prisma {
     onboarded?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    activeCommunity?: IntNullableFilter<"User"> | number | null
     threads?: ThreadListRelationFilter
     communityLeader?: CommunityListRelationFilter
     communityMember?: CommunityListRelationFilter
@@ -4578,6 +4611,7 @@ export namespace Prisma {
     onboarded?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    activeCommunity?: SortOrderInput | SortOrder
     threads?: ThreadOrderByRelationAggregateInput
     communityLeader?: CommunityOrderByRelationAggregateInput
     communityMember?: CommunityOrderByRelationAggregateInput
@@ -4598,6 +4632,7 @@ export namespace Prisma {
     onboarded?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    activeCommunity?: IntNullableFilter<"User"> | number | null
     threads?: ThreadListRelationFilter
     communityLeader?: CommunityListRelationFilter
     communityMember?: CommunityListRelationFilter
@@ -4615,6 +4650,7 @@ export namespace Prisma {
     onboarded?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    activeCommunity?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4637,6 +4673,7 @@ export namespace Prisma {
     onboarded?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    activeCommunity?: IntNullableWithAggregatesFilter<"User"> | number | null
   }
 
   export type ThreadWhereInput = {
@@ -4732,10 +4769,10 @@ export namespace Prisma {
     username?: StringNullableFilter<"Community"> | string | null
     image?: StringNullableFilter<"Community"> | string | null
     bio?: StringNullableFilter<"Community"> | string | null
-    creatorId?: IntFilter<"Community"> | number
-    createdBy?: XOR<UserRelationFilter, UserWhereInput>
+    creatorId?: IntNullableFilter<"Community"> | number | null
+    createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     members?: UserListRelationFilter
-    thread?: ThreadListRelationFilter
+    threads?: ThreadListRelationFilter
   }
 
   export type CommunityOrderByWithRelationInput = {
@@ -4747,10 +4784,10 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
-    creatorId?: SortOrder
+    creatorId?: SortOrderInput | SortOrder
     createdBy?: UserOrderByWithRelationInput
     members?: UserOrderByRelationAggregateInput
-    thread?: ThreadOrderByRelationAggregateInput
+    threads?: ThreadOrderByRelationAggregateInput
   }
 
   export type CommunityWhereUniqueInput = Prisma.AtLeast<{
@@ -4765,10 +4802,10 @@ export namespace Prisma {
     username?: StringNullableFilter<"Community"> | string | null
     image?: StringNullableFilter<"Community"> | string | null
     bio?: StringNullableFilter<"Community"> | string | null
-    creatorId?: IntFilter<"Community"> | number
-    createdBy?: XOR<UserRelationFilter, UserWhereInput>
+    creatorId?: IntNullableFilter<"Community"> | number | null
+    createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     members?: UserListRelationFilter
-    thread?: ThreadListRelationFilter
+    threads?: ThreadListRelationFilter
   }, "id">
 
   export type CommunityOrderByWithAggregationInput = {
@@ -4780,7 +4817,7 @@ export namespace Prisma {
     username?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
-    creatorId?: SortOrder
+    creatorId?: SortOrderInput | SortOrder
     _count?: CommunityCountOrderByAggregateInput
     _avg?: CommunityAvgOrderByAggregateInput
     _max?: CommunityMaxOrderByAggregateInput
@@ -4800,7 +4837,7 @@ export namespace Prisma {
     username?: StringNullableWithAggregatesFilter<"Community"> | string | null
     image?: StringNullableWithAggregatesFilter<"Community"> | string | null
     bio?: StringNullableWithAggregatesFilter<"Community"> | string | null
-    creatorId?: IntWithAggregatesFilter<"Community"> | number
+    creatorId?: IntNullableWithAggregatesFilter<"Community"> | number | null
   }
 
   export type UserCreateInput = {
@@ -4814,6 +4851,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
@@ -4831,6 +4869,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
@@ -4847,6 +4886,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
@@ -4864,6 +4904,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
@@ -4881,6 +4922,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -4894,6 +4936,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -4908,6 +4951,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ThreadCreateInput = {
@@ -4916,7 +4960,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
-    community?: CommunityCreateNestedOneWithoutThreadInput
+    community?: CommunityCreateNestedOneWithoutThreadsInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
@@ -4939,7 +4983,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
-    community?: CommunityUpdateOneWithoutThreadNestedInput
+    community?: CommunityUpdateOneWithoutThreadsNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
@@ -4993,9 +5037,9 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
+    createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
     members?: UserCreateNestedManyWithoutCommunityMemberInput
-    thread?: ThreadCreateNestedManyWithoutCommunityInput
+    threads?: ThreadCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateInput = {
@@ -5007,9 +5051,9 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    creatorId: number
+    creatorId?: number | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
-    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUpdateInput = {
@@ -5020,9 +5064,9 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
+    createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
-    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+    threads?: ThreadUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateInput = {
@@ -5034,9 +5078,9 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: IntFieldUpdateOperationsInput | number
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
-    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityCreateManyInput = {
@@ -5048,7 +5092,7 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    creatorId: number
+    creatorId?: number | null
   }
 
   export type CommunityUpdateManyMutationInput = {
@@ -5070,7 +5114,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: IntFieldUpdateOperationsInput | number
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5130,6 +5174,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ThreadListRelationFilter = {
     every?: ThreadWhereInput
     some?: ThreadWhereInput
@@ -5167,10 +5222,12 @@ export namespace Prisma {
     onboarded?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    activeCommunity?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
+    activeCommunity?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -5185,6 +5242,7 @@ export namespace Prisma {
     onboarded?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    activeCommunity?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5199,10 +5257,12 @@ export namespace Prisma {
     onboarded?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    activeCommunity?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+    activeCommunity?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5279,7 +5339,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -5287,7 +5347,12 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type UserNullableRelationFilter = {
@@ -5350,27 +5415,6 @@ export namespace Prisma {
     authorId?: SortOrder
     communityId?: SortOrder
     parentId?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type UserListRelationFilter = {
@@ -5485,6 +5529,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type ThreadUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<ThreadCreateWithoutAuthorInput, ThreadUncheckedCreateWithoutAuthorInput> | ThreadCreateWithoutAuthorInput[] | ThreadUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ThreadCreateOrConnectWithoutAuthorInput | ThreadCreateOrConnectWithoutAuthorInput[]
@@ -5581,9 +5633,9 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type CommunityCreateNestedOneWithoutThreadInput = {
-    create?: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
-    connectOrCreate?: CommunityCreateOrConnectWithoutThreadInput
+  export type CommunityCreateNestedOneWithoutThreadsInput = {
+    create?: XOR<CommunityCreateWithoutThreadsInput, CommunityUncheckedCreateWithoutThreadsInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutThreadsInput
     connect?: CommunityWhereUniqueInput
   }
 
@@ -5617,14 +5669,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutThreadsInput, UserUpdateWithoutThreadsInput>, UserUncheckedUpdateWithoutThreadsInput>
   }
 
-  export type CommunityUpdateOneWithoutThreadNestedInput = {
-    create?: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
-    connectOrCreate?: CommunityCreateOrConnectWithoutThreadInput
-    upsert?: CommunityUpsertWithoutThreadInput
+  export type CommunityUpdateOneWithoutThreadsNestedInput = {
+    create?: XOR<CommunityCreateWithoutThreadsInput, CommunityUncheckedCreateWithoutThreadsInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutThreadsInput
+    upsert?: CommunityUpsertWithoutThreadsInput
     disconnect?: CommunityWhereInput | boolean
     delete?: CommunityWhereInput | boolean
     connect?: CommunityWhereUniqueInput
-    update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutThreadInput, CommunityUpdateWithoutThreadInput>, CommunityUncheckedUpdateWithoutThreadInput>
+    update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutThreadsInput, CommunityUpdateWithoutThreadsInput>, CommunityUncheckedUpdateWithoutThreadsInput>
   }
 
   export type ThreadUpdateOneWithoutChildrenNestedInput = {
@@ -5649,14 +5701,6 @@ export namespace Prisma {
     update?: ThreadUpdateWithWhereUniqueWithoutParentInput | ThreadUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: ThreadUpdateManyWithWhereWithoutParentInput | ThreadUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ThreadUncheckedUpdateManyWithoutParentNestedInput = {
@@ -5705,10 +5749,12 @@ export namespace Prisma {
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutCommunityLeaderNestedInput = {
+  export type UserUpdateOneWithoutCommunityLeaderNestedInput = {
     create?: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommunityLeaderInput
     upsert?: UserUpsertWithoutCommunityLeaderInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommunityLeaderInput, UserUpdateWithoutCommunityLeaderInput>, UserUncheckedUpdateWithoutCommunityLeaderInput>
   }
@@ -5822,6 +5868,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5883,17 +5940,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -5948,7 +5994,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     content: string
-    community?: CommunityCreateNestedOneWithoutThreadInput
+    community?: CommunityCreateNestedOneWithoutThreadsInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
@@ -5983,7 +6029,7 @@ export namespace Prisma {
     image?: string | null
     bio?: string | null
     members?: UserCreateNestedManyWithoutCommunityMemberInput
-    thread?: ThreadCreateNestedManyWithoutCommunityInput
+    threads?: ThreadCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateWithoutCreatedByInput = {
@@ -5996,7 +6042,7 @@ export namespace Prisma {
     image?: string | null
     bio?: string | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
-    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityCreateOrConnectWithoutCreatedByInput = {
@@ -6017,8 +6063,8 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
-    thread?: ThreadCreateNestedManyWithoutCommunityInput
+    createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
+    threads?: ThreadCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateWithoutMembersInput = {
@@ -6030,8 +6076,8 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    creatorId: number
-    thread?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    creatorId?: number | null
+    threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityCreateOrConnectWithoutMembersInput = {
@@ -6097,7 +6143,7 @@ export namespace Prisma {
     username?: StringNullableFilter<"Community"> | string | null
     image?: StringNullableFilter<"Community"> | string | null
     bio?: StringNullableFilter<"Community"> | string | null
-    creatorId?: IntFilter<"Community"> | number
+    creatorId?: IntNullableFilter<"Community"> | number | null
   }
 
   export type CommunityUpsertWithWhereUniqueWithoutMembersInput = {
@@ -6127,6 +6173,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
   }
@@ -6143,6 +6190,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
   }
@@ -6152,7 +6200,7 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutThreadsInput, UserUncheckedCreateWithoutThreadsInput>
   }
 
-  export type CommunityCreateWithoutThreadInput = {
+  export type CommunityCreateWithoutThreadsInput = {
     uuid?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6160,11 +6208,11 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    createdBy: UserCreateNestedOneWithoutCommunityLeaderInput
+    createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
     members?: UserCreateNestedManyWithoutCommunityMemberInput
   }
 
-  export type CommunityUncheckedCreateWithoutThreadInput = {
+  export type CommunityUncheckedCreateWithoutThreadsInput = {
     id?: number
     uuid?: string
     createdAt?: Date | string
@@ -6173,13 +6221,13 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
-    creatorId: number
+    creatorId?: number | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
   }
 
-  export type CommunityCreateOrConnectWithoutThreadInput = {
+  export type CommunityCreateOrConnectWithoutThreadsInput = {
     where: CommunityWhereUniqueInput
-    create: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
+    create: XOR<CommunityCreateWithoutThreadsInput, CommunityUncheckedCreateWithoutThreadsInput>
   }
 
   export type ThreadCreateWithoutChildrenInput = {
@@ -6188,7 +6236,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
-    community?: CommunityCreateNestedOneWithoutThreadInput
+    community?: CommunityCreateNestedOneWithoutThreadsInput
     parent?: ThreadCreateNestedOneWithoutChildrenInput
   }
 
@@ -6214,7 +6262,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     content: string
     author?: UserCreateNestedOneWithoutThreadsInput
-    community?: CommunityCreateNestedOneWithoutThreadInput
+    community?: CommunityCreateNestedOneWithoutThreadsInput
     children?: ThreadCreateNestedManyWithoutParentInput
   }
 
@@ -6261,6 +6309,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
   }
@@ -6277,22 +6326,23 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
   }
 
-  export type CommunityUpsertWithoutThreadInput = {
-    update: XOR<CommunityUpdateWithoutThreadInput, CommunityUncheckedUpdateWithoutThreadInput>
-    create: XOR<CommunityCreateWithoutThreadInput, CommunityUncheckedCreateWithoutThreadInput>
+  export type CommunityUpsertWithoutThreadsInput = {
+    update: XOR<CommunityUpdateWithoutThreadsInput, CommunityUncheckedUpdateWithoutThreadsInput>
+    create: XOR<CommunityCreateWithoutThreadsInput, CommunityUncheckedCreateWithoutThreadsInput>
     where?: CommunityWhereInput
   }
 
-  export type CommunityUpdateToOneWithWhereWithoutThreadInput = {
+  export type CommunityUpdateToOneWithWhereWithoutThreadsInput = {
     where?: CommunityWhereInput
-    data: XOR<CommunityUpdateWithoutThreadInput, CommunityUncheckedUpdateWithoutThreadInput>
+    data: XOR<CommunityUpdateWithoutThreadsInput, CommunityUncheckedUpdateWithoutThreadsInput>
   }
 
-  export type CommunityUpdateWithoutThreadInput = {
+  export type CommunityUpdateWithoutThreadsInput = {
     uuid?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6300,11 +6350,11 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
+    createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
   }
 
-  export type CommunityUncheckedUpdateWithoutThreadInput = {
+  export type CommunityUncheckedUpdateWithoutThreadsInput = {
     id?: IntFieldUpdateOperationsInput | number
     uuid?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6313,7 +6363,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: IntFieldUpdateOperationsInput | number
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
   }
 
@@ -6334,7 +6384,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
-    community?: CommunityUpdateOneWithoutThreadNestedInput
+    community?: CommunityUpdateOneWithoutThreadsNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
   }
 
@@ -6376,6 +6426,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
   }
@@ -6392,6 +6443,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
   }
@@ -6412,6 +6464,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
   }
@@ -6428,6 +6481,7 @@ export namespace Prisma {
     onboarded?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    activeCommunity?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
   }
@@ -6490,6 +6544,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
   }
@@ -6506,6 +6561,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
   }
@@ -6541,6 +6597,7 @@ export namespace Prisma {
     onboarded?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    activeCommunity?: IntNullableFilter<"User"> | number | null
   }
 
   export type ThreadUpsertWithWhereUniqueWithoutCommunityInput = {
@@ -6585,7 +6642,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
-    community?: CommunityUpdateOneWithoutThreadNestedInput
+    community?: CommunityUpdateOneWithoutThreadsNestedInput
     parent?: ThreadUpdateOneWithoutChildrenNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
@@ -6620,7 +6677,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
-    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+    threads?: ThreadUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateWithoutCreatedByInput = {
@@ -6633,7 +6690,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
-    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateManyWithoutCreatedByInput = {
@@ -6655,8 +6712,8 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    createdBy?: UserUpdateOneRequiredWithoutCommunityLeaderNestedInput
-    thread?: ThreadUpdateManyWithoutCommunityNestedInput
+    createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
+    threads?: ThreadUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateWithoutMembersInput = {
@@ -6668,8 +6725,8 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: IntFieldUpdateOperationsInput | number
-    thread?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+    threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateManyWithoutMembersInput = {
@@ -6681,7 +6738,7 @@ export namespace Prisma {
     username?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: IntFieldUpdateOperationsInput | number
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ThreadCreateManyParentInput = {
@@ -6700,7 +6757,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     content?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneWithoutThreadsNestedInput
-    community?: CommunityUpdateOneWithoutThreadNestedInput
+    community?: CommunityUpdateOneWithoutThreadsNestedInput
     children?: ThreadUpdateManyWithoutParentNestedInput
   }
 
@@ -6746,6 +6803,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
   }
@@ -6762,6 +6820,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
   }
@@ -6778,6 +6837,7 @@ export namespace Prisma {
     onboarded?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ThreadUpdateWithoutCommunityInput = {

@@ -30,6 +30,7 @@ model User {
   threads         Thread[]
   communityLeader Community[] @relation("CommunityCreator")
   communityMember Community[] @relation("CommunityMember")
+  activeCommunity Int?
 }
 
 model Thread {
@@ -56,8 +57,8 @@ model Community {
   username  String?
   image     String?
   bio       String?
-  creatorId Int
-  createdBy User     @relation("CommunityCreator", fields: [creatorId], references: [id])
-  members   User[]   @relation("CommunityMember")
-  thread    Thread[]
+  creatorId Int?
+  createdBy User?     @relation("CommunityCreator", fields: [creatorId], references: [id])
+  members   User[]    @relation("CommunityMember")
+  threads   Thread[]
 }

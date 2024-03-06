@@ -7,6 +7,7 @@ export default function ProfileHeader({
   username,
   image,
   bio,
+  type,
 }: {
   accountId: number;
   authUserId: number;
@@ -14,6 +15,7 @@ export default function ProfileHeader({
   username: string | null;
   image: string | null;
   bio: string | null;
+  type?: string;
 }) {
   return (
     <div className="flex w-full flex-col justify-start">

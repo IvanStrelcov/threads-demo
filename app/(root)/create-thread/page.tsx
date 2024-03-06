@@ -10,7 +10,7 @@ export default async function CreateThread() {
   return (
     <>
       <h1 className="head-text">Create Thread</h1>
-      <PostThread userId={session.user.id}/>
+      <PostThread userId={session.user.id} organizationId={session.user.activeCommunity}/>
     </>
   );
 }

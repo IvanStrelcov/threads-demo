@@ -20,9 +20,10 @@ import { ThreadValidation } from "@/lib/validations/thread";
 
 interface Props {
   userId: number;
+  organizationId: number | null;
 }
 
-export default function PostThread({ userId }: Props) {
+export default function PostThread({ userId, organizationId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const form = useForm({
@@ -37,7 +38,7 @@ export default function PostThread({ userId }: Props) {
     await createThread({
       text: values.thread,
       author: userId,
-      communityId: null,
+      communityId: organizationId,
       path: pathname,
     });
 

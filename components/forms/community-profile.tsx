@@ -98,7 +98,7 @@ export default function CommunityProfile({ user, community, btnTitle }: Props) {
     }
 
     await createCommunity({
-      userId: user.id,
+      creatorId: user.id,
       name: values.name,
       username: values.username,
       image: values.profile_photo,
