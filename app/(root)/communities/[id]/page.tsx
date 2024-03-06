@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchCommunity } from "@/lib/actions/community.actions";
+import { communityTabs } from "@/lib/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import { communityTabs } from "@/lib/constants";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import UserCard from "@/components/cards/user-card";
 

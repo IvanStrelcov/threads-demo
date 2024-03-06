@@ -170,8 +170,7 @@ export async function changeActiveCommunity({
   path: string;
 }) {
   try {
-    const result = await prisma.user.update({ where: {id: userId }, data: { activeCommunity: activeCommunityId} });
-    console.log('changeActiveCommunity result >>>', result);
+    await prisma.user.update({ where: {id: userId }, data: { activeCommunity: activeCommunityId} });
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to change user active community: ${error.message}`);

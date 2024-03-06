@@ -137,7 +137,6 @@ export const fetchCommunities = async ({
       query as Prisma.CommunityCountArgs
     );
     const isNext = totalCommunitiesCount > skip + communities.length;
-    console.log("fetchCommunities result >>>", communities);
     return { communities, isNext };
   } catch (error: any) {
     throw new Error(`Failed to fetch communities: ${error.message}`);

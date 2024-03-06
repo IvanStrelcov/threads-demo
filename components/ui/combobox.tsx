@@ -52,7 +52,6 @@ export default function Combobox({
 
   const renderCurrent = useMemo(() => {
     const el = mappable.find((item) => item.value === value);
-    console.log('value >>>', value)
     if (el) {
       return (
         <div className="flex items-center gap-4">

@@ -9,22 +9,15 @@
 //   callbacks: {
 //     authorized({ auth, request: { nextUrl } }) {
 //       const isLoggedIn = !!auth?.user;
-//       console.log('auth', auth);
 //       const isOnHome = nextUrl.pathname.startsWith("/");
 //       if (isOnHome) {
 //         if (isLoggedIn && whitelist.includes(nextUrl.pathname)) {
-//           console.log('I think ');
 //           // if (auth.user.)
 //           return Response.redirect(new URL("/home", nextUrl));
 //         }
 //         if (isLoggedIn) return true;
 //         return false; // Redirect unauthenticated users to login page
 //       } else if (isLoggedIn) {
-//         console.log('HERE!')
-//         console.log('nextUrl ', nextUrl);
-//         console.log('new URL("/", nextUrl) ', new URL("/", nextUrl))
-        
-
 //         return Response.redirect(new URL("/home", nextUrl));
 //       }
 //       return true;

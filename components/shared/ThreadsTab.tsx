@@ -24,7 +24,6 @@ export default async function ThreadsTab({
   return (
     <section className="mt-9 flex flex-col gap-10">
       {result.threads.map((post: any) => {
-        console.log(post.author);
         return (
           <ThreadCard
             key={post.id}

@@ -9,7 +9,6 @@
 // async function getUser(email: string): Promise<User | null> {
 //   try {
 //     const user = await prisma.user.findUnique({ where: { email } });
-//     console.log('user >>>', user);
 //     return user;
 //   } catch (error) {
 //     throw new Error("Failed to fetch user.");

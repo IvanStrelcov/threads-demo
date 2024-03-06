@@ -68,7 +68,6 @@ export async function fetchPosts({
         createdAt: "desc",
       },
     });
-    console.log('posts >>>', posts)
     const totalPostsCount = await prisma.thread.count({
       where: { parentId: null },
     });
