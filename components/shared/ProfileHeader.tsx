@@ -26,7 +26,7 @@ export default function ProfileHeader({
               src={image ?? "/assets/profile.svg"}
               alt="Profile image"
               fill
-              className="rounded-full object-contain shadow-2xl"
+              className="rounded-full object-cover shadow-2xl"
             />
           </div>
 

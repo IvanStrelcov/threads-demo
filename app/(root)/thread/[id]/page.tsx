@@ -24,7 +24,7 @@ export default async function Thread({ params }: { params: { id: string } }) {
           parentId={thread.parentId}
           content={thread.content}
           author={thread.author}
-          // community={thread.community}
+          community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
         />

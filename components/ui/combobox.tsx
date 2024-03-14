@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { changeActiveCommunity } from '@/lib/actions/user.actions';
+import { changeActiveCommunity } from "@/lib/actions/user.actions";
 import { usePathname } from "next/navigation";
 
 export default function Combobox({
@@ -43,10 +43,10 @@ export default function Combobox({
 
   const changeCommunity = async (activeCommunityId: number | null) => {
     await changeActiveCommunity({ userId, activeCommunityId, path: pathname });
-  }
+  };
 
   useEffect(() => {
-    const activeCommunity = value === '-1' ? null : Number(value);
+    const activeCommunity = value === "-1" ? null : Number(value);
     changeCommunity(activeCommunity);
   }, [value]);
 
@@ -56,7 +56,7 @@ export default function Combobox({
       return (
         <div className="flex items-center gap-4">
           <Image
-            src={el.image || '/assets/profile.svg'}
+            src={el.image || "/assets/profile.svg"}
             alt="community-selector-logo"
             width={24}
             height={24}
@@ -67,7 +67,7 @@ export default function Combobox({
       );
     }
     return null;
-  },[value])
+  }, [value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -76,11 +76,11 @@ export default function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[250px] justify-between bg-dark-4 text-light-1"
+          className="w-[250px] justify-between"
         >
-          {value ? 
+          {value ? (
             renderCurrent
-           : (
+          ) : (
             <div className="flex items-center gap-2">
               <Image
                 src="/assets/profile.svg"
@@ -115,7 +115,16 @@ export default function Combobox({
                     value === item.value ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {item.label}
+                <div className="flex gap-2 items-center">
+                  <Image
+                    src={item.image || "/assets/profile.svg"}
+                    alt="community-logo"
+                    width={20}
+                    height={20}
+                    className="rounded-full object-cover w-5 h-5"
+                  ></Image>
+                  <p className="">{item.label}</p>
+                </div>
               </CommandItem>
             ))}
           </CommandGroup>

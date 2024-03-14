@@ -108,10 +108,10 @@ export const fetchCommunities = async ({
   pageSize = 20,
   sortBy = "desc",
 }: {
-  searchString: string;
-  pageNumber: number;
-  pageSize: number;
-  sortBy: Prisma.SortOrder;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: Prisma.SortOrder;
 }) => {
   try {
     const skip = pageSize * (pageNumber - 1);
@@ -133,6 +133,8 @@ export const fetchCommunities = async ({
     }
     const communities = await prisma.community.findMany(query);
     delete query.include;
+    delete query.skip;
+    delete query.take;
     const totalCommunitiesCount = await prisma.community.count(
       query as Prisma.CommunityCountArgs
     );

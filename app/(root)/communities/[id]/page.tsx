@@ -1,12 +1,16 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+
 import { options } from "@/app/api/auth/[...nextauth]/options";
+
 import { fetchCommunity } from "@/lib/actions/community.actions";
 import { communityTabs } from "@/lib/constants";
+
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import UserCard from "@/components/cards/user-card";
+import AddCommunityMember from "@/components/forms/AddCommunityMember";
 
 export default async function CommunityDetail({
   params,
@@ -36,6 +40,15 @@ export default async function CommunityDetail({
         type="Community"
       />
 
+      {session.user.id === community.creatorId && (
+        <div className="text-light-2 mt-4">
+          <AddCommunityMember
+            currentUserId={session.user.id}
+            currentCommunityId={community.id}
+          />
+        </div>
+      )}
+
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
@@ -47,7 +60,7 @@ export default async function CommunityDetail({
                     alt={tab.label}
                     width={24}
                     height={24}
-                    className="object-contain"
+                    className="object-contain w-6 h-6"
                   />
                   <p className="max-sm:hidden">{tab.label}</p>
 
@@ -68,6 +81,7 @@ export default async function CommunityDetail({
               accountType="Community"
             />
           </TabsContent>
+
           <TabsContent value="members" className="w-full text-light-1">
             <section className="mt-9 flex flex-col gap-10">
               {community?.members?.map((member: any) => (
@@ -78,17 +92,22 @@ export default async function CommunityDetail({
                   username={member.username}
                   image={member.image}
                   personType="User"
+                  isAdmin={
+                    community.creatorId === session?.user.id &&
+                    session?.user.id !== member.id // this is simple solution for the admin can not remove himself
+                  }
+                  communityId={community.id}
                 />
               ))}
             </section>
           </TabsContent>
-          <TabsContent value="requests" className="w-full text-light-1">
+          {/* <TabsContent value="requests" className="w-full text-light-1">
             <ThreadsTab
               currentUserId={session.user.id}
               accountId={community.id}
               accountType="Community"
             />
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </div>
     </section>

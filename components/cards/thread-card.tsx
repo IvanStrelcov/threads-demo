@@ -12,7 +12,7 @@ interface Thread {
     name: string | null;
     image: string | null;
   } | null;
-  community: {
+  community?: {
     id: number;
     name: string | null;
     image: string | null;

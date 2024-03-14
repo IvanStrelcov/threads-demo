@@ -25,12 +25,12 @@ export default function CommunityCard({
   return (
     <article className="community-card">
       <div className="flex flex-wrap items-center gap-3">
-        <Link href={`/communities/${id}`} className="relative h-12 w-12">
+        <Link href={`/communities/${id}`} className="relative h-12 w-12 object-cover">
           <Image
             src={image}
             alt="community_logo"
             fill
-            className="rounded-full object-cover"
+            className="rounded-full object-contain shadow-2xl"
           />
         </Link>
 

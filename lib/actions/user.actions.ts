@@ -100,16 +100,16 @@ export async function fetchUserPosts(userId: number) {
 
 export async function fetchUsers({
   userId,
-  searchString,
+  searchString = "",
   limit = 20,
   page = 1,
   sortBy = "desc",
 }: {
   userId: number;
-  searchString: string;
-  limit: number;
-  page: number;
-  sortBy: Prisma.SortOrder;
+  searchString?: string;
+  limit?: number;
+  page?: number;
+  sortBy?: Prisma.SortOrder;
 }) {
   try {
     const skip = limit * (page - 1);
@@ -128,9 +128,9 @@ export async function fetchUsers({
       ];
     }
     const users = await prisma.user.findMany(query);
-    const totalUsersCount = await prisma.user.count(
-      query as Prisma.UserCountArgs
-    );
+    delete query.skip;
+    delete query.take;
+    const totalUsersCount = await prisma.user.count(query as Prisma.UserCountArgs);
     const isNext = totalUsersCount > skip + users.length;
     return { users, isNext };
   } catch (error: any) {
@@ -170,7 +170,99 @@ export async function changeActiveCommunity({
   path: string;
 }) {
   try {
-    await prisma.user.update({ where: {id: userId }, data: { activeCommunity: activeCommunityId} });
+    await prisma.user.update({
+      where: { id: userId },
+      data: { activeCommunity: activeCommunityId },
+    });
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to change user active community: ${error.message}`);
+  }
+}
+
+export async function fetchUsersForCommunity({
+  searchString,
+  currentCommunityId,
+  currentUserId,
+}: {
+  searchString: string;
+  currentUserId: number;
+  currentCommunityId: number;
+}) {
+  try {
+    let query: Prisma.UserFindManyArgs = {
+      where: {
+        AND: [
+          {
+            communityMember: {
+              none: {
+                OR: [
+                  {
+                    id: currentCommunityId,
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    };
+    if (searchString.trim() !== "" && query.where && query.where["AND"]) {
+      (query.where["AND"] as Prisma.UserWhereInput[]).push({
+        OR: [
+          { username: { contains: searchString, mode: "insensitive" } },
+          { name: { contains: searchString, mode: "insensitive" } },
+        ],
+      });
+    }
+    const users = await prisma.user.findMany(query);
+    return users;
+  } catch (error: any) {
+    throw new Error(`Failed to change user active community: ${error.message}`);
+  }
+}
+
+export async function addUserToCommunity({
+  userId,
+  communityId,
+  path,
+}: {
+  userId: number;
+  communityId: number;
+  path: string;
+}) {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user) {
+      const res = await prisma.community.update({
+        where: { id: communityId },
+        data: { members: { connect: user } },
+      });
+      console.log("res", res);
+    }
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to add user to community: ${error.message}`);
+  }
+}
+
+export async function removeUserFromCommunity({
+  userId,
+  communityId,
+  path,
+}: {
+  userId: number;
+  communityId: number;
+  path: string;
+}) {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user) {
+      const res = await prisma.community.update({
+        where: { id: communityId },
+        data: { members: { disconnect: user } },
+      });
+    }
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to change user active community: ${error.message}`);

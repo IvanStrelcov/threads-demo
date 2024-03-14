@@ -87,6 +87,7 @@ export async function fetchThreadById(id: number) {
         children: {
           include: { author: true, children: { include: { author: true } } },
         },
+        community: true,
       },
     });
     return thread;
