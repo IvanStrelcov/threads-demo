@@ -1,9 +1,15 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { Status } from "@prisma/client";
 
 import { options } from "@/app/api/auth/[...nextauth]/options";
 
-import { fetchCommunity } from "@/lib/actions/community.actions";
+import {
+  fetchCommunity,
+  fetchRequest,
+  fetchInvitation,
+  fetchCommunityRequests,
+} from "@/lib/actions/community.actions";
 import { communityTabs } from "@/lib/constants";
 
 import ProfileHeader from "@/components/shared/ProfileHeader";
@@ -11,6 +17,7 @@ import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import UserCard from "@/components/cards/user-card";
 import AddCommunityMember from "@/components/forms/AddCommunityMember";
+import RequestButtonAction from "@/components/shared/RequestButtonAction";
 
 export default async function CommunityDetail({
   params,
@@ -27,6 +34,19 @@ export default async function CommunityDetail({
     communityId: Number(params.id),
   });
   if (!community) return null;
+
+  const request = await fetchRequest({
+    userId: session.user.id,
+    communityId: community.id,
+  });
+  const invitation = await fetchInvitation({
+    userId: session.user.id,
+    communityId: community.id,
+  });
+  const communityRequests = await fetchCommunityRequests({
+    communityId: community.id,
+    status: Status.PENDING,
+  });
 
   return (
     <section className="relative">
@@ -48,6 +68,17 @@ export default async function CommunityDetail({
           />
         </div>
       )}
+
+      {session.user.id !== community.creatorId ? (
+        <div className="text-light-2 mt-4">
+          <RequestButtonAction
+            currentUserId={session.user.id}
+            currentCommunityId={community.id}
+            request={request?.status || null}
+            invitation={invitation?.status || null}
+          />
+        </div>
+      ) : null}
 
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
@@ -92,6 +123,7 @@ export default async function CommunityDetail({
                   username={member.username}
                   image={member.image}
                   personType="User"
+                  status={member.requests?.[0]?.status}
                   isAdmin={
                     community.creatorId === session?.user.id &&
                     session?.user.id !== member.id // this is simple solution for the admin can not remove himself
@@ -101,13 +133,30 @@ export default async function CommunityDetail({
               ))}
             </section>
           </TabsContent>
-          {/* <TabsContent value="requests" className="w-full text-light-1">
-            <ThreadsTab
-              currentUserId={session.user.id}
-              accountId={community.id}
-              accountType="Community"
-            />
-          </TabsContent> */}
+          <TabsContent value="requests" className="w-full text-light-1">
+            <section className="mt-9 flex flex-col gap-10">
+              {communityRequests.length ? (
+                communityRequests?.map((request: any) => (
+                  <UserCard
+                    key={request.user.id}
+                    id={request.user.id}
+                    name={request.user.name}
+                    username={request.user.username}
+                    image={request.user.image}
+                    personType="User"
+                    status={request.status}
+                    isAdmin={
+                      community.creatorId === session?.user.id &&
+                      session?.user.id !== request.user.id // this is simple solution for the admin can not remove himself
+                    }
+                    communityId={community.id}
+                  />
+                ))
+              ) : (
+                <p className="no-result">No requests</p>
+              )}
+            </section>
+          </TabsContent>
         </Tabs>
       </div>
     </section>

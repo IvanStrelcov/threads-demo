@@ -18,7 +18,7 @@ export default async function Communities() {
 
   return (
     <section className="">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col justify-start items-start gap-4 sm:flex-row sm:justify-between sm:items-center">
         <h1 className="head-text">Communities</h1>
         <Link
           href="/communities/create"

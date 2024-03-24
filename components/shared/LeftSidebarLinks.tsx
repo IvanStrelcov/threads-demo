@@ -8,8 +8,8 @@ import { useSession } from "next-auth/react";
 
 export default function LeftSidebarLinks() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-
+  const { data, status } = useSession();
+  if (status === 'loading') return null;
   return (
     <div className="flex w-full flex-1 flex-col gap-6 px-6">
       {sidebarLinks.map((link) => {
@@ -18,7 +18,7 @@ export default function LeftSidebarLinks() {
           pathname === link.route;
 
         if (link.route === "/profile")
-          link.route = `${link.route}/${session?.user.id}`;
+          link.route = `${link.route}/${data?.user.id}`;
         return (
           <Link
             href={link.route}

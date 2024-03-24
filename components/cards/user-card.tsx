@@ -2,8 +2,13 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
+import { Status } from "@prisma/client";
 import { removeUserFromCommunity } from "@/lib/actions/user.actions";
 import { Button } from "@/components/ui/button";
+import {
+  changeInvitationStatus,
+  changeRequestStatus,
+} from "@/lib/actions/community.actions";
 
 export default function UserCard({
   id,
@@ -13,6 +18,7 @@ export default function UserCard({
   personType,
   isAdmin,
   communityId,
+  status,
 }: {
   id: number;
   name: string;
@@ -21,6 +27,7 @@ export default function UserCard({
   personType: string;
   isAdmin?: boolean;
   communityId?: number;
+  status?: Status;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -31,6 +38,25 @@ export default function UserCard({
       await removeUserFromCommunity({
         userId: id,
         communityId,
+        path: pathname,
+      });
+      await changeInvitationStatus({
+        userId: id,
+        communityId,
+        status: Status.CANCELED,
+        applyToRequest: true,
+        path: pathname,
+      });
+    }
+  };
+
+  const onHandleRequest = async (status: Status) => {
+    if (communityId) {
+      await changeRequestStatus({
+        userId: id,
+        communityId,
+        status,
+        applyToInvitation: true,
         path: pathname,
       });
     }
@@ -53,6 +79,32 @@ export default function UserCard({
         </div>
       </div>
 
+      {isAdmin && status && status === Status.ACCEPTED && (
+        <Button
+          className="user-card_btn bg-remove"
+          onClick={() => onRemoveUser()}
+        >
+          Remove
+        </Button>
+      )}
+
+      {isAdmin && status && status === Status.PENDING && (
+        <div className="flex gap-2">
+          <Button
+            className="user-card_btn transparent_btn"
+            onClick={() => onHandleRequest(Status.DECLINED)}
+          >
+            Decline Request
+          </Button>
+          <Button
+            className="user-card_btn"
+            onClick={() => onHandleRequest(Status.ACCEPTED)}
+          >
+            Apply Request
+          </Button>
+        </div>
+      )}
+
       <Button
         className="user-card_btn"
         onClick={() => {
@@ -65,15 +117,6 @@ export default function UserCard({
       >
         View
       </Button>
-
-      {isAdmin && (
-        <Button
-          className="user-card_btn remove-clr"
-          onClick={() => onRemoveUser()}
-        >
-          Remove
-        </Button>
-      )}
     </article>
   );
 }

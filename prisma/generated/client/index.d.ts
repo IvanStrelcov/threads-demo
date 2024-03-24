@@ -28,6 +28,36 @@ export type Thread = $Result.DefaultSelection<Prisma.$ThreadPayload>
  * 
  */
 export type Community = $Result.DefaultSelection<Prisma.$CommunityPayload>
+/**
+ * Model Request
+ * 
+ */
+export type Request = $Result.DefaultSelection<Prisma.$RequestPayload>
+/**
+ * Model Invite
+ * 
+ */
+export type Invite = $Result.DefaultSelection<Prisma.$InvitePayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const Status: {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED'
+};
+
+export type Status = (typeof Status)[keyof typeof Status]
+
+}
+
+export type Status = $Enums.Status
+
+export const Status: typeof $Enums.Status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -180,6 +210,26 @@ export class PrismaClient<
     * ```
     */
   get community(): Prisma.CommunityDelegate<ExtArgs>;
+
+  /**
+   * `prisma.request`: Exposes CRUD operations for the **Request** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Requests
+    * const requests = await prisma.request.findMany()
+    * ```
+    */
+  get request(): Prisma.RequestDelegate<ExtArgs>;
+
+  /**
+   * `prisma.invite`: Exposes CRUD operations for the **Invite** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Invites
+    * const invites = await prisma.invite.findMany()
+    * ```
+    */
+  get invite(): Prisma.InviteDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -652,7 +702,9 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Thread: 'Thread',
-    Community: 'Community'
+    Community: 'Community',
+    Request: 'Request',
+    Invite: 'Invite'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -669,7 +721,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'thread' | 'community'
+      modelProps: 'user' | 'thread' | 'community' | 'request' | 'invite'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -871,6 +923,138 @@ export namespace Prisma {
           }
         }
       }
+      Request: {
+        payload: Prisma.$RequestPayload<ExtArgs>
+        fields: Prisma.RequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RequestFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RequestFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          findFirst: {
+            args: Prisma.RequestFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RequestFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          findMany: {
+            args: Prisma.RequestFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>[]
+          }
+          create: {
+            args: Prisma.RequestCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          createMany: {
+            args: Prisma.RequestCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.RequestDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          update: {
+            args: Prisma.RequestUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.RequestDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RequestUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.RequestUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$RequestPayload>
+          }
+          aggregate: {
+            args: Prisma.RequestAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateRequest>
+          }
+          groupBy: {
+            args: Prisma.RequestGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<RequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RequestCountArgs<ExtArgs>,
+            result: $Utils.Optional<RequestCountAggregateOutputType> | number
+          }
+        }
+      }
+      Invite: {
+        payload: Prisma.$InvitePayload<ExtArgs>
+        fields: Prisma.InviteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InviteFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InviteFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          findFirst: {
+            args: Prisma.InviteFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InviteFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          findMany: {
+            args: Prisma.InviteFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>[]
+          }
+          create: {
+            args: Prisma.InviteCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          createMany: {
+            args: Prisma.InviteCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.InviteDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          update: {
+            args: Prisma.InviteUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          deleteMany: {
+            args: Prisma.InviteDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InviteUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.InviteUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$InvitePayload>
+          }
+          aggregate: {
+            args: Prisma.InviteAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateInvite>
+          }
+          groupBy: {
+            args: Prisma.InviteGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<InviteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InviteCountArgs<ExtArgs>,
+            result: $Utils.Optional<InviteCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1033,12 +1217,16 @@ export namespace Prisma {
     threads: number
     communityLeader: number
     communityMember: number
+    requests: number
+    invites: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     threads?: boolean | UserCountOutputTypeCountThreadsArgs
     communityLeader?: boolean | UserCountOutputTypeCountCommunityLeaderArgs
     communityMember?: boolean | UserCountOutputTypeCountCommunityMemberArgs
+    requests?: boolean | UserCountOutputTypeCountRequestsArgs
+    invites?: boolean | UserCountOutputTypeCountInvitesArgs
   }
 
   // Custom InputTypes
@@ -1075,6 +1263,22 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCommunityMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommunityWhereInput
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RequestWhereInput
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InviteWhereInput
   }
 
 
@@ -1120,11 +1324,15 @@ export namespace Prisma {
   export type CommunityCountOutputType = {
     members: number
     threads: number
+    requests: number
+    invites: number
   }
 
   export type CommunityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | CommunityCountOutputTypeCountMembersArgs
     threads?: boolean | CommunityCountOutputTypeCountThreadsArgs
+    requests?: boolean | CommunityCountOutputTypeCountRequestsArgs
+    invites?: boolean | CommunityCountOutputTypeCountInvitesArgs
   }
 
   // Custom InputTypes
@@ -1153,6 +1361,22 @@ export namespace Prisma {
    */
   export type CommunityCountOutputTypeCountThreadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ThreadWhereInput
+  }
+
+
+  /**
+   * CommunityCountOutputType without action
+   */
+  export type CommunityCountOutputTypeCountRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RequestWhereInput
+  }
+
+
+  /**
+   * CommunityCountOutputType without action
+   */
+  export type CommunityCountOutputTypeCountInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InviteWhereInput
   }
 
 
@@ -1422,6 +1646,8 @@ export namespace Prisma {
     threads?: boolean | User$threadsArgs<ExtArgs>
     communityLeader?: boolean | User$communityLeaderArgs<ExtArgs>
     communityMember?: boolean | User$communityMemberArgs<ExtArgs>
+    requests?: boolean | User$requestsArgs<ExtArgs>
+    invites?: boolean | User$invitesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1444,6 +1670,8 @@ export namespace Prisma {
     threads?: boolean | User$threadsArgs<ExtArgs>
     communityLeader?: boolean | User$communityLeaderArgs<ExtArgs>
     communityMember?: boolean | User$communityMemberArgs<ExtArgs>
+    requests?: boolean | User$requestsArgs<ExtArgs>
+    invites?: boolean | User$invitesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1454,6 +1682,8 @@ export namespace Prisma {
       threads: Prisma.$ThreadPayload<ExtArgs>[]
       communityLeader: Prisma.$CommunityPayload<ExtArgs>[]
       communityMember: Prisma.$CommunityPayload<ExtArgs>[]
+      requests: Prisma.$RequestPayload<ExtArgs>[]
+      invites: Prisma.$InvitePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1838,6 +2068,10 @@ export namespace Prisma {
     communityLeader<T extends User$communityLeaderArgs<ExtArgs> = {}>(args?: Subset<T, User$communityLeaderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     communityMember<T extends User$communityMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$communityMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    requests<T extends User$requestsArgs<ExtArgs> = {}>(args?: Subset<T, User$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    invites<T extends User$invitesArgs<ExtArgs> = {}>(args?: Subset<T, User$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2250,6 +2484,48 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CommunityScalarFieldEnum | CommunityScalarFieldEnum[]
+  }
+
+
+  /**
+   * User.requests
+   */
+  export type User$requestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    where?: RequestWhereInput
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    cursor?: RequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+
+  /**
+   * User.invites
+   */
+  export type User$invitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    where?: InviteWhereInput
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    cursor?: InviteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
   }
 
 
@@ -3589,6 +3865,8 @@ export namespace Prisma {
     createdBy?: boolean | Community$createdByArgs<ExtArgs>
     members?: boolean | Community$membersArgs<ExtArgs>
     threads?: boolean | Community$threadsArgs<ExtArgs>
+    requests?: boolean | Community$requestsArgs<ExtArgs>
+    invites?: boolean | Community$invitesArgs<ExtArgs>
     _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["community"]>
 
@@ -3608,6 +3886,8 @@ export namespace Prisma {
     createdBy?: boolean | Community$createdByArgs<ExtArgs>
     members?: boolean | Community$membersArgs<ExtArgs>
     threads?: boolean | Community$threadsArgs<ExtArgs>
+    requests?: boolean | Community$requestsArgs<ExtArgs>
+    invites?: boolean | Community$invitesArgs<ExtArgs>
     _count?: boolean | CommunityCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3618,6 +3898,8 @@ export namespace Prisma {
       createdBy: Prisma.$UserPayload<ExtArgs> | null
       members: Prisma.$UserPayload<ExtArgs>[]
       threads: Prisma.$ThreadPayload<ExtArgs>[]
+      requests: Prisma.$RequestPayload<ExtArgs>[]
+      invites: Prisma.$InvitePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3999,6 +4281,10 @@ export namespace Prisma {
     members<T extends Community$membersArgs<ExtArgs> = {}>(args?: Subset<T, Community$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     threads<T extends Community$threadsArgs<ExtArgs> = {}>(args?: Subset<T, Community$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    requests<T extends Community$requestsArgs<ExtArgs> = {}>(args?: Subset<T, Community$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    invites<T extends Community$invitesArgs<ExtArgs> = {}>(args?: Subset<T, Community$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4407,6 +4693,48 @@ export namespace Prisma {
 
 
   /**
+   * Community.requests
+   */
+  export type Community$requestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    where?: RequestWhereInput
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    cursor?: RequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+
+  /**
+   * Community.invites
+   */
+  export type Community$invitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    where?: InviteWhereInput
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    cursor?: InviteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
+  }
+
+
+  /**
    * Community without action
    */
   export type CommunityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4418,6 +4746,1950 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: CommunityInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model Request
+   */
+
+  export type AggregateRequest = {
+    _count: RequestCountAggregateOutputType | null
+    _avg: RequestAvgAggregateOutputType | null
+    _sum: RequestSumAggregateOutputType | null
+    _min: RequestMinAggregateOutputType | null
+    _max: RequestMaxAggregateOutputType | null
+  }
+
+  export type RequestAvgAggregateOutputType = {
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type RequestSumAggregateOutputType = {
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type RequestMinAggregateOutputType = {
+    uuid: string | null
+    createdAt: Date | null
+    updatedat: Date | null
+    status: $Enums.Status | null
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type RequestMaxAggregateOutputType = {
+    uuid: string | null
+    createdAt: Date | null
+    updatedat: Date | null
+    status: $Enums.Status | null
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type RequestCountAggregateOutputType = {
+    uuid: number
+    createdAt: number
+    updatedat: number
+    status: number
+    communityId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type RequestAvgAggregateInputType = {
+    communityId?: true
+    userId?: true
+  }
+
+  export type RequestSumAggregateInputType = {
+    communityId?: true
+    userId?: true
+  }
+
+  export type RequestMinAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+  }
+
+  export type RequestMaxAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+  }
+
+  export type RequestCountAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type RequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Request to aggregate.
+     */
+    where?: RequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Requests to fetch.
+     */
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Requests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Requests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Requests
+    **/
+    _count?: true | RequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RequestMaxAggregateInputType
+  }
+
+  export type GetRequestAggregateType<T extends RequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRequest[P]>
+      : GetScalarType<T[P], AggregateRequest[P]>
+  }
+
+
+
+
+  export type RequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RequestWhereInput
+    orderBy?: RequestOrderByWithAggregationInput | RequestOrderByWithAggregationInput[]
+    by: RequestScalarFieldEnum[] | RequestScalarFieldEnum
+    having?: RequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RequestCountAggregateInputType | true
+    _avg?: RequestAvgAggregateInputType
+    _sum?: RequestSumAggregateInputType
+    _min?: RequestMinAggregateInputType
+    _max?: RequestMaxAggregateInputType
+  }
+
+  export type RequestGroupByOutputType = {
+    uuid: string
+    createdAt: Date
+    updatedat: Date
+    status: $Enums.Status
+    communityId: number
+    userId: number
+    _count: RequestCountAggregateOutputType | null
+    _avg: RequestAvgAggregateOutputType | null
+    _sum: RequestSumAggregateOutputType | null
+    _min: RequestMinAggregateOutputType | null
+    _max: RequestMaxAggregateOutputType | null
+  }
+
+  type GetRequestGroupByPayload<T extends RequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RequestGroupByOutputType[P]>
+            : GetScalarType<T[P], RequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    uuid?: boolean
+    createdAt?: boolean
+    updatedat?: boolean
+    status?: boolean
+    communityId?: boolean
+    userId?: boolean
+    community?: boolean | CommunityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["request"]>
+
+  export type RequestSelectScalar = {
+    uuid?: boolean
+    createdAt?: boolean
+    updatedat?: boolean
+    status?: boolean
+    communityId?: boolean
+    userId?: boolean
+  }
+
+  export type RequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    community?: boolean | CommunityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+
+  export type $RequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Request"
+    objects: {
+      community: Prisma.$CommunityPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      uuid: string
+      createdAt: Date
+      updatedat: Date
+      status: $Enums.Status
+      communityId: number
+      userId: number
+    }, ExtArgs["result"]["request"]>
+    composites: {}
+  }
+
+
+  type RequestGetPayload<S extends boolean | null | undefined | RequestDefaultArgs> = $Result.GetResult<Prisma.$RequestPayload, S>
+
+  type RequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<RequestFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: RequestCountAggregateInputType | true
+    }
+
+  export interface RequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Request'], meta: { name: 'Request' } }
+    /**
+     * Find zero or one Request that matches the filter.
+     * @param {RequestFindUniqueArgs} args - Arguments to find a Request
+     * @example
+     * // Get one Request
+     * const request = await prisma.request.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RequestFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestFindUniqueArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Request that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RequestFindUniqueOrThrowArgs} args - Arguments to find a Request
+     * @example
+     * // Get one Request
+     * const request = await prisma.request.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RequestFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Request that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestFindFirstArgs} args - Arguments to find a Request
+     * @example
+     * // Get one Request
+     * const request = await prisma.request.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RequestFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestFindFirstArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Request that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestFindFirstOrThrowArgs} args - Arguments to find a Request
+     * @example
+     * // Get one Request
+     * const request = await prisma.request.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RequestFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Requests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Requests
+     * const requests = await prisma.request.findMany()
+     * 
+     * // Get first 10 Requests
+     * const requests = await prisma.request.findMany({ take: 10 })
+     * 
+     * // Only select the `uuid`
+     * const requestWithUuidOnly = await prisma.request.findMany({ select: { uuid: true } })
+     * 
+    **/
+    findMany<T extends RequestFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Request.
+     * @param {RequestCreateArgs} args - Arguments to create a Request.
+     * @example
+     * // Create one Request
+     * const Request = await prisma.request.create({
+     *   data: {
+     *     // ... data to create a Request
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RequestCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestCreateArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Requests.
+     *     @param {RequestCreateManyArgs} args - Arguments to create many Requests.
+     *     @example
+     *     // Create many Requests
+     *     const request = await prisma.request.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RequestCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Request.
+     * @param {RequestDeleteArgs} args - Arguments to delete one Request.
+     * @example
+     * // Delete one Request
+     * const Request = await prisma.request.delete({
+     *   where: {
+     *     // ... filter to delete one Request
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RequestDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestDeleteArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Request.
+     * @param {RequestUpdateArgs} args - Arguments to update one Request.
+     * @example
+     * // Update one Request
+     * const request = await prisma.request.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RequestUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestUpdateArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Requests.
+     * @param {RequestDeleteManyArgs} args - Arguments to filter Requests to delete.
+     * @example
+     * // Delete a few Requests
+     * const { count } = await prisma.request.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RequestDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, RequestDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Requests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Requests
+     * const request = await prisma.request.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RequestUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Request.
+     * @param {RequestUpsertArgs} args - Arguments to update or create a Request.
+     * @example
+     * // Update or create a Request
+     * const request = await prisma.request.upsert({
+     *   create: {
+     *     // ... data to create a Request
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Request we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RequestUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, RequestUpsertArgs<ExtArgs>>
+    ): Prisma__RequestClient<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Requests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestCountArgs} args - Arguments to filter Requests to count.
+     * @example
+     * // Count the number of Requests
+     * const count = await prisma.request.count({
+     *   where: {
+     *     // ... the filter for the Requests we want to count
+     *   }
+     * })
+    **/
+    count<T extends RequestCountArgs>(
+      args?: Subset<T, RequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Request.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RequestAggregateArgs>(args: Subset<T, RequestAggregateArgs>): Prisma.PrismaPromise<GetRequestAggregateType<T>>
+
+    /**
+     * Group by Request.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RequestGroupByArgs['orderBy'] }
+        : { orderBy?: RequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Request model
+   */
+  readonly fields: RequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Request.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    community<T extends CommunityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CommunityDefaultArgs<ExtArgs>>): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Request model
+   */ 
+  interface RequestFieldRefs {
+    readonly uuid: FieldRef<"Request", 'String'>
+    readonly createdAt: FieldRef<"Request", 'DateTime'>
+    readonly updatedat: FieldRef<"Request", 'DateTime'>
+    readonly status: FieldRef<"Request", 'Status'>
+    readonly communityId: FieldRef<"Request", 'Int'>
+    readonly userId: FieldRef<"Request", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Request findUnique
+   */
+  export type RequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter, which Request to fetch.
+     */
+    where: RequestWhereUniqueInput
+  }
+
+
+  /**
+   * Request findUniqueOrThrow
+   */
+  export type RequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter, which Request to fetch.
+     */
+    where: RequestWhereUniqueInput
+  }
+
+
+  /**
+   * Request findFirst
+   */
+  export type RequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter, which Request to fetch.
+     */
+    where?: RequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Requests to fetch.
+     */
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Requests.
+     */
+    cursor?: RequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Requests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Requests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Requests.
+     */
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+
+  /**
+   * Request findFirstOrThrow
+   */
+  export type RequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter, which Request to fetch.
+     */
+    where?: RequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Requests to fetch.
+     */
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Requests.
+     */
+    cursor?: RequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Requests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Requests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Requests.
+     */
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+
+  /**
+   * Request findMany
+   */
+  export type RequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter, which Requests to fetch.
+     */
+    where?: RequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Requests to fetch.
+     */
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Requests.
+     */
+    cursor?: RequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Requests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Requests.
+     */
+    skip?: number
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+
+  /**
+   * Request create
+   */
+  export type RequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Request.
+     */
+    data: XOR<RequestCreateInput, RequestUncheckedCreateInput>
+  }
+
+
+  /**
+   * Request createMany
+   */
+  export type RequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Requests.
+     */
+    data: RequestCreateManyInput | RequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Request update
+   */
+  export type RequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Request.
+     */
+    data: XOR<RequestUpdateInput, RequestUncheckedUpdateInput>
+    /**
+     * Choose, which Request to update.
+     */
+    where: RequestWhereUniqueInput
+  }
+
+
+  /**
+   * Request updateMany
+   */
+  export type RequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Requests.
+     */
+    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyInput>
+    /**
+     * Filter which Requests to update
+     */
+    where?: RequestWhereInput
+  }
+
+
+  /**
+   * Request upsert
+   */
+  export type RequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Request to update in case it exists.
+     */
+    where: RequestWhereUniqueInput
+    /**
+     * In case the Request found by the `where` argument doesn't exist, create a new Request with this data.
+     */
+    create: XOR<RequestCreateInput, RequestUncheckedCreateInput>
+    /**
+     * In case the Request was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RequestUpdateInput, RequestUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Request delete
+   */
+  export type RequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+    /**
+     * Filter which Request to delete.
+     */
+    where: RequestWhereUniqueInput
+  }
+
+
+  /**
+   * Request deleteMany
+   */
+  export type RequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Requests to delete
+     */
+    where?: RequestWhereInput
+  }
+
+
+  /**
+   * Request without action
+   */
+  export type RequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model Invite
+   */
+
+  export type AggregateInvite = {
+    _count: InviteCountAggregateOutputType | null
+    _avg: InviteAvgAggregateOutputType | null
+    _sum: InviteSumAggregateOutputType | null
+    _min: InviteMinAggregateOutputType | null
+    _max: InviteMaxAggregateOutputType | null
+  }
+
+  export type InviteAvgAggregateOutputType = {
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type InviteSumAggregateOutputType = {
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type InviteMinAggregateOutputType = {
+    uuid: string | null
+    createdAt: Date | null
+    updatedat: Date | null
+    status: $Enums.Status | null
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type InviteMaxAggregateOutputType = {
+    uuid: string | null
+    createdAt: Date | null
+    updatedat: Date | null
+    status: $Enums.Status | null
+    communityId: number | null
+    userId: number | null
+  }
+
+  export type InviteCountAggregateOutputType = {
+    uuid: number
+    createdAt: number
+    updatedat: number
+    status: number
+    communityId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type InviteAvgAggregateInputType = {
+    communityId?: true
+    userId?: true
+  }
+
+  export type InviteSumAggregateInputType = {
+    communityId?: true
+    userId?: true
+  }
+
+  export type InviteMinAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+  }
+
+  export type InviteMaxAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+  }
+
+  export type InviteCountAggregateInputType = {
+    uuid?: true
+    createdAt?: true
+    updatedat?: true
+    status?: true
+    communityId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type InviteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Invite to aggregate.
+     */
+    where?: InviteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Invites to fetch.
+     */
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InviteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Invites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Invites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Invites
+    **/
+    _count?: true | InviteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InviteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InviteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InviteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InviteMaxAggregateInputType
+  }
+
+  export type GetInviteAggregateType<T extends InviteAggregateArgs> = {
+        [P in keyof T & keyof AggregateInvite]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInvite[P]>
+      : GetScalarType<T[P], AggregateInvite[P]>
+  }
+
+
+
+
+  export type InviteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InviteWhereInput
+    orderBy?: InviteOrderByWithAggregationInput | InviteOrderByWithAggregationInput[]
+    by: InviteScalarFieldEnum[] | InviteScalarFieldEnum
+    having?: InviteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InviteCountAggregateInputType | true
+    _avg?: InviteAvgAggregateInputType
+    _sum?: InviteSumAggregateInputType
+    _min?: InviteMinAggregateInputType
+    _max?: InviteMaxAggregateInputType
+  }
+
+  export type InviteGroupByOutputType = {
+    uuid: string
+    createdAt: Date
+    updatedat: Date
+    status: $Enums.Status
+    communityId: number
+    userId: number
+    _count: InviteCountAggregateOutputType | null
+    _avg: InviteAvgAggregateOutputType | null
+    _sum: InviteSumAggregateOutputType | null
+    _min: InviteMinAggregateOutputType | null
+    _max: InviteMaxAggregateOutputType | null
+  }
+
+  type GetInviteGroupByPayload<T extends InviteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InviteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InviteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InviteGroupByOutputType[P]>
+            : GetScalarType<T[P], InviteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InviteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    uuid?: boolean
+    createdAt?: boolean
+    updatedat?: boolean
+    status?: boolean
+    communityId?: boolean
+    userId?: boolean
+    community?: boolean | CommunityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invite"]>
+
+  export type InviteSelectScalar = {
+    uuid?: boolean
+    createdAt?: boolean
+    updatedat?: boolean
+    status?: boolean
+    communityId?: boolean
+    userId?: boolean
+  }
+
+  export type InviteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    community?: boolean | CommunityDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+
+  export type $InvitePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Invite"
+    objects: {
+      community: Prisma.$CommunityPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      uuid: string
+      createdAt: Date
+      updatedat: Date
+      status: $Enums.Status
+      communityId: number
+      userId: number
+    }, ExtArgs["result"]["invite"]>
+    composites: {}
+  }
+
+
+  type InviteGetPayload<S extends boolean | null | undefined | InviteDefaultArgs> = $Result.GetResult<Prisma.$InvitePayload, S>
+
+  type InviteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<InviteFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: InviteCountAggregateInputType | true
+    }
+
+  export interface InviteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Invite'], meta: { name: 'Invite' } }
+    /**
+     * Find zero or one Invite that matches the filter.
+     * @param {InviteFindUniqueArgs} args - Arguments to find a Invite
+     * @example
+     * // Get one Invite
+     * const invite = await prisma.invite.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends InviteFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteFindUniqueArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Invite that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {InviteFindUniqueOrThrowArgs} args - Arguments to find a Invite
+     * @example
+     * // Get one Invite
+     * const invite = await prisma.invite.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends InviteFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Invite that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteFindFirstArgs} args - Arguments to find a Invite
+     * @example
+     * // Get one Invite
+     * const invite = await prisma.invite.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends InviteFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteFindFirstArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Invite that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteFindFirstOrThrowArgs} args - Arguments to find a Invite
+     * @example
+     * // Get one Invite
+     * const invite = await prisma.invite.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends InviteFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Invites that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Invites
+     * const invites = await prisma.invite.findMany()
+     * 
+     * // Get first 10 Invites
+     * const invites = await prisma.invite.findMany({ take: 10 })
+     * 
+     * // Only select the `uuid`
+     * const inviteWithUuidOnly = await prisma.invite.findMany({ select: { uuid: true } })
+     * 
+    **/
+    findMany<T extends InviteFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Invite.
+     * @param {InviteCreateArgs} args - Arguments to create a Invite.
+     * @example
+     * // Create one Invite
+     * const Invite = await prisma.invite.create({
+     *   data: {
+     *     // ... data to create a Invite
+     *   }
+     * })
+     * 
+    **/
+    create<T extends InviteCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteCreateArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Invites.
+     *     @param {InviteCreateManyArgs} args - Arguments to create many Invites.
+     *     @example
+     *     // Create many Invites
+     *     const invite = await prisma.invite.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends InviteCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Invite.
+     * @param {InviteDeleteArgs} args - Arguments to delete one Invite.
+     * @example
+     * // Delete one Invite
+     * const Invite = await prisma.invite.delete({
+     *   where: {
+     *     // ... filter to delete one Invite
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends InviteDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteDeleteArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Invite.
+     * @param {InviteUpdateArgs} args - Arguments to update one Invite.
+     * @example
+     * // Update one Invite
+     * const invite = await prisma.invite.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends InviteUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteUpdateArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Invites.
+     * @param {InviteDeleteManyArgs} args - Arguments to filter Invites to delete.
+     * @example
+     * // Delete a few Invites
+     * const { count } = await prisma.invite.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends InviteDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InviteDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Invites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Invites
+     * const invite = await prisma.invite.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends InviteUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Invite.
+     * @param {InviteUpsertArgs} args - Arguments to update or create a Invite.
+     * @example
+     * // Update or create a Invite
+     * const invite = await prisma.invite.upsert({
+     *   create: {
+     *     // ... data to create a Invite
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Invite we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends InviteUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, InviteUpsertArgs<ExtArgs>>
+    ): Prisma__InviteClient<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Invites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteCountArgs} args - Arguments to filter Invites to count.
+     * @example
+     * // Count the number of Invites
+     * const count = await prisma.invite.count({
+     *   where: {
+     *     // ... the filter for the Invites we want to count
+     *   }
+     * })
+    **/
+    count<T extends InviteCountArgs>(
+      args?: Subset<T, InviteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InviteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Invite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InviteAggregateArgs>(args: Subset<T, InviteAggregateArgs>): Prisma.PrismaPromise<GetInviteAggregateType<T>>
+
+    /**
+     * Group by Invite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InviteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InviteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InviteGroupByArgs['orderBy'] }
+        : { orderBy?: InviteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InviteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInviteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Invite model
+   */
+  readonly fields: InviteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Invite.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InviteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    community<T extends CommunityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CommunityDefaultArgs<ExtArgs>>): Prisma__CommunityClient<$Result.GetResult<Prisma.$CommunityPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Invite model
+   */ 
+  interface InviteFieldRefs {
+    readonly uuid: FieldRef<"Invite", 'String'>
+    readonly createdAt: FieldRef<"Invite", 'DateTime'>
+    readonly updatedat: FieldRef<"Invite", 'DateTime'>
+    readonly status: FieldRef<"Invite", 'Status'>
+    readonly communityId: FieldRef<"Invite", 'Int'>
+    readonly userId: FieldRef<"Invite", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Invite findUnique
+   */
+  export type InviteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter, which Invite to fetch.
+     */
+    where: InviteWhereUniqueInput
+  }
+
+
+  /**
+   * Invite findUniqueOrThrow
+   */
+  export type InviteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter, which Invite to fetch.
+     */
+    where: InviteWhereUniqueInput
+  }
+
+
+  /**
+   * Invite findFirst
+   */
+  export type InviteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter, which Invite to fetch.
+     */
+    where?: InviteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Invites to fetch.
+     */
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Invites.
+     */
+    cursor?: InviteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Invites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Invites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Invites.
+     */
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Invite findFirstOrThrow
+   */
+  export type InviteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter, which Invite to fetch.
+     */
+    where?: InviteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Invites to fetch.
+     */
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Invites.
+     */
+    cursor?: InviteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Invites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Invites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Invites.
+     */
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Invite findMany
+   */
+  export type InviteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter, which Invites to fetch.
+     */
+    where?: InviteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Invites to fetch.
+     */
+    orderBy?: InviteOrderByWithRelationInput | InviteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Invites.
+     */
+    cursor?: InviteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Invites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Invites.
+     */
+    skip?: number
+    distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Invite create
+   */
+  export type InviteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Invite.
+     */
+    data: XOR<InviteCreateInput, InviteUncheckedCreateInput>
+  }
+
+
+  /**
+   * Invite createMany
+   */
+  export type InviteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Invites.
+     */
+    data: InviteCreateManyInput | InviteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Invite update
+   */
+  export type InviteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Invite.
+     */
+    data: XOR<InviteUpdateInput, InviteUncheckedUpdateInput>
+    /**
+     * Choose, which Invite to update.
+     */
+    where: InviteWhereUniqueInput
+  }
+
+
+  /**
+   * Invite updateMany
+   */
+  export type InviteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Invites.
+     */
+    data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyInput>
+    /**
+     * Filter which Invites to update
+     */
+    where?: InviteWhereInput
+  }
+
+
+  /**
+   * Invite upsert
+   */
+  export type InviteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Invite to update in case it exists.
+     */
+    where: InviteWhereUniqueInput
+    /**
+     * In case the Invite found by the `where` argument doesn't exist, create a new Invite with this data.
+     */
+    create: XOR<InviteCreateInput, InviteUncheckedCreateInput>
+    /**
+     * In case the Invite was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InviteUpdateInput, InviteUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Invite delete
+   */
+  export type InviteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
+    /**
+     * Filter which Invite to delete.
+     */
+    where: InviteWhereUniqueInput
+  }
+
+
+  /**
+   * Invite deleteMany
+   */
+  export type InviteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Invites to delete
+     */
+    where?: InviteWhereInput
+  }
+
+
+  /**
+   * Invite without action
+   */
+  export type InviteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invite
+     */
+    select?: InviteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: InviteInclude<ExtArgs> | null
   }
 
 
@@ -4481,6 +6753,30 @@ export namespace Prisma {
   };
 
   export type CommunityScalarFieldEnum = (typeof CommunityScalarFieldEnum)[keyof typeof CommunityScalarFieldEnum]
+
+
+  export const RequestScalarFieldEnum: {
+    uuid: 'uuid',
+    createdAt: 'createdAt',
+    updatedat: 'updatedat',
+    status: 'status',
+    communityId: 'communityId',
+    userId: 'userId'
+  };
+
+  export type RequestScalarFieldEnum = (typeof RequestScalarFieldEnum)[keyof typeof RequestScalarFieldEnum]
+
+
+  export const InviteScalarFieldEnum: {
+    uuid: 'uuid',
+    createdAt: 'createdAt',
+    updatedat: 'updatedat',
+    status: 'status',
+    communityId: 'communityId',
+    userId: 'userId'
+  };
+
+  export type InviteScalarFieldEnum = (typeof InviteScalarFieldEnum)[keyof typeof InviteScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4562,6 +6858,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status[]'
+   */
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4597,6 +6907,8 @@ export namespace Prisma {
     threads?: ThreadListRelationFilter
     communityLeader?: CommunityListRelationFilter
     communityMember?: CommunityListRelationFilter
+    requests?: RequestListRelationFilter
+    invites?: InviteListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4615,6 +6927,8 @@ export namespace Prisma {
     threads?: ThreadOrderByRelationAggregateInput
     communityLeader?: CommunityOrderByRelationAggregateInput
     communityMember?: CommunityOrderByRelationAggregateInput
+    requests?: RequestOrderByRelationAggregateInput
+    invites?: InviteOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4636,6 +6950,8 @@ export namespace Prisma {
     threads?: ThreadListRelationFilter
     communityLeader?: CommunityListRelationFilter
     communityMember?: CommunityListRelationFilter
+    requests?: RequestListRelationFilter
+    invites?: InviteListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4773,6 +7089,8 @@ export namespace Prisma {
     createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     members?: UserListRelationFilter
     threads?: ThreadListRelationFilter
+    requests?: RequestListRelationFilter
+    invites?: InviteListRelationFilter
   }
 
   export type CommunityOrderByWithRelationInput = {
@@ -4788,6 +7106,8 @@ export namespace Prisma {
     createdBy?: UserOrderByWithRelationInput
     members?: UserOrderByRelationAggregateInput
     threads?: ThreadOrderByRelationAggregateInput
+    requests?: RequestOrderByRelationAggregateInput
+    invites?: InviteOrderByRelationAggregateInput
   }
 
   export type CommunityWhereUniqueInput = Prisma.AtLeast<{
@@ -4806,6 +7126,8 @@ export namespace Prisma {
     createdBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     members?: UserListRelationFilter
     threads?: ThreadListRelationFilter
+    requests?: RequestListRelationFilter
+    invites?: InviteListRelationFilter
   }, "id">
 
   export type CommunityOrderByWithAggregationInput = {
@@ -4840,6 +7162,138 @@ export namespace Prisma {
     creatorId?: IntNullableWithAggregatesFilter<"Community"> | number | null
   }
 
+  export type RequestWhereInput = {
+    AND?: RequestWhereInput | RequestWhereInput[]
+    OR?: RequestWhereInput[]
+    NOT?: RequestWhereInput | RequestWhereInput[]
+    uuid?: StringFilter<"Request"> | string
+    createdAt?: DateTimeFilter<"Request"> | Date | string
+    updatedat?: DateTimeFilter<"Request"> | Date | string
+    status?: EnumStatusFilter<"Request"> | $Enums.Status
+    communityId?: IntFilter<"Request"> | number
+    userId?: IntFilter<"Request"> | number
+    community?: XOR<CommunityRelationFilter, CommunityWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type RequestOrderByWithRelationInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+    community?: CommunityOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type RequestWhereUniqueInput = Prisma.AtLeast<{
+    communityId_userId?: RequestCommunityIdUserIdCompoundUniqueInput
+    AND?: RequestWhereInput | RequestWhereInput[]
+    OR?: RequestWhereInput[]
+    NOT?: RequestWhereInput | RequestWhereInput[]
+    uuid?: StringFilter<"Request"> | string
+    createdAt?: DateTimeFilter<"Request"> | Date | string
+    updatedat?: DateTimeFilter<"Request"> | Date | string
+    status?: EnumStatusFilter<"Request"> | $Enums.Status
+    communityId?: IntFilter<"Request"> | number
+    userId?: IntFilter<"Request"> | number
+    community?: XOR<CommunityRelationFilter, CommunityWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "communityId_userId">
+
+  export type RequestOrderByWithAggregationInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+    _count?: RequestCountOrderByAggregateInput
+    _avg?: RequestAvgOrderByAggregateInput
+    _max?: RequestMaxOrderByAggregateInput
+    _min?: RequestMinOrderByAggregateInput
+    _sum?: RequestSumOrderByAggregateInput
+  }
+
+  export type RequestScalarWhereWithAggregatesInput = {
+    AND?: RequestScalarWhereWithAggregatesInput | RequestScalarWhereWithAggregatesInput[]
+    OR?: RequestScalarWhereWithAggregatesInput[]
+    NOT?: RequestScalarWhereWithAggregatesInput | RequestScalarWhereWithAggregatesInput[]
+    uuid?: StringWithAggregatesFilter<"Request"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Request"> | Date | string
+    updatedat?: DateTimeWithAggregatesFilter<"Request"> | Date | string
+    status?: EnumStatusWithAggregatesFilter<"Request"> | $Enums.Status
+    communityId?: IntWithAggregatesFilter<"Request"> | number
+    userId?: IntWithAggregatesFilter<"Request"> | number
+  }
+
+  export type InviteWhereInput = {
+    AND?: InviteWhereInput | InviteWhereInput[]
+    OR?: InviteWhereInput[]
+    NOT?: InviteWhereInput | InviteWhereInput[]
+    uuid?: StringFilter<"Invite"> | string
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    updatedat?: DateTimeFilter<"Invite"> | Date | string
+    status?: EnumStatusFilter<"Invite"> | $Enums.Status
+    communityId?: IntFilter<"Invite"> | number
+    userId?: IntFilter<"Invite"> | number
+    community?: XOR<CommunityRelationFilter, CommunityWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type InviteOrderByWithRelationInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+    community?: CommunityOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type InviteWhereUniqueInput = Prisma.AtLeast<{
+    communityId_userId?: InviteCommunityIdUserIdCompoundUniqueInput
+    AND?: InviteWhereInput | InviteWhereInput[]
+    OR?: InviteWhereInput[]
+    NOT?: InviteWhereInput | InviteWhereInput[]
+    uuid?: StringFilter<"Invite"> | string
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    updatedat?: DateTimeFilter<"Invite"> | Date | string
+    status?: EnumStatusFilter<"Invite"> | $Enums.Status
+    communityId?: IntFilter<"Invite"> | number
+    userId?: IntFilter<"Invite"> | number
+    community?: XOR<CommunityRelationFilter, CommunityWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "communityId_userId">
+
+  export type InviteOrderByWithAggregationInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+    _count?: InviteCountOrderByAggregateInput
+    _avg?: InviteAvgOrderByAggregateInput
+    _max?: InviteMaxOrderByAggregateInput
+    _min?: InviteMinOrderByAggregateInput
+    _sum?: InviteSumOrderByAggregateInput
+  }
+
+  export type InviteScalarWhereWithAggregatesInput = {
+    AND?: InviteScalarWhereWithAggregatesInput | InviteScalarWhereWithAggregatesInput[]
+    OR?: InviteScalarWhereWithAggregatesInput[]
+    NOT?: InviteScalarWhereWithAggregatesInput | InviteScalarWhereWithAggregatesInput[]
+    uuid?: StringWithAggregatesFilter<"Invite"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Invite"> | Date | string
+    updatedat?: DateTimeWithAggregatesFilter<"Invite"> | Date | string
+    status?: EnumStatusWithAggregatesFilter<"Invite"> | $Enums.Status
+    communityId?: IntWithAggregatesFilter<"Invite"> | number
+    userId?: IntWithAggregatesFilter<"Invite"> | number
+  }
+
   export type UserCreateInput = {
     uuid?: string
     name?: string | null
@@ -4855,6 +7309,8 @@ export namespace Prisma {
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4873,6 +7329,8 @@ export namespace Prisma {
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4890,6 +7348,8 @@ export namespace Prisma {
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4908,6 +7368,8 @@ export namespace Prisma {
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5040,6 +7502,8 @@ export namespace Prisma {
     createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
     members?: UserCreateNestedManyWithoutCommunityMemberInput
     threads?: ThreadCreateNestedManyWithoutCommunityInput
+    requests?: RequestCreateNestedManyWithoutCommunityInput
+    invites?: InviteCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateInput = {
@@ -5054,6 +7518,8 @@ export namespace Prisma {
     creatorId?: number | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
     threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    requests?: RequestUncheckedCreateNestedManyWithoutCommunityInput
+    invites?: InviteUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUpdateInput = {
@@ -5067,6 +7533,8 @@ export namespace Prisma {
     createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
     threads?: ThreadUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateInput = {
@@ -5081,6 +7549,8 @@ export namespace Prisma {
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
     threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityCreateManyInput = {
@@ -5115,6 +7585,128 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type RequestCreateInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    community: CommunityCreateNestedOneWithoutRequestsInput
+    user: UserCreateNestedOneWithoutRequestsInput
+  }
+
+  export type RequestUncheckedCreateInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+    userId: number
+  }
+
+  export type RequestUpdateInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    community?: CommunityUpdateOneRequiredWithoutRequestsNestedInput
+    user?: UserUpdateOneRequiredWithoutRequestsNestedInput
+  }
+
+  export type RequestUncheckedUpdateInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RequestCreateManyInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+    userId: number
+  }
+
+  export type RequestUpdateManyMutationInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  }
+
+  export type RequestUncheckedUpdateManyInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteCreateInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    community: CommunityCreateNestedOneWithoutInvitesInput
+    user: UserCreateNestedOneWithoutInvitesInput
+  }
+
+  export type InviteUncheckedCreateInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+    userId: number
+  }
+
+  export type InviteUpdateInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    community?: CommunityUpdateOneRequiredWithoutInvitesNestedInput
+    user?: UserUpdateOneRequiredWithoutInvitesNestedInput
+  }
+
+  export type InviteUncheckedUpdateInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteCreateManyInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+    userId: number
+  }
+
+  export type InviteUpdateManyMutationInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  }
+
+  export type InviteUncheckedUpdateManyInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5197,6 +7789,18 @@ export namespace Prisma {
     none?: CommunityWhereInput
   }
 
+  export type RequestListRelationFilter = {
+    every?: RequestWhereInput
+    some?: RequestWhereInput
+    none?: RequestWhereInput
+  }
+
+  export type InviteListRelationFilter = {
+    every?: InviteWhereInput
+    some?: InviteWhereInput
+    none?: InviteWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5207,6 +7811,14 @@ export namespace Prisma {
   }
 
   export type CommunityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InviteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5473,6 +8085,117 @@ export namespace Prisma {
     creatorId?: SortOrder
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type CommunityRelationFilter = {
+    is?: CommunityWhereInput
+    isNot?: CommunityWhereInput
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type RequestCommunityIdUserIdCompoundUniqueInput = {
+    communityId: number
+    userId: number
+  }
+
+  export type RequestCountOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RequestAvgOrderByAggregateInput = {
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RequestMaxOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RequestMinOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RequestSumOrderByAggregateInput = {
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type InviteCommunityIdUserIdCompoundUniqueInput = {
+    communityId: number
+    userId: number
+  }
+
+  export type InviteCountOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type InviteAvgOrderByAggregateInput = {
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type InviteMaxOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type InviteMinOrderByAggregateInput = {
+    uuid?: SortOrder
+    createdAt?: SortOrder
+    updatedat?: SortOrder
+    status?: SortOrder
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type InviteSumOrderByAggregateInput = {
+    communityId?: SortOrder
+    userId?: SortOrder
+  }
+
   export type ThreadCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ThreadCreateWithoutAuthorInput, ThreadUncheckedCreateWithoutAuthorInput> | ThreadCreateWithoutAuthorInput[] | ThreadUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ThreadCreateOrConnectWithoutAuthorInput | ThreadCreateOrConnectWithoutAuthorInput[]
@@ -5493,6 +8216,20 @@ export namespace Prisma {
     connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
   }
 
+  export type RequestCreateNestedManyWithoutUserInput = {
+    create?: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput> | RequestCreateWithoutUserInput[] | RequestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutUserInput | RequestCreateOrConnectWithoutUserInput[]
+    createMany?: RequestCreateManyUserInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type InviteCreateNestedManyWithoutUserInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+  }
+
   export type ThreadUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ThreadCreateWithoutAuthorInput, ThreadUncheckedCreateWithoutAuthorInput> | ThreadCreateWithoutAuthorInput[] | ThreadUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ThreadCreateOrConnectWithoutAuthorInput | ThreadCreateOrConnectWithoutAuthorInput[]
@@ -5511,6 +8248,20 @@ export namespace Prisma {
     create?: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput> | CommunityCreateWithoutMembersInput[] | CommunityUncheckedCreateWithoutMembersInput[]
     connectOrCreate?: CommunityCreateOrConnectWithoutMembersInput | CommunityCreateOrConnectWithoutMembersInput[]
     connect?: CommunityWhereUniqueInput | CommunityWhereUniqueInput[]
+  }
+
+  export type RequestUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput> | RequestCreateWithoutUserInput[] | RequestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutUserInput | RequestCreateOrConnectWithoutUserInput[]
+    createMany?: RequestCreateManyUserInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type InviteUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5578,6 +8329,34 @@ export namespace Prisma {
     deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
   }
 
+  export type RequestUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput> | RequestCreateWithoutUserInput[] | RequestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutUserInput | RequestCreateOrConnectWithoutUserInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutUserInput | RequestUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RequestCreateManyUserInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutUserInput | RequestUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutUserInput | RequestUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type InviteUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -5625,6 +8404,34 @@ export namespace Prisma {
     update?: CommunityUpdateWithWhereUniqueWithoutMembersInput | CommunityUpdateWithWhereUniqueWithoutMembersInput[]
     updateMany?: CommunityUpdateManyWithWhereWithoutMembersInput | CommunityUpdateManyWithWhereWithoutMembersInput[]
     deleteMany?: CommunityScalarWhereInput | CommunityScalarWhereInput[]
+  }
+
+  export type RequestUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput> | RequestCreateWithoutUserInput[] | RequestUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutUserInput | RequestCreateOrConnectWithoutUserInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutUserInput | RequestUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RequestCreateManyUserInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutUserInput | RequestUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutUserInput | RequestUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type InviteUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput> | InviteCreateWithoutUserInput[] | InviteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutUserInput | InviteCreateOrConnectWithoutUserInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutUserInput | InviteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InviteCreateManyUserInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutUserInput | InviteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutUserInput | InviteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutThreadsInput = {
@@ -5736,6 +8543,20 @@ export namespace Prisma {
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
   }
 
+  export type RequestCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput> | RequestCreateWithoutCommunityInput[] | RequestUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutCommunityInput | RequestCreateOrConnectWithoutCommunityInput[]
+    createMany?: RequestCreateManyCommunityInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type InviteCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput> | InviteCreateWithoutCommunityInput[] | InviteUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutCommunityInput | InviteCreateOrConnectWithoutCommunityInput[]
+    createMany?: InviteCreateManyCommunityInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutCommunityMemberInput = {
     create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
     connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
@@ -5747,6 +8568,20 @@ export namespace Prisma {
     connectOrCreate?: ThreadCreateOrConnectWithoutCommunityInput | ThreadCreateOrConnectWithoutCommunityInput[]
     createMany?: ThreadCreateManyCommunityInputEnvelope
     connect?: ThreadWhereUniqueInput | ThreadWhereUniqueInput[]
+  }
+
+  export type RequestUncheckedCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput> | RequestCreateWithoutCommunityInput[] | RequestUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutCommunityInput | RequestCreateOrConnectWithoutCommunityInput[]
+    createMany?: RequestCreateManyCommunityInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type InviteUncheckedCreateNestedManyWithoutCommunityInput = {
+    create?: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput> | InviteCreateWithoutCommunityInput[] | InviteUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutCommunityInput | InviteCreateOrConnectWithoutCommunityInput[]
+    createMany?: InviteCreateManyCommunityInputEnvelope
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
   export type UserUpdateOneWithoutCommunityLeaderNestedInput = {
@@ -5786,6 +8621,34 @@ export namespace Prisma {
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
   }
 
+  export type RequestUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput> | RequestCreateWithoutCommunityInput[] | RequestUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutCommunityInput | RequestCreateOrConnectWithoutCommunityInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutCommunityInput | RequestUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: RequestCreateManyCommunityInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutCommunityInput | RequestUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutCommunityInput | RequestUpdateManyWithWhereWithoutCommunityInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type InviteUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput> | InviteCreateWithoutCommunityInput[] | InviteUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutCommunityInput | InviteCreateOrConnectWithoutCommunityInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutCommunityInput | InviteUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: InviteCreateManyCommunityInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutCommunityInput | InviteUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutCommunityInput | InviteUpdateManyWithWhereWithoutCommunityInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutCommunityMemberNestedInput = {
     create?: XOR<UserCreateWithoutCommunityMemberInput, UserUncheckedCreateWithoutCommunityMemberInput> | UserCreateWithoutCommunityMemberInput[] | UserUncheckedCreateWithoutCommunityMemberInput[]
     connectOrCreate?: UserCreateOrConnectWithoutCommunityMemberInput | UserCreateOrConnectWithoutCommunityMemberInput[]
@@ -5811,6 +8674,94 @@ export namespace Prisma {
     update?: ThreadUpdateWithWhereUniqueWithoutCommunityInput | ThreadUpdateWithWhereUniqueWithoutCommunityInput[]
     updateMany?: ThreadUpdateManyWithWhereWithoutCommunityInput | ThreadUpdateManyWithWhereWithoutCommunityInput[]
     deleteMany?: ThreadScalarWhereInput | ThreadScalarWhereInput[]
+  }
+
+  export type RequestUncheckedUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput> | RequestCreateWithoutCommunityInput[] | RequestUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutCommunityInput | RequestCreateOrConnectWithoutCommunityInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutCommunityInput | RequestUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: RequestCreateManyCommunityInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutCommunityInput | RequestUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutCommunityInput | RequestUpdateManyWithWhereWithoutCommunityInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type InviteUncheckedUpdateManyWithoutCommunityNestedInput = {
+    create?: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput> | InviteCreateWithoutCommunityInput[] | InviteUncheckedCreateWithoutCommunityInput[]
+    connectOrCreate?: InviteCreateOrConnectWithoutCommunityInput | InviteCreateOrConnectWithoutCommunityInput[]
+    upsert?: InviteUpsertWithWhereUniqueWithoutCommunityInput | InviteUpsertWithWhereUniqueWithoutCommunityInput[]
+    createMany?: InviteCreateManyCommunityInputEnvelope
+    set?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    disconnect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    delete?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+    update?: InviteUpdateWithWhereUniqueWithoutCommunityInput | InviteUpdateWithWhereUniqueWithoutCommunityInput[]
+    updateMany?: InviteUpdateManyWithWhereWithoutCommunityInput | InviteUpdateManyWithWhereWithoutCommunityInput[]
+    deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
+  }
+
+  export type CommunityCreateNestedOneWithoutRequestsInput = {
+    create?: XOR<CommunityCreateWithoutRequestsInput, CommunityUncheckedCreateWithoutRequestsInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutRequestsInput
+    connect?: CommunityWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutRequestsInput = {
+    create?: XOR<UserCreateWithoutRequestsInput, UserUncheckedCreateWithoutRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
+  export type CommunityUpdateOneRequiredWithoutRequestsNestedInput = {
+    create?: XOR<CommunityCreateWithoutRequestsInput, CommunityUncheckedCreateWithoutRequestsInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutRequestsInput
+    upsert?: CommunityUpsertWithoutRequestsInput
+    connect?: CommunityWhereUniqueInput
+    update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutRequestsInput, CommunityUpdateWithoutRequestsInput>, CommunityUncheckedUpdateWithoutRequestsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutRequestsInput, UserUncheckedCreateWithoutRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRequestsInput
+    upsert?: UserUpsertWithoutRequestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRequestsInput, UserUpdateWithoutRequestsInput>, UserUncheckedUpdateWithoutRequestsInput>
+  }
+
+  export type CommunityCreateNestedOneWithoutInvitesInput = {
+    create?: XOR<CommunityCreateWithoutInvitesInput, CommunityUncheckedCreateWithoutInvitesInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutInvitesInput
+    connect?: CommunityWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutInvitesInput = {
+    create?: XOR<UserCreateWithoutInvitesInput, UserUncheckedCreateWithoutInvitesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInvitesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CommunityUpdateOneRequiredWithoutInvitesNestedInput = {
+    create?: XOR<CommunityCreateWithoutInvitesInput, CommunityUncheckedCreateWithoutInvitesInput>
+    connectOrCreate?: CommunityCreateOrConnectWithoutInvitesInput
+    upsert?: CommunityUpsertWithoutInvitesInput
+    connect?: CommunityWhereUniqueInput
+    update?: XOR<XOR<CommunityUpdateToOneWithWhereWithoutInvitesInput, CommunityUpdateWithoutInvitesInput>, CommunityUncheckedUpdateWithoutInvitesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutInvitesNestedInput = {
+    create?: XOR<UserCreateWithoutInvitesInput, UserUncheckedCreateWithoutInvitesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInvitesInput
+    upsert?: UserUpsertWithoutInvitesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInvitesInput, UserUpdateWithoutInvitesInput>, UserUncheckedUpdateWithoutInvitesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5989,6 +8940,23 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
   export type ThreadCreateWithoutAuthorInput = {
     uuid?: string
     createdAt?: Date | string
@@ -6030,6 +8998,8 @@ export namespace Prisma {
     bio?: string | null
     members?: UserCreateNestedManyWithoutCommunityMemberInput
     threads?: ThreadCreateNestedManyWithoutCommunityInput
+    requests?: RequestCreateNestedManyWithoutCommunityInput
+    invites?: InviteCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateWithoutCreatedByInput = {
@@ -6043,6 +9013,8 @@ export namespace Prisma {
     bio?: string | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
     threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    requests?: RequestUncheckedCreateNestedManyWithoutCommunityInput
+    invites?: InviteUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityCreateOrConnectWithoutCreatedByInput = {
@@ -6065,6 +9037,8 @@ export namespace Prisma {
     bio?: string | null
     createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
     threads?: ThreadCreateNestedManyWithoutCommunityInput
+    requests?: RequestCreateNestedManyWithoutCommunityInput
+    invites?: InviteCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateWithoutMembersInput = {
@@ -6078,11 +9052,65 @@ export namespace Prisma {
     bio?: string | null
     creatorId?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    requests?: RequestUncheckedCreateNestedManyWithoutCommunityInput
+    invites?: InviteUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityCreateOrConnectWithoutMembersInput = {
     where: CommunityWhereUniqueInput
     create: XOR<CommunityCreateWithoutMembersInput, CommunityUncheckedCreateWithoutMembersInput>
+  }
+
+  export type RequestCreateWithoutUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    community: CommunityCreateNestedOneWithoutRequestsInput
+  }
+
+  export type RequestUncheckedCreateWithoutUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+  }
+
+  export type RequestCreateOrConnectWithoutUserInput = {
+    where: RequestWhereUniqueInput
+    create: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput>
+  }
+
+  export type RequestCreateManyUserInputEnvelope = {
+    data: RequestCreateManyUserInput | RequestCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InviteCreateWithoutUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    community: CommunityCreateNestedOneWithoutInvitesInput
+  }
+
+  export type InviteUncheckedCreateWithoutUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+  }
+
+  export type InviteCreateOrConnectWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
+  }
+
+  export type InviteCreateManyUserInputEnvelope = {
+    data: InviteCreateManyUserInput | InviteCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type ThreadUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -6162,6 +9190,62 @@ export namespace Prisma {
     data: XOR<CommunityUpdateManyMutationInput, CommunityUncheckedUpdateManyWithoutMembersInput>
   }
 
+  export type RequestUpsertWithWhereUniqueWithoutUserInput = {
+    where: RequestWhereUniqueInput
+    update: XOR<RequestUpdateWithoutUserInput, RequestUncheckedUpdateWithoutUserInput>
+    create: XOR<RequestCreateWithoutUserInput, RequestUncheckedCreateWithoutUserInput>
+  }
+
+  export type RequestUpdateWithWhereUniqueWithoutUserInput = {
+    where: RequestWhereUniqueInput
+    data: XOR<RequestUpdateWithoutUserInput, RequestUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RequestUpdateManyWithWhereWithoutUserInput = {
+    where: RequestScalarWhereInput
+    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type RequestScalarWhereInput = {
+    AND?: RequestScalarWhereInput | RequestScalarWhereInput[]
+    OR?: RequestScalarWhereInput[]
+    NOT?: RequestScalarWhereInput | RequestScalarWhereInput[]
+    uuid?: StringFilter<"Request"> | string
+    createdAt?: DateTimeFilter<"Request"> | Date | string
+    updatedat?: DateTimeFilter<"Request"> | Date | string
+    status?: EnumStatusFilter<"Request"> | $Enums.Status
+    communityId?: IntFilter<"Request"> | number
+    userId?: IntFilter<"Request"> | number
+  }
+
+  export type InviteUpsertWithWhereUniqueWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    update: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
+    create: XOR<InviteCreateWithoutUserInput, InviteUncheckedCreateWithoutUserInput>
+  }
+
+  export type InviteUpdateWithWhereUniqueWithoutUserInput = {
+    where: InviteWhereUniqueInput
+    data: XOR<InviteUpdateWithoutUserInput, InviteUncheckedUpdateWithoutUserInput>
+  }
+
+  export type InviteUpdateManyWithWhereWithoutUserInput = {
+    where: InviteScalarWhereInput
+    data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type InviteScalarWhereInput = {
+    AND?: InviteScalarWhereInput | InviteScalarWhereInput[]
+    OR?: InviteScalarWhereInput[]
+    NOT?: InviteScalarWhereInput | InviteScalarWhereInput[]
+    uuid?: StringFilter<"Invite"> | string
+    createdAt?: DateTimeFilter<"Invite"> | Date | string
+    updatedat?: DateTimeFilter<"Invite"> | Date | string
+    status?: EnumStatusFilter<"Invite"> | $Enums.Status
+    communityId?: IntFilter<"Invite"> | number
+    userId?: IntFilter<"Invite"> | number
+  }
+
   export type UserCreateWithoutThreadsInput = {
     uuid?: string
     name?: string | null
@@ -6176,6 +9260,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutThreadsInput = {
@@ -6193,6 +9279,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutThreadsInput = {
@@ -6210,6 +9298,8 @@ export namespace Prisma {
     bio?: string | null
     createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
     members?: UserCreateNestedManyWithoutCommunityMemberInput
+    requests?: RequestCreateNestedManyWithoutCommunityInput
+    invites?: InviteCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityUncheckedCreateWithoutThreadsInput = {
@@ -6223,6 +9313,8 @@ export namespace Prisma {
     bio?: string | null
     creatorId?: number | null
     members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+    requests?: RequestUncheckedCreateNestedManyWithoutCommunityInput
+    invites?: InviteUncheckedCreateNestedManyWithoutCommunityInput
   }
 
   export type CommunityCreateOrConnectWithoutThreadsInput = {
@@ -6312,6 +9404,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutThreadsInput = {
@@ -6329,6 +9423,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommunityUpsertWithoutThreadsInput = {
@@ -6352,6 +9448,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
+    requests?: RequestUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateWithoutThreadsInput = {
@@ -6365,6 +9463,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type ThreadUpsertWithoutChildrenInput = {
@@ -6429,6 +9529,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityMember?: CommunityCreateNestedManyWithoutMembersInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommunityLeaderInput = {
@@ -6446,6 +9548,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommunityLeaderInput = {
@@ -6467,6 +9571,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     threads?: ThreadCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    invites?: InviteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommunityMemberInput = {
@@ -6484,6 +9590,8 @@ export namespace Prisma {
     activeCommunity?: number | null
     threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
     communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommunityMemberInput = {
@@ -6522,6 +9630,58 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RequestCreateWithoutCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    user: UserCreateNestedOneWithoutRequestsInput
+  }
+
+  export type RequestUncheckedCreateWithoutCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    userId: number
+  }
+
+  export type RequestCreateOrConnectWithoutCommunityInput = {
+    where: RequestWhereUniqueInput
+    create: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type RequestCreateManyCommunityInputEnvelope = {
+    data: RequestCreateManyCommunityInput | RequestCreateManyCommunityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InviteCreateWithoutCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    user: UserCreateNestedOneWithoutInvitesInput
+  }
+
+  export type InviteUncheckedCreateWithoutCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    userId: number
+  }
+
+  export type InviteCreateOrConnectWithoutCommunityInput = {
+    where: InviteWhereUniqueInput
+    create: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type InviteCreateManyCommunityInputEnvelope = {
+    data: InviteCreateManyCommunityInput | InviteCreateManyCommunityInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutCommunityLeaderInput = {
     update: XOR<UserUpdateWithoutCommunityLeaderInput, UserUncheckedUpdateWithoutCommunityLeaderInput>
     create: XOR<UserCreateWithoutCommunityLeaderInput, UserUncheckedCreateWithoutCommunityLeaderInput>
@@ -6547,6 +9707,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommunityLeaderInput = {
@@ -6564,6 +9726,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutCommunityMemberInput = {
@@ -6616,6 +9780,366 @@ export namespace Prisma {
     data: XOR<ThreadUpdateManyMutationInput, ThreadUncheckedUpdateManyWithoutCommunityInput>
   }
 
+  export type RequestUpsertWithWhereUniqueWithoutCommunityInput = {
+    where: RequestWhereUniqueInput
+    update: XOR<RequestUpdateWithoutCommunityInput, RequestUncheckedUpdateWithoutCommunityInput>
+    create: XOR<RequestCreateWithoutCommunityInput, RequestUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type RequestUpdateWithWhereUniqueWithoutCommunityInput = {
+    where: RequestWhereUniqueInput
+    data: XOR<RequestUpdateWithoutCommunityInput, RequestUncheckedUpdateWithoutCommunityInput>
+  }
+
+  export type RequestUpdateManyWithWhereWithoutCommunityInput = {
+    where: RequestScalarWhereInput
+    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutCommunityInput>
+  }
+
+  export type InviteUpsertWithWhereUniqueWithoutCommunityInput = {
+    where: InviteWhereUniqueInput
+    update: XOR<InviteUpdateWithoutCommunityInput, InviteUncheckedUpdateWithoutCommunityInput>
+    create: XOR<InviteCreateWithoutCommunityInput, InviteUncheckedCreateWithoutCommunityInput>
+  }
+
+  export type InviteUpdateWithWhereUniqueWithoutCommunityInput = {
+    where: InviteWhereUniqueInput
+    data: XOR<InviteUpdateWithoutCommunityInput, InviteUncheckedUpdateWithoutCommunityInput>
+  }
+
+  export type InviteUpdateManyWithWhereWithoutCommunityInput = {
+    where: InviteScalarWhereInput
+    data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyWithoutCommunityInput>
+  }
+
+  export type CommunityCreateWithoutRequestsInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
+    members?: UserCreateNestedManyWithoutCommunityMemberInput
+    threads?: ThreadCreateNestedManyWithoutCommunityInput
+    invites?: InviteCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUncheckedCreateWithoutRequestsInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId?: number | null
+    members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+    threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    invites?: InviteUncheckedCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityCreateOrConnectWithoutRequestsInput = {
+    where: CommunityWhereUniqueInput
+    create: XOR<CommunityCreateWithoutRequestsInput, CommunityUncheckedCreateWithoutRequestsInput>
+  }
+
+  export type UserCreateWithoutRequestsInput = {
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activeCommunity?: number | null
+    threads?: ThreadCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityCreateNestedManyWithoutMembersInput
+    invites?: InviteCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRequestsInput = {
+    id?: number
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activeCommunity?: number | null
+    threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+    invites?: InviteUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRequestsInput, UserUncheckedCreateWithoutRequestsInput>
+  }
+
+  export type CommunityUpsertWithoutRequestsInput = {
+    update: XOR<CommunityUpdateWithoutRequestsInput, CommunityUncheckedUpdateWithoutRequestsInput>
+    create: XOR<CommunityCreateWithoutRequestsInput, CommunityUncheckedCreateWithoutRequestsInput>
+    where?: CommunityWhereInput
+  }
+
+  export type CommunityUpdateToOneWithWhereWithoutRequestsInput = {
+    where?: CommunityWhereInput
+    data: XOR<CommunityUpdateWithoutRequestsInput, CommunityUncheckedUpdateWithoutRequestsInput>
+  }
+
+  export type CommunityUpdateWithoutRequestsInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
+    members?: UserUpdateManyWithoutCommunityMemberNestedInput
+    threads?: ThreadUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateWithoutRequestsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
+    threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type UserUpsertWithoutRequestsInput = {
+    update: XOR<UserUpdateWithoutRequestsInput, UserUncheckedUpdateWithoutRequestsInput>
+    create: XOR<UserCreateWithoutRequestsInput, UserUncheckedCreateWithoutRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRequestsInput, UserUncheckedUpdateWithoutRequestsInput>
+  }
+
+  export type UserUpdateWithoutRequestsInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
+    threads?: ThreadUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRequestsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
+    threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CommunityCreateWithoutInvitesInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    createdBy?: UserCreateNestedOneWithoutCommunityLeaderInput
+    members?: UserCreateNestedManyWithoutCommunityMemberInput
+    threads?: ThreadCreateNestedManyWithoutCommunityInput
+    requests?: RequestCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityUncheckedCreateWithoutInvitesInput = {
+    id?: number
+    uuid?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name?: string | null
+    username?: string | null
+    image?: string | null
+    bio?: string | null
+    creatorId?: number | null
+    members?: UserUncheckedCreateNestedManyWithoutCommunityMemberInput
+    threads?: ThreadUncheckedCreateNestedManyWithoutCommunityInput
+    requests?: RequestUncheckedCreateNestedManyWithoutCommunityInput
+  }
+
+  export type CommunityCreateOrConnectWithoutInvitesInput = {
+    where: CommunityWhereUniqueInput
+    create: XOR<CommunityCreateWithoutInvitesInput, CommunityUncheckedCreateWithoutInvitesInput>
+  }
+
+  export type UserCreateWithoutInvitesInput = {
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activeCommunity?: number | null
+    threads?: ThreadCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityCreateNestedManyWithoutMembersInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutInvitesInput = {
+    id?: number
+    uuid?: string
+    name?: string | null
+    username?: string | null
+    email: string
+    password: string
+    image?: string | null
+    bio?: string | null
+    onboarded?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activeCommunity?: number | null
+    threads?: ThreadUncheckedCreateNestedManyWithoutAuthorInput
+    communityLeader?: CommunityUncheckedCreateNestedManyWithoutCreatedByInput
+    communityMember?: CommunityUncheckedCreateNestedManyWithoutMembersInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutInvitesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInvitesInput, UserUncheckedCreateWithoutInvitesInput>
+  }
+
+  export type CommunityUpsertWithoutInvitesInput = {
+    update: XOR<CommunityUpdateWithoutInvitesInput, CommunityUncheckedUpdateWithoutInvitesInput>
+    create: XOR<CommunityCreateWithoutInvitesInput, CommunityUncheckedCreateWithoutInvitesInput>
+    where?: CommunityWhereInput
+  }
+
+  export type CommunityUpdateToOneWithWhereWithoutInvitesInput = {
+    where?: CommunityWhereInput
+    data: XOR<CommunityUpdateWithoutInvitesInput, CommunityUncheckedUpdateWithoutInvitesInput>
+  }
+
+  export type CommunityUpdateWithoutInvitesInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
+    members?: UserUpdateManyWithoutCommunityMemberNestedInput
+    threads?: ThreadUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type CommunityUncheckedUpdateWithoutInvitesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+    members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
+    threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutCommunityNestedInput
+  }
+
+  export type UserUpsertWithoutInvitesInput = {
+    update: XOR<UserUpdateWithoutInvitesInput, UserUncheckedUpdateWithoutInvitesInput>
+    create: XOR<UserCreateWithoutInvitesInput, UserUncheckedCreateWithoutInvitesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInvitesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInvitesInput, UserUncheckedUpdateWithoutInvitesInput>
+  }
+
+  export type UserUpdateWithoutInvitesInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
+    threads?: ThreadUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUpdateManyWithoutMembersNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInvitesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    onboarded?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
+    threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
+    communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+    communityMember?: CommunityUncheckedUpdateManyWithoutMembersNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ThreadCreateManyAuthorInput = {
     id?: number
     uuid?: string
@@ -6635,6 +10159,22 @@ export namespace Prisma {
     username?: string | null
     image?: string | null
     bio?: string | null
+  }
+
+  export type RequestCreateManyUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
+  }
+
+  export type InviteCreateManyUserInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    communityId: number
   }
 
   export type ThreadUpdateWithoutAuthorInput = {
@@ -6678,6 +10218,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     members?: UserUpdateManyWithoutCommunityMemberNestedInput
     threads?: ThreadUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateWithoutCreatedByInput = {
@@ -6691,6 +10233,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     members?: UserUncheckedUpdateManyWithoutCommunityMemberNestedInput
     threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateManyWithoutCreatedByInput = {
@@ -6714,6 +10258,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneWithoutCommunityLeaderNestedInput
     threads?: ThreadUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateWithoutMembersInput = {
@@ -6727,6 +10273,8 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutCommunityNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutCommunityNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutCommunityNestedInput
   }
 
   export type CommunityUncheckedUpdateManyWithoutMembersInput = {
@@ -6739,6 +10287,54 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type RequestUpdateWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    community?: CommunityUpdateOneRequiredWithoutRequestsNestedInput
+  }
+
+  export type RequestUncheckedUpdateWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RequestUncheckedUpdateManyWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteUpdateWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    community?: CommunityUpdateOneRequiredWithoutInvitesNestedInput
+  }
+
+  export type InviteUncheckedUpdateWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteUncheckedUpdateManyWithoutUserInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    communityId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ThreadCreateManyParentInput = {
@@ -6792,6 +10388,22 @@ export namespace Prisma {
     parentId?: number | null
   }
 
+  export type RequestCreateManyCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    userId: number
+  }
+
+  export type InviteCreateManyCommunityInput = {
+    uuid?: string
+    createdAt?: Date | string
+    updatedat?: Date | string
+    status: $Enums.Status
+    userId: number
+  }
+
   export type UserUpdateWithoutCommunityMemberInput = {
     uuid?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6806,6 +10418,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUpdateManyWithoutCreatedByNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    invites?: InviteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommunityMemberInput = {
@@ -6823,6 +10437,8 @@ export namespace Prisma {
     activeCommunity?: NullableIntFieldUpdateOperationsInput | number | null
     threads?: ThreadUncheckedUpdateManyWithoutAuthorNestedInput
     communityLeader?: CommunityUncheckedUpdateManyWithoutCreatedByNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutCommunityMemberInput = {
@@ -6871,6 +10487,54 @@ export namespace Prisma {
     parentId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type RequestUpdateWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    user?: UserUpdateOneRequiredWithoutRequestsNestedInput
+  }
+
+  export type RequestUncheckedUpdateWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RequestUncheckedUpdateManyWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteUpdateWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    user?: UserUpdateOneRequiredWithoutInvitesNestedInput
+  }
+
+  export type InviteUncheckedUpdateWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InviteUncheckedUpdateManyWithoutCommunityInput = {
+    uuid?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedat?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
 
 
   /**
@@ -6900,6 +10564,14 @@ export namespace Prisma {
      * @deprecated Use CommunityDefaultArgs instead
      */
     export type CommunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommunityDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use RequestDefaultArgs instead
+     */
+    export type RequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RequestDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use InviteDefaultArgs instead
+     */
+    export type InviteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = InviteDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

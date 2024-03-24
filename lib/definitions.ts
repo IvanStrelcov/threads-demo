@@ -1,4 +1,6 @@
-export type User = {
+import type { User, Request, Invite } from "@prisma/client";
+
+export type UserForAuth = {
   id: number;
   email: string;
   name: string | null;
@@ -10,8 +12,15 @@ export type User = {
   activeCommunity: number | null;
 };
 
+type UserWithoutPassword = Omit<User, "password">;
+
+export type UserWithReqInv = {
+  requests: Request[];
+  invites: Invite[];
+} & UserWithoutPassword;
+
 export type UserModel = {
-  id: number
+  id: number;
   uuid: string;
   name: string;
   username: string;
@@ -23,17 +32,17 @@ export type UserModel = {
   createdAt: Date;
   updatedAt: Date;
   threads: ThreadModel[];
-}
+};
 
 export type ThreadModel = {
-  id: number
+  id: number;
   uuid: string;
   createdAt: Date;
   updatedAt: Date;
   content: string;
-  authorId: number
+  authorId: number;
   author: UserModel;
-  parentId: number | null
+  parentId: number | null;
   parent: ThreadModel | null;
   children: ThreadModel[];
-}
+};

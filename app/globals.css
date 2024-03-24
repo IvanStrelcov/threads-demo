@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: #f1f1f182;
+  opacity: 0.8;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1f1f229c;
+  opacity: 0.;
+  border-radius: 4px;
+}
+
 body {
   @apply bg-dark-1;
 }
@@ -54,7 +74,15 @@ body {
     @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
   }
 
-  .remove-clr {
+  .action_btn {
+    @apply h-auto w-[120px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+  }
+
+  .transparent_btn {
+    @apply text-red-500 bg-transparent !important;
+  }
+
+  .bg-remove {
     @apply bg-red-500 !important;
   }
 

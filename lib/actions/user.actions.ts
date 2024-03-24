@@ -5,6 +5,7 @@ import type { Thread, User } from "@prisma/client";
 import prisma from "@/lib/database/db";
 import { revalidatePath } from "next/cache";
 import { prismaExclude } from "../database/utils";
+import { UserWithReqInv } from "../definitions";
 
 type ThreadWithAuthor = {
   id: number;
@@ -130,7 +131,9 @@ export async function fetchUsers({
     const users = await prisma.user.findMany(query);
     delete query.skip;
     delete query.take;
-    const totalUsersCount = await prisma.user.count(query as Prisma.UserCountArgs);
+    const totalUsersCount = await prisma.user.count(
+      query as Prisma.UserCountArgs
+    );
     const isNext = totalUsersCount > skip + users.length;
     return { users, isNext };
   } catch (error: any) {
@@ -188,8 +191,19 @@ export async function fetchUsersForCommunity({
   searchString: string;
   currentUserId: number;
   currentCommunityId: number;
-}) {
+}): Promise<UserWithReqInv[]> {
   try {
+    let selectKeys: any = prismaExclude("User", ["password"]);
+    selectKeys.requests = {
+      where: {
+        communityId: currentCommunityId,
+      },
+    };
+    selectKeys.invites = {
+      where: {
+        communityId: currentCommunityId,
+      },
+    };
     let query: Prisma.UserFindManyArgs = {
       where: {
         AND: [
@@ -206,6 +220,7 @@ export async function fetchUsersForCommunity({
           },
         ],
       },
+      select: selectKeys,
     };
     if (searchString.trim() !== "" && query.where && query.where["AND"]) {
       (query.where["AND"] as Prisma.UserWhereInput[]).push({
@@ -215,7 +230,7 @@ export async function fetchUsersForCommunity({
         ],
       });
     }
-    const users = await prisma.user.findMany(query);
+    const users: any = await prisma.user.findMany(query);
     return users;
   } catch (error: any) {
     throw new Error(`Failed to change user active community: ${error.message}`);
@@ -238,7 +253,6 @@ export async function addUserToCommunity({
         where: { id: communityId },
         data: { members: { connect: user } },
       });
-      console.log("res", res);
     }
     revalidatePath(path);
   } catch (error: any) {

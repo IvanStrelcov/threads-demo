@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { User } from "@prisma/client";
+import { Status } from "@prisma/client";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import {
@@ -11,15 +11,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { UserWithReqInv } from "@/lib/definitions";
 import {
   fetchUsersForCommunity,
   addUserToCommunity,
 } from "@/lib/actions/user.actions";
+import {
+  changeInvitationStatus,
+  changeRequestStatus,
+} from "@/lib/actions/community.actions";
 
 export default function AddCommunityMember({
   currentUserId,
@@ -30,7 +33,7 @@ export default function AddCommunityMember({
 }) {
   const pathname = usePathname();
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserWithReqInv[]>([]);
 
   const getUsersForCommunity = async (value: string) => {
     const users = await fetchUsersForCommunity({
@@ -41,10 +44,52 @@ export default function AddCommunityMember({
     setUsers(users);
   };
 
-  const onAddMember = async (userId: number) => {
+  const onChangeRequest = async ({
+    userId,
+    status,
+  }: {
+    userId: number;
+    status: Status;
+  }) => {
+    await changeRequestStatus({
+      userId,
+      communityId: currentCommunityId,
+      status,
+      path: pathname,
+    });
+    getUsersForCommunity(search);
+  };
+
+  const onChangeInvitation = async ({
+    userId,
+    status,
+    applyToRequest,
+  }: {
+    userId: number;
+    status: Status;
+    applyToRequest: boolean;
+  }) => {
+    await changeInvitationStatus({
+      userId,
+      communityId: currentCommunityId,
+      status,
+      applyToRequest,
+      path: pathname,
+    });
+    getUsersForCommunity(search);
+  };
+
+  const onAcceptRequest = async (userId: number) => {
     await addUserToCommunity({
       userId,
       communityId: currentCommunityId,
+      path: pathname,
+    });
+    await changeInvitationStatus({
+      userId,
+      communityId: currentCommunityId,
+      status: Status.ACCEPTED,
+      applyToRequest: true,
       path: pathname,
     });
     getUsersForCommunity(search);
@@ -63,7 +108,7 @@ export default function AddCommunityMember({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary-500">Add member</Button>
+        <Button className="action_btn bg-primary-500">Add member</Button>
       </DialogTrigger>
       <DialogContent className="bg-dark-3 border-none text-light-1">
         <DialogHeader>
@@ -79,9 +124,9 @@ export default function AddCommunityMember({
             onChange={(e) => setSearch(e.target.value)}
             className="no-focus bg-dark-4"
           />
-          <div className="flex flex-col w-full mt-2 gap-2 max-h-24">
+          <div className="flex flex-col w-full mt-2 gap-2 max-h-24 overflow-y-auto">
             {users.length
-              ? users.map((user: User) => {
+              ? users.map((user: UserWithReqInv) => {
                   return (
                     <div
                       key={user.id}
@@ -97,29 +142,61 @@ export default function AddCommunityMember({
                         />
                         <p>{user.name}</p>
                       </div>
-                      <Button
-                        className="bg-primary-500"
-                        onClick={() => onAddMember(user.id)}
-                      >
-                        Add
-                      </Button>
+                      {user.requests[0] &&
+                      user.requests[0].status === Status.PENDING ? (
+                        <div className="flex gap-2">
+                          <Button
+                            className="action_btn transparent_btn"
+                            onClick={() =>
+                              onChangeRequest({
+                                userId: user.id,
+                                status: Status.CANCELED,
+                              })
+                            }
+                          >
+                            Cancel Request
+                          </Button>
+                          <Button
+                            className="action_btn bg-primary-500"
+                            onClick={() => onAcceptRequest(user.id)}
+                          >
+                            Accept Request
+                          </Button>
+                        </div>
+                      ) : user.invites[0] &&
+                        user.invites[0].status === Status.PENDING ? (
+                        <Button
+                          className="action_btn bg-remove"
+                          onClick={() =>
+                            onChangeInvitation({
+                              userId: user.id,
+                              status: Status.CANCELED,
+                              applyToRequest: true,
+                            })
+                          }
+                        >
+                          Revoke Invitation
+                        </Button>
+                      ) : (
+                        <Button
+                          className="action_btn bg-primary-500"
+                          onClick={() =>
+                            onChangeInvitation({
+                              userId: user.id,
+                              status: Status.PENDING,
+                              applyToRequest: false,
+                            })
+                          }
+                        >
+                          Send invitation
+                        </Button>
+                      )}
                     </div>
                   );
                 })
               : null}
           </div>
         </div>
-        <DialogFooter className="mt-9 sm:justify-start">
-          <DialogClose asChild>
-            <Button
-              type="button"
-              variant="secondary"
-              className="bg-light-3 text-light-1 hover:bg-opacity-80 hover:text-light-1 hover:bg-light-3"
-            >
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

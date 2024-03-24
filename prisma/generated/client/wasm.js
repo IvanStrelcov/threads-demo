@@ -145,6 +145,24 @@ exports.Prisma.CommunityScalarFieldEnum = {
   creatorId: 'creatorId'
 };
 
+exports.Prisma.RequestScalarFieldEnum = {
+  uuid: 'uuid',
+  createdAt: 'createdAt',
+  updatedat: 'updatedat',
+  status: 'status',
+  communityId: 'communityId',
+  userId: 'userId'
+};
+
+exports.Prisma.InviteScalarFieldEnum = {
+  uuid: 'uuid',
+  createdAt: 'createdAt',
+  updatedat: 'updatedat',
+  status: 'status',
+  communityId: 'communityId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -159,12 +177,20 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Status = exports.$Enums.Status = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Thread: 'Thread',
-  Community: 'Community'
+  Community: 'Community',
+  Request: 'Request',
+  Invite: 'Invite'
 };
 
 /**

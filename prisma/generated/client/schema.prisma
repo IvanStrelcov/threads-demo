@@ -31,6 +31,8 @@ model User {
   communityLeader Community[] @relation("CommunityCreator")
   communityMember Community[] @relation("CommunityMember")
   activeCommunity Int?
+  requests        Request[]
+  invites         Invite[]
 }
 
 model Thread {
@@ -49,16 +51,54 @@ model Thread {
 }
 
 model Community {
-  id        Int      @id @default(autoincrement())
-  uuid      String   @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  uuid      String    @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   name      String?
   username  String?
   image     String?
   bio       String?
   creatorId Int?
   createdBy User?     @relation("CommunityCreator", fields: [creatorId], references: [id])
-  members   User[]   @relation("CommunityMember")
+  members   User[]    @relation("CommunityMember")
   threads   Thread[]
+  requests  Request[]
+  invites   Invite[]
+}
+
+enum Status {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELED
+  EXPIRED
+}
+
+model Request {
+  // id          Int        @id @default(autoincrement())
+  uuid        String    @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedat   DateTime  @updatedAt
+  status      Status
+  communityId Int
+  community   Community @relation(fields: [communityId], references: [id])
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@id([communityId, userId])
+}
+
+model Invite {
+  // id          Int        @id @default(autoincrement())
+  uuid        String     @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedat   DateTime   @updatedAt
+  status      Status
+  communityId Int
+  community   Community @relation(fields: [communityId], references: [id])
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@id([communityId, userId])
 }
