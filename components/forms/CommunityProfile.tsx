@@ -21,6 +21,7 @@ import { CommunityValidation } from "@/lib/validations/community";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import { createCommunity } from "@/lib/actions/community.actions";
+import { addUserToCommunity } from "@/lib/actions/user.actions";
 
 interface Props {
   user: {
@@ -97,12 +98,18 @@ export default function CommunityProfile({ user, community, btnTitle }: Props) {
       }
     }
 
-    await createCommunity({
+    const result = await createCommunity({
       creatorId: user.id,
       name: values.name,
       username: values.username,
       image: values.profile_photo,
       bio: values.bio,
+      path: pathname,
+    });
+
+    await addUserToCommunity({
+      userId: user.id,
+      communityId: result.id,
       path: pathname,
     });
 
@@ -134,7 +141,7 @@ export default function CommunityProfile({ user, community, btnTitle }: Props) {
                     height={96}
                     priority
                     // className h-24 for fixed height
-                    className="rounded-full object-contain w-24 h-24"
+                    className="rounded-full object-cover w-24 h-24"
                   />
                 ) : (
                   <Image
@@ -142,7 +149,7 @@ export default function CommunityProfile({ user, community, btnTitle }: Props) {
                     alt="profile photo"
                     width={24}
                     height={24}
-                    className="object-contain"
+                    className="rounded-full object-cover"
                   />
                 )}
               </FormLabel>

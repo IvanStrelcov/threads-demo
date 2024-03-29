@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import SignInForm from "@/components/forms/sign-in";
+import SignInForm from "@/components/forms/SignIn";
 import Image from "next/image";
 
 export default async function SignIn() {

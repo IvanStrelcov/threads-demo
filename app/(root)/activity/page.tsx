@@ -27,7 +27,7 @@ export default async function Activity() {
                       alt="author logo"
                       width={20}
                       height={20}
-                      className="rounded-full object-contain w-5 h-5"
+                      className="rounded-full object-cover w-5 h-5"
                     />
                     <p className="!text-small-regular text-light-1">
                       <span className="mr-1 text-primary-500">{activity.author.name}</span> replied to your thread

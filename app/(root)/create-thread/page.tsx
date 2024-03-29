@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import PostThread from "@/components/forms/post-thread";
+import PostThread from "@/components/forms/PostThread";
 
 export default async function CreateThread() {
   const session = await getServerSession(options);

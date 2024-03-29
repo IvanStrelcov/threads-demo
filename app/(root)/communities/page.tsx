@@ -2,23 +2,29 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchCommunities } from "@/lib/actions/community.actions";
-import CommunityCard from "@/components/cards/community-card";
+import CommunityCard from "@/components/cards/CommunityCard";
+import SearchBar from "@/components/shared/SearchBar";
+import Pagination from "@/components/shared/Pagination";
 
-export default async function Communities() {
+export default async function Communities({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   const session = await getServerSession(options);
 
   if (!session?.user) return null;
 
   const result: any = await fetchCommunities({
-    searchString: "",
-    pageSize: 20,
-    pageNumber: 1,
+    searchString: searchParams.q,
+    pageSize: 25,
+    pageNumber: searchParams?.page ? +searchParams.page : 1,
     sortBy: "desc",
   });
 
   return (
-    <section className="">
-      <div className="flex flex-col justify-start items-start gap-4 sm:flex-row sm:justify-between sm:items-center">
+    <>
+      <div className="flex flex-col justify-start items-start gap-2 sm:flex-row sm:justify-between sm:items-center">
         <h1 className="head-text">Communities</h1>
         <Link
           href="/communities/create"
@@ -27,8 +33,10 @@ export default async function Communities() {
           Create Community
         </Link>
       </div>
-
-      <div className="mt-14 flex flex-col gap-9">
+      <div className="mt-5">
+        <SearchBar routeType="communities" />
+      </div>
+      <section className="mt-9 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
         {result.communities.length === 0 ? (
           <p className="no-result">No communities</p>
         ) : (
@@ -48,7 +56,13 @@ export default async function Communities() {
             })}
           </>
         )}
-      </div>
-    </section>
+      </section>
+
+      <Pagination
+        path="communities"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
+    </>
   );
 }

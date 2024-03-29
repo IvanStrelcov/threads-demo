@@ -73,9 +73,6 @@ export async function fetchUserPosts(userId: number) {
       where: { id: userId },
       include: {
         threads: {
-          where: {
-            parentId: null,
-          },
           include: {
             children: {
               include: {
@@ -142,6 +139,28 @@ export async function fetchUsers({
 }
 
 export async function fetchActivities({ userId }: { userId: number }) {
+  try {
+    const userThreads = await prisma.thread.findMany({
+      where: { authorId: userId },
+      include: {
+        children: {
+          where: { authorId: { not: userId } },
+          include: { author: { select: prismaExclude("User", ["password"]) } },
+        },
+      },
+    });
+
+    const childThreads = userThreads.reduce((acc, current) => {
+      return acc.concat(current?.children);
+    }, [] as Thread[]);
+
+    return childThreads as unknown as ThreadWithAuthor[];
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user activities: ${error.message}`);
+  }
+}
+
+export async function fetchReplies({ userId }: { userId: number }) {
   try {
     const userThreads = await prisma.thread.findMany({
       where: { authorId: userId },

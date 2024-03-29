@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchPosts } from "@/lib/actions/thread.actions";
-import ThreadCard from "@/components/cards/thread-card";
+import ThreadCard from "@/components/cards/ThreadCard";
 import Pagination from "@/components/shared/Pagination";
 
 export default async function HomePage({
@@ -10,6 +10,7 @@ export default async function HomePage({
   searchParams: { [key: string]: string | undefined };
 }) {
   const session = await getServerSession(options);
+  if (!session || !session.user) return null;
 
   const result = await fetchPosts({
     limit: 30,

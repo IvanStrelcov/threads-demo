@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   id: number;
@@ -25,12 +25,15 @@ export default function CommunityCard({
   return (
     <article className="community-card">
       <div className="flex flex-wrap items-center gap-3">
-        <Link href={`/communities/${id}`} className="relative h-12 w-12 object-cover">
+        <Link
+          href={`/communities/${id}`}
+          className="relative h-12 w-12 object-cover"
+        >
           <Image
             src={image}
             alt="community_logo"
             fill
-            className="rounded-full object-contain shadow-2xl"
+            className="rounded-full object-cover shadow-2xl"
           />
         </Link>
 

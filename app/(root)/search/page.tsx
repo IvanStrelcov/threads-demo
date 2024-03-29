@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchUsers } from "@/lib/actions/user.actions";
-import UserCard from "@/components/cards/user-card";
-import Searchbar from "@/components/shared/SearchBar";
+import UserCard from "@/components/cards/UserCard";
+import SearchBar from "@/components/shared/SearchBar";
 import Pagination from "@/components/shared/Pagination";
 
 export default async function Search({
@@ -16,7 +16,7 @@ export default async function Search({
 
   const result: any = await fetchUsers({
     userId: Number(session.user.id),
-    searchString: searchParams.q || '',
+    searchString: searchParams.q || "",
     limit: 20,
     page: searchParams?.page ? +searchParams.page : 1,
     sortBy: "asc",
@@ -26,7 +26,7 @@ export default async function Search({
     <section>
       <h1 className="head-text mb-10">Search</h1>
 
-      <Searchbar routeType="search" />
+      <SearchBar routeType="search" />
 
       <div className="mt-14 flex flex-col gap-9">
         {result.users.length === 0 ? (
@@ -50,7 +50,7 @@ export default async function Search({
       </div>
 
       <Pagination
-        path='search'
+        path="search"
         pageNumber={searchParams?.page ? +searchParams.page : 1}
         isNext={result.isNext}
       />

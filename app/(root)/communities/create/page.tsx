@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import CommunityProfile from "@/components/forms/community-profile";
+import CommunityProfile from "@/components/forms/CommunityProfile";
 
 export default async function CommunitiesCreate() {
   const session = await getServerSession(options);
@@ -15,8 +15,8 @@ export default async function CommunitiesCreate() {
 
   const userData = {
     id: session.user.id,
-    username: session.user.username,
-    name: session.user.name,
+    username: session.user.username || "",
+    name: session.user.name || "",
     bio: session.user.bio || "",
     image: session.user.image || "",
   };
@@ -28,8 +28,12 @@ export default async function CommunitiesCreate() {
       </p>
 
       <section className="mt-9 bg-dark-2 p-10">
-        <CommunityProfile user={userData} community={null} btnTitle={"Create"} />
+        <CommunityProfile
+          user={userData}
+          community={null}
+          btnTitle={"Create"}
+        />
       </section>
     </main>
-  )
+  );
 }

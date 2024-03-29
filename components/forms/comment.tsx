@@ -13,7 +13,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,7 +61,7 @@ export default function Comment({
                   alt="Profile image"
                   width={48}
                   height={48}
-                  className="rounded-full object-contain w-12 h-12"
+                  className="rounded-full object-cover w-12 h-12"
                 />
               </FormLabel>
               <FormControl className="border-none bg-transparent">

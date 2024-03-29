@@ -1,8 +1,7 @@
 "use server";
 
-import prisma from "@/lib/database/db";
-import type { Thread } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import prisma from "@/lib/database/db";
 
 export async function createThread({
   text,
@@ -50,7 +49,7 @@ export async function fetchPosts({
             id: true,
             name: true,
             image: true,
-          }
+          },
         },
         children: {
           include: {
@@ -85,7 +84,11 @@ export async function fetchThreadById(id: number) {
       include: {
         author: true,
         children: {
-          include: { author: true, children: { include: { author: true } } },
+          include: {
+            author: true,
+            children: { include: { author: true } },
+            community: true,
+          },
         },
         community: true,
       },
@@ -109,18 +112,29 @@ export async function addCommentToThread({
   communityId?: number | null;
 }) {
   try {
-    const thread = await prisma.thread.findUniqueOrThrow({ where: { id: threadId }});
+    const thread = await prisma.thread.findUniqueOrThrow({
+      where: { id: threadId },
+    });
 
     const result = await prisma.thread.create({
       data: {
         parentId: threadId,
         content: commentText,
         authorId: userId,
-      }
+      },
     });
 
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to add comment to thread: ${error.message}`);
+  }
+}
+
+export async function deleteThread(id: number, path: string): Promise<void> {
+  try {
+    await prisma.thread.delete({ where: { id } });
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to delete thread: ${error.message}`);
   }
 }

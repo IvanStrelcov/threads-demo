@@ -3,7 +3,10 @@
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { Status } from "@prisma/client";
-import { removeUserFromCommunity } from "@/lib/actions/user.actions";
+import {
+  addUserToCommunity,
+  removeUserFromCommunity,
+} from "@/lib/actions/user.actions";
 import { Button } from "@/components/ui/button";
 import {
   changeInvitationStatus,
@@ -59,6 +62,13 @@ export default function UserCard({
         applyToInvitation: true,
         path: pathname,
       });
+      if (status === Status.ACCEPTED) {
+        await addUserToCommunity({
+          userId: id,
+          communityId: communityId,
+          path: pathname,
+        });
+      }
     }
   };
 

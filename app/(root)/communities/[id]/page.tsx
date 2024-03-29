@@ -15,7 +15,7 @@ import { communityTabs } from "@/lib/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import ThreadsTab from "@/components/shared/ThreadsTab";
-import UserCard from "@/components/cards/user-card";
+import UserCard from "@/components/cards/UserCard";
 import AddCommunityMember from "@/components/forms/AddCommunityMember";
 import RequestButtonAction from "@/components/shared/RequestButtonAction";
 
@@ -91,7 +91,7 @@ export default async function CommunityDetail({
                     alt={tab.label}
                     width={24}
                     height={24}
-                    className="object-contain w-6 h-6"
+                    className="rounded-full object-cover w-6 h-6"
                   />
                   <p className="max-sm:hidden">{tab.label}</p>
 

@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
+import Link from "next/link";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { fetchUser } from "@/lib/actions/user.actions";
+import { fetchReplies, fetchUser } from "@/lib/actions/user.actions";
+import { profileTabs } from "@/lib/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import { profileTabs } from "@/lib/constants";
-import { UserModel } from "@/lib/definitions";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 
 export default async function Profile({ params }: { params: { id: string } }) {
@@ -17,6 +17,8 @@ export default async function Profile({ params }: { params: { id: string } }) {
 
   const user: any = await fetchUser(Number(params.id));
   if (!user) return null;
+
+  const replies = await fetchReplies({ userId: Number(params.id) });
 
   return (
     <section className="relative">
@@ -40,7 +42,7 @@ export default async function Profile({ params }: { params: { id: string } }) {
                     alt={tab.label}
                     width={24}
                     height={24}
-                    className="object-contain"
+                    className="rounded-full object-cover"
                   />
                   <p className="max-sm:hidden">{tab.label}</p>
 
@@ -53,21 +55,67 @@ export default async function Profile({ params }: { params: { id: string } }) {
               );
             })}
           </TabsList>
-          {profileTabs.map((tab) => {
-            return (
-              <TabsContent
-                key={`content-${tab.label}`}
-                value={tab.value}
-                className="w-full text-light-1"
-              >
-                <ThreadsTab
-                  currentUserId={session.user.id}
-                  accountId={user.id}
-                  accountType="User"
-                />
-              </TabsContent>
-            );
-          })}
+          <TabsContent
+            key="content-threads"
+            value="threads"
+            className="w-full text-light-1"
+          >
+            <ThreadsTab
+              currentUserId={session.user.id}
+              accountId={user.id}
+              accountType="User"
+            />
+          </TabsContent>
+
+          <TabsContent
+            key="content-replies"
+            value="replies"
+            className="w-full text-light-1"
+          >
+            <section className="mt-10 flex flex-col gap-5">
+              {replies.length > 0 ? (
+                <>
+                  {replies.map((reply) => {
+                    return (
+                      <Link key={reply.id} href={`/thread/${reply.parentId}`}>
+                        <article className="activity-card">
+                          <Image
+                            src={reply.author.image ?? "/assets/profile.svg"}
+                            alt="author logo"
+                            width={20}
+                            height={20}
+                            className="rounded-full object-cover w-5 h-5"
+                          />
+                          <p className="!text-small-regular text-light-1">
+                            <span className="mr-1 text-primary-500">
+                              {reply.author.name}
+                            </span>{" "}
+                            replied to your thread
+                          </p>
+                        </article>
+                      </Link>
+                    );
+                  })}
+                </>
+              ) : (
+                <p className="!text-base-regular text-light-3">
+                  No activity yet
+                </p>
+              )}
+            </section>
+          </TabsContent>
+
+          <TabsContent
+            key="content-tagged"
+            value="tagged"
+            className="w-full text-light-1"
+          >
+            <ThreadsTab
+              currentUserId={session.user.id}
+              accountId={user.id}
+              accountType="User"
+            />
+          </TabsContent>
         </Tabs>
       </div>
     </section>

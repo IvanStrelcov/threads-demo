@@ -1,10 +1,11 @@
 import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteThread from "@/components/forms/DeleteThread";
 
 interface Thread {
   id: number;
-  currentUserId: number | undefined;
+  currentUserId: number;
   parentId: number | null;
   content: string;
   author: {
@@ -77,7 +78,7 @@ export default function ThreadCard({
                   alt="heart"
                   width={24}
                   height={24}
-                  className="cursor-pointer object-contain"
+                  className="cursor-pointer object-cover"
                 />
                 <Link href={`/thread/${id}`}>
                   <Image
@@ -85,7 +86,7 @@ export default function ThreadCard({
                     alt="reply"
                     width={24}
                     height={24}
-                    className="cursor-pointer object-contain"
+                    className="cursor-pointer object-cover"
                   />
                 </Link>
                 <Image
@@ -93,14 +94,14 @@ export default function ThreadCard({
                   alt="repost"
                   width={24}
                   height={24}
-                  className="cursor-pointer object-contain"
+                  className="cursor-pointer object-cover"
                 />
                 <Image
                   src="/assets/share.svg"
                   alt="share"
                   width={24}
                   height={24}
-                  className="cursor-pointer object-contain"
+                  className="cursor-pointer object-cover"
                 />
               </div>
 
@@ -114,10 +115,18 @@ export default function ThreadCard({
             </div>
           </div>
         </div>
+
+        {author && (
+          <DeleteThread
+            threadId={id}
+            currentUserId={currentUserId}
+            authorId={author.id}
+            parentId={parentId}
+            isComment={isComment}
+          />
+        )}
       </div>
 
-      {/* TODO: delete thread */}
-      {/* TODO: show comment logo */}
       {!isComment && comments?.length > 0 && (
         <div className="ml-2.5 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
@@ -127,7 +136,9 @@ export default function ThreadCard({
               alt={`user_${index}`}
               width={24}
               height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover w-6 h-6`}
+              className={`${
+                index !== 0 && "-ml-5"
+              } rounded-full object-cover w-6 h-6`}
             />
           ))}
 

@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import UserCard from "@/components/cards/user-card";
+import UserCard from "@/components/cards/UserCard";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUsers } from "@/lib/actions/user.actions";
 import { options } from "@/app/api/auth/[...nextauth]/options";

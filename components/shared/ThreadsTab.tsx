@@ -1,6 +1,6 @@
 import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
-import ThreadCard from "../cards/thread-card";
+import ThreadCard from "../cards/ThreadCard";
 import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 export default async function ThreadsTab({

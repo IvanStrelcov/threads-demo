@@ -48,6 +48,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       bio: user?.bio || "",
     },
   });
+
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
@@ -80,7 +81,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       }
     }
 
-    // TODO: Update user profile
     await updateUser({
       userId: user.id,
       name: values.name,
@@ -90,10 +90,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       path: pathname,
     });
 
-    if (pathname === '/profile/edit') {
+    if (pathname === "/profile/edit") {
       router.back();
     } else {
-      router.push('/');
+      router.push("/");
     }
   };
 
@@ -113,20 +113,19 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 {field.value ? (
                   <Image
                     src={field.value}
-                    alt="profile photo"
+                    alt="profile_photo"
                     width={96}
                     height={96}
                     priority
-                    // className h-24 for fixed height
-                    className="rounded-full object-contain w-24 h-24"
+                    className="rounded-full object-cover w-24 h-24"
                   />
                 ) : (
                   <Image
                     src="/assets/profile.svg"
-                    alt="profile photo"
+                    alt="profile_photo"
                     width={24}
                     height={24}
-                    className="object-contain"
+                    className="rounded-full object-contain"
                   />
                 )}
               </FormLabel>
@@ -134,12 +133,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 <Input
                   type="file"
                   accept="image/*"
-                  placeholder="Upload a photo"
+                  placeholder="Add profile photo"
                   className="account-form_image-input"
                   onChange={(e) => handleImage(e, field.onChange)}
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -159,7 +158,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -179,7 +178,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -199,12 +198,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="bg-primary-500">
-          Submit
+          {btnTitle}
         </Button>
       </form>
     </Form>

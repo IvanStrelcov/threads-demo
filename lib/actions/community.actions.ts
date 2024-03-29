@@ -1,7 +1,6 @@
 "use server";
 
 import { Prisma, Status } from "@prisma/client";
-import type { User, Thread, Community } from "@prisma/client";
 import prisma from "@/lib/database/db";
 import { revalidatePath } from "next/cache";
 import { prismaExclude } from "../database/utils";
@@ -26,6 +25,7 @@ export async function createCommunity({
       data: { name, username, bio, image, creatorId },
     });
     revalidatePath(path);
+    return result;
   } catch (error: any) {
     throw new Error(`Failed to create community: ${error.message}`);
   }
@@ -54,10 +54,11 @@ export async function fetchCommunity({ communityId }: { communityId: number }) {
           include: {
             requests: true,
             invites: true,
-          }
-        }
+          },
+        },
       },
     });
+    console.log(result);
     return result;
   } catch (error: any) {
     throw new Error(`Failed to fetch community: ${error.message}`);
@@ -205,6 +206,15 @@ export async function changeRequestStatus({
         update: { status },
         create: { userId, communityId, status },
       });
+    }
+    if (status === Status.ACCEPTED) {
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+      if (user) {
+        const res = await prisma.community.update({
+          where: { id: communityId },
+          data: { members: { connect: user } },
+        });
+      }
     }
     revalidatePath(path);
   } catch (error: any) {

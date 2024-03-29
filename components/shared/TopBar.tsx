@@ -14,11 +14,13 @@ export default async function TopBar() {
   const initial = [
     { value: "-1", label: "Personal", image: session.user.image },
   ];
-  const communities = initial.concat(userCommunities.map((el) => ({
-    value: String(el.id),
-    label: el.name || '',
-    image: el.image || '/assets/profile.svg',
-  })));
+  const communities = initial.concat(
+    userCommunities.map((el) => ({
+      value: String(el.id),
+      label: el.name || "",
+      image: el.image || "/assets/profile.svg",
+    }))
+  );
   let active = { value: "-1", label: "Personal", image: session.user.image };
   if (session.user.activeCommunity) {
     active.value = String(session.user.activeCommunity);
@@ -34,10 +36,16 @@ export default async function TopBar() {
     <nav className="topbar">
       <Link href="/" className="flex items-center gap-4">
         <Image src="/assets/logo.svg" alt="logo" height={28} width={28} />
-        <p className="text-heading3-bold text-light-1 max-xs:hidden">Threads</p>
+        <p className="text-heading3-bold text-light-1 hidden sm:block">Threads</p>
       </Link>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-4">
+        <Combobox
+          mappable={communities}
+          pickable="community"
+          active={active}
+          userId={session.user.id}
+        />
         <div className="block md:hidden">
           <div className="flex cursor-pointer">
             <Image
@@ -48,9 +56,6 @@ export default async function TopBar() {
             />
           </div>
         </div>
-
-        {/* TODO: organization switcher */}
-        <Combobox mappable={communities} pickable="community" active={active} userId={session.user.id} />
       </div>
     </nav>
   );

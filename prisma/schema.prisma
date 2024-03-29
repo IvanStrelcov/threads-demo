@@ -42,11 +42,11 @@ model Thread {
   updatedAt   DateTime   @updatedAt
   content     String
   authorId    Int?
-  author      User?      @relation(fields: [authorId], references: [id])
+  author      User?      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   communityId Int?
-  community   Community? @relation(fields: [communityId], references: [id])
+  community   Community? @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId    Int?
-  parent      Thread?    @relation("ThreadChildren", fields: [parentId], references: [id])
+  parent      Thread?    @relation("ThreadChildren", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   children    Thread[]   @relation("ThreadChildren")
 }
 
@@ -60,7 +60,7 @@ model Community {
   image     String?
   bio       String?
   creatorId Int?
-  createdBy User?     @relation("CommunityCreator", fields: [creatorId], references: [id])
+  createdBy User?     @relation("CommunityCreator", fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   members   User[]    @relation("CommunityMember")
   threads   Thread[]
   requests  Request[]
@@ -82,9 +82,9 @@ model Request {
   updatedat   DateTime  @updatedAt
   status      Status
   communityId Int
-  community   Community @relation(fields: [communityId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([communityId, userId])
 }
@@ -96,9 +96,9 @@ model Invite {
   updatedat   DateTime   @updatedAt
   status      Status
   communityId Int
-  community   Community @relation(fields: [communityId], references: [id])
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([communityId, userId])
 }

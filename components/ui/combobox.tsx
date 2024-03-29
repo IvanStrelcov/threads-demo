@@ -76,7 +76,7 @@ export default function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[250px] justify-between"
+          className="w-[200px] sm:w-[250px] justify-between"
         >
           {value ? (
             renderCurrent
@@ -87,7 +87,7 @@ export default function Combobox({
                 alt="logo"
                 width={20}
                 height={20}
-                className="rounded-full object-contain w-5 h-5"
+                className="rounded-full object-cover w-5 h-5"
               />
               <p className="">Select {pickable}...</p>
             </div>
@@ -95,7 +95,7 @@ export default function Combobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[250px] p-0">
+      <PopoverContent className="w-[200px] sm:w-[250px] p-0">
         <Command>
           <CommandInput placeholder={`Search ${pickable}...`} />
           <CommandEmpty>No {pickable} found.</CommandEmpty>

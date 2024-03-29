@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";
-import AccountProfile from "@/components/forms/account-profile";
+import AccountProfile from "@/components/forms/AccountProfile";
 
 export default async function Onboarding() {
   const session = await getServerSession(options);
@@ -15,8 +15,8 @@ export default async function Onboarding() {
 
   const userData = {
     id: session.user.id,
-    username: session.user.username,
-    name: session.user.name,
+    username: session.user.username || "",
+    name: session.user.name || "",
     bio: session.user.bio || "",
     image: session.user.image || "",
   };

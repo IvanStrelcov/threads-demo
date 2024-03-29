@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
-import ThreadCard from "@/components/cards/thread-card";
-import Comment from "@/components/forms/comment";
+import ThreadCard from "@/components/cards/ThreadCard";
+import Comment from "@/components/forms/Comment";
 
 export default async function Thread({ params }: { params: { id: string } }) {
   if (!params.id || isNaN(params.id as any)) return null;
@@ -49,6 +49,7 @@ export default async function Thread({ params }: { params: { id: string } }) {
               parentId={thread.id}
               createdAt={comment.createdAt}
               comments={comment.children}
+              community={comment.community}
               author={{
                 id: comment.author?.id || 0,
                 name: comment.author?.name || "",
