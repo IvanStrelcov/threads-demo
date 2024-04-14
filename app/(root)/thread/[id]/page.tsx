@@ -12,6 +12,7 @@ export default async function Thread({ params }: { params: { id: string } }) {
   if (!session?.user) return null;
 
   const thread = await fetchThreadById(Number(params.id));
+
   if (!thread) return null;
 
   return (
@@ -27,6 +28,7 @@ export default async function Thread({ params }: { params: { id: string } }) {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          tags={thread.tags}
         />
       </div>
 
@@ -56,6 +58,7 @@ export default async function Thread({ params }: { params: { id: string } }) {
                 image: comment.author?.image || null,
               }}
               isComment
+              tags={comment.tags}
             />
           );
         })}

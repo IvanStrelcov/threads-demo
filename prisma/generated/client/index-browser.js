@@ -163,6 +163,14 @@ exports.Prisma.InviteScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.TagScalarFieldEnum = {
+  uuid: 'uuid',
+  createdAt: 'createdAt',
+  updatedat: 'updatedat',
+  threadId: 'threadId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -190,7 +198,8 @@ exports.Prisma.ModelName = {
   Thread: 'Thread',
   Community: 'Community',
   Request: 'Request',
-  Invite: 'Invite'
+  Invite: 'Invite',
+  Tag: 'Tag'
 };
 
 /**

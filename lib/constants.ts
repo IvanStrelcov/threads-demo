@@ -44,3 +44,5 @@ export const communityTabs = [
 ];
 
 export const SALT_ROUNDS = 10;
+
+export const regexForValidation = /(?<=[^a-zA-Z0-9]|^)(@\w+|@)/g;

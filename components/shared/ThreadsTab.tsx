@@ -43,6 +43,7 @@ export default async function ThreadsTab({
             community={post.community}
             createdAt={post.createdAt}
             comments={post.children}
+            tags={post.tags}
           />
         );
       })}

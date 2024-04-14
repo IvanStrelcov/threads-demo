@@ -86,6 +86,17 @@ export async function fetchUserPosts(userId: number) {
               },
             },
             author: true,
+            tags: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    name: true,
+                    username: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -299,5 +310,40 @@ export async function removeUserFromCommunity({
     revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to change user active community: ${error.message}`);
+  }
+}
+
+export async function fetchUsersByUsername({
+  username,
+  currentUserId,
+}: {
+  username: string;
+  currentUserId: number;
+}) {
+  try {
+    const searchString = username.trim();
+    let query: any = { where: { NOT: { id: currentUserId } } };
+    if (searchString.length > 0) {
+      query = {};
+      query = {
+        where: {
+          OR: [
+            { username: { contains: searchString, mode: "insensitive" } },
+            { name: { contains: searchString, mode: "insensitive" } },
+          ],
+          NOT: { id: currentUserId },
+        },
+        select: {
+          id: true,
+          username: true,
+          name: true,
+          image: true,
+        },
+      };
+    }
+    const users = await prisma.user.findMany(query);
+    return users;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch users by username: ${error.message}`);
   }
 }

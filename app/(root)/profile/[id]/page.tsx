@@ -7,6 +7,7 @@ import { profileTabs } from "@/lib/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import ThreadsTab from "@/components/shared/ThreadsTab";
+import { findUserTags } from "@/lib/actions/tag.actions";
 
 export default async function Profile({ params }: { params: { id: string } }) {
   if (!params.id || isNaN(params.id as any)) return null;
@@ -19,6 +20,7 @@ export default async function Profile({ params }: { params: { id: string } }) {
   if (!user) return null;
 
   const replies = await fetchReplies({ userId: Number(params.id) });
+  const tags = await findUserTags({ userId: Number(params.id) });
 
   return (
     <section className="relative">
@@ -110,11 +112,45 @@ export default async function Profile({ params }: { params: { id: string } }) {
             value="tagged"
             className="w-full text-light-1"
           >
-            <ThreadsTab
-              currentUserId={session.user.id}
-              accountId={user.id}
-              accountType="User"
-            />
+            <section className="mt-10 flex flex-col gap-5">
+              {tags.length > 0 ? (
+                <>
+                  {tags.map((tag) => {
+                    return (
+                      <article key={tag.uuid} className="activity-card">
+                        <Image
+                          src={
+                            tag.thread?.author?.image ?? "/assets/profile.svg"
+                          }
+                          alt="author logo"
+                          width={20}
+                          height={20}
+                          className="rounded-full object-cover w-5 h-5"
+                        />
+                        <p className="!text-small-regular text-light-1">
+                          <span className="mr-1 text-primary-500">
+                            <Link href={`/profile/${tag.thread.author?.id}`}>
+                              {tag.thread.author?.name}
+                            </Link>
+                          </span>
+                          tagged you in the{" "}
+                          <Link
+                            href={`/thread/${tag.thread.id}`}
+                            className="text-primary-500"
+                          >
+                            thread
+                          </Link>
+                        </p>
+                      </article>
+                    );
+                  })}
+                </>
+              ) : (
+                <p className="!text-base-regular text-light-3">
+                  No activity yet
+                </p>
+              )}
+            </section>
           </TabsContent>
         </Tabs>
       </div>

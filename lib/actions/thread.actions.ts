@@ -19,6 +19,7 @@ export async function createThread({
       data: { content: text, authorId: author, communityId: communityId },
     });
     revalidatePath(path);
+    return createdThread;
   } catch (error: any) {
     throw new Error(`Failed to create thread: ${error.message}`);
   }
@@ -60,6 +61,17 @@ export async function fetchPosts({
             },
           },
         },
+        tags: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       take: limit,
       skip,
@@ -88,9 +100,15 @@ export async function fetchThreadById(id: number) {
             author: true,
             children: { include: { author: true } },
             community: true,
+            tags: {
+              include: { user: { select: { username: true, id: true } } },
+            },
           },
         },
         community: true,
+        tags: {
+          include: { user: { select: { username: true, id: true } } },
+        },
       },
     });
     return thread;
@@ -125,6 +143,7 @@ export async function addCommentToThread({
     });
 
     revalidatePath(path);
+    return result;
   } catch (error: any) {
     throw new Error(`Failed to add comment to thread: ${error.message}`);
   }

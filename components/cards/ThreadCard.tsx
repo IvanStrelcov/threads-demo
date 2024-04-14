@@ -1,6 +1,6 @@
-import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { formatDateString } from "@/lib/utils";
 import DeleteThread from "@/components/forms/DeleteThread";
 
 interface Thread {
@@ -25,6 +25,15 @@ interface Thread {
     } | null;
   }[];
   isComment?: boolean;
+  tags: {
+    userId: number;
+    threadId: number;
+    uuid: string;
+    user: {
+      id: number;
+      username: string | null;
+    };
+  }[];
 }
 
 export default function ThreadCard({
@@ -37,7 +46,31 @@ export default function ThreadCard({
   createdAt,
   comments,
   isComment,
+  tags,
 }: Thread) {
+  const renderContent = () => {
+    const newContent = content.split(" ").map((word: string, index: number) => {
+      const tag = tags.find((tag) => word.includes(tag?.user?.username || ""));
+      if (
+        tag &&
+        tag.user &&
+        tag.user.username &&
+        word.includes(tag.user.username)
+      ) {
+        const wordAndSymbols = word.split(/(?=[\@])|(?<=[\W])|(?=\W)/g);
+        wordAndSymbols[1] = tag.user.username;
+        let newTag = wordAndSymbols.join('');
+        return (
+          <Link key={index} href={`/profile/${tag.user.id}`} className="tag">
+            {newTag}&nbsp;
+          </Link>
+        );
+      } else {
+        return <span key={index}>{word}&nbsp;</span>;
+      }
+    });
+    return newContent;
+  };
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -69,7 +102,9 @@ export default function ThreadCard({
               </h4>
             </Link>
 
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            <p className="mt-2 text-small-regular text-light-2">
+              {tags?.length ? renderContent() : content}
+            </p>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">

@@ -18,12 +18,12 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #1f1f229c;
-  opacity: 0.;
+  opacity: 0;
   border-radius: 4px;
 }
 
 body {
-  @apply bg-dark-1 overflow-hidden;
+  @apply bg-dark-1;
 }
 
 @layer components {
@@ -194,4 +194,20 @@ body {
 
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+}
+
+.backdrop {
+  @apply absolute bg-dark-2 w-full h-96 top-0 mt-9 py-2 px-3 border border-dark-4 text-light-2 !important;
+}
+
+.backdrop_input {
+  @apply absolute bg-transparent min-w-40 max-w-[724px] max-h-20 left-14 top-[-1px] py-2 px-3 text-light-2 tracking-normal !important;
+}
+
+.suggestions {
+  @apply absolute bg-dark-2 w-auto max-h-28 overflow-y-auto px-3 top-0 mt-9 py-2 border border-light-2 text-light-1 cursor-pointer z-50 !important;
+}
+
+.tag {
+  @apply text-[#1d9bf0];
 }

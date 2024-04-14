@@ -3,6 +3,7 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { fetchPosts } from "@/lib/actions/thread.actions";
 import ThreadCard from "@/components/cards/ThreadCard";
 import Pagination from "@/components/shared/Pagination";
+import { findUserTags } from "@/lib/actions/tag.actions";
 
 export default async function HomePage({
   searchParams,
@@ -16,6 +17,8 @@ export default async function HomePage({
     limit: 30,
     page: searchParams.page ? +searchParams.page : 1,
   });
+
+  const tags = await findUserTags({ userId: session.user.id })
 
   return (
     <>
@@ -38,6 +41,7 @@ export default async function HomePage({
                   community={post.community}
                   createdAt={post.createdAt}
                   comments={post.children}
+                  tags={post.tags}
                 />
               );
             })}
